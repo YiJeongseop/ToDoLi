@@ -1,0 +1,16 @@
+{
+  "@@locale": "ko",
+
+  "noTitle" : "제목 없음",
+  "deleteAllAppointments" : "모든 일정 삭제",
+  "deleteThisOnly" : "이 일정만 삭제",
+  "deleteSinceThis" : "이후 모든 일정 삭제",
+  "changeSinceThis" : "이후 모든 일정 변경",
+  "changeThisOnly" : "이 일정만 변경",
+  "recurrence" : "반복",
+  "timesEvery" : "번      매  ",
+  "days" : "일",
+  "weeks" : "주",
+  "months" : "달",
+  "logout" : "로그아웃"
+}

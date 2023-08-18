@@ -1,0 +1,16 @@
+{
+  "@@locale": "en",
+
+  "noTitle" : "No Title",
+  "deleteAllAppointments" : "Delete all schedules",
+  "deleteThisOnly" : "Delete this only",
+  "deleteSinceThis" : "Delete since this",
+  "changeSinceThis" : "Change since this",
+  "changeThisOnly" : "Change this only",
+  "recurrence" : "Recurrence",
+  "timesEvery" : "times every  ",
+  "days" : "DAYS",
+  "weeks" : "WEEKS",
+  "months" : "MONTHS",
+  "logout" : "Logout"
+}
