@@ -28,21 +28,30 @@ class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   Future<void> signInWithGoogle() async {
-    Get.dialog(const LoadingOverlay(), barrierDismissible: false);
+      Get.dialog(const LoadingOverlay(), barrierDismissible: false);
 
-    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+      if(googleUser == null) {
+        Get.back();
+        return;
+      }
 
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
+      try{
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-    await FirebaseAuth.instance.signInWithCredential(credential);
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
 
-    Get.back(); // Go main
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+        Get.back();
+      } catch(e){
+        Get.back();
+        return;
+      }
   }
 
   @override
