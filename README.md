@@ -7,7 +7,7 @@ It's a really simple app, but I was able to create it with a lot of help from __
 It's available on the [Google Play Store](https://play.google.com/store/apps/details?id=com.sanashi.todoli).
 
 ## Features
-* Google Login Using Firebase ( google-services.json used at this time is not in this repository. if you want to refer to this code, you should have your own google-services.json )
+* Google Login Using Firebase ( google-services.json used at this time is not in this repository. If you want to refer to this code, you should have your own google-services.json )
 * Upload appointments to Google Drive, download appointments from Google Drive
 * English and Korean translations 
 
@@ -15,6 +15,7 @@ It's available on the [Google Play Store](https://play.google.com/store/apps/det
 * Change the color of some parts of the UI
 * Change and delete parts of recurring appointments
 * Play interstitial ads when the UI changes color ( If you want to refer to this code, change App ID in AndroidManifest.xml and Ads ID in interstitial_ad_widget.dart to your own )
+* Connect to donation site ( If you want to refer to this code, change url in move_url.dart to your own )
 
 ## Screenshots
 ![Screenshots](https://github.com/YiJeongseop/ToDoLi/assets/112690335/4ee4c1e1-a6c9-4220-b5b9-49f5b2e2b835)
