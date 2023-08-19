@@ -21,7 +21,7 @@ class LoadingOverlay extends StatelessWidget {
 }
 
 // https://developers.google.com/drive/api/guides/api-specific-auth?hl=en
-final GoogleSignIn _googleSignIn = GoogleSignIn(
+final GoogleSignIn googleSignIn = GoogleSignIn(
     scopes: [drive.DriveApi.driveFileScope, drive.DriveApi.driveAppdataScope]);
 
 class LoginPage extends StatelessWidget {
@@ -30,7 +30,7 @@ class LoginPage extends StatelessWidget {
   Future<void> signInWithGoogle() async {
     Get.dialog(const LoadingOverlay(), barrierDismissible: false);
 
-    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
     final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;

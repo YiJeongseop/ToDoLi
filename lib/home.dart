@@ -251,6 +251,8 @@ class _HomeState extends State<Home> {
                                     style: AppLocalizations.of(context)!.localeName == 'ko' ? ko26 : en28
                                   ),
                                   onTap: () {
+                                    googleSignIn.disconnect();
+                                    // It makes the pop up to choose between Google accounts always come out.
                                     FirebaseAuth.instance.signOut();
                                   },
                                 ),

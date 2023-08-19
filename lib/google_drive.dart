@@ -1,7 +1,7 @@
 part of event_calendar;
 
 Future<drive.DriveApi?> _getDriveApi() async {
-  final googleUser = await _googleSignIn.signInSilently();
+  final googleUser = await googleSignIn.signInSilently();
   final headers = await googleUser?.authHeaders;
   final client = GoogleAuthClient(headers!);
   final driveApi = drive.DriveApi(client);
