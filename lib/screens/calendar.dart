@@ -245,7 +245,7 @@ class CalendarState extends State<Calendar> {
           dataSource: calendarDataSource,
           onTap: calendarTapCallback,
           scheduleViewSettings: ScheduleViewSettings( // https://help.syncfusion.com/flutter/calendar/schedule-view
-            appointmentItemHeight: 57,
+            appointmentItemHeight: 52,
             hideEmptyScheduleWeek: true,
             monthHeaderSettings: MonthHeaderSettings(
               textAlign: TextAlign.center,
@@ -256,10 +256,10 @@ class CalendarState extends State<Calendar> {
             weekHeaderSettings: WeekHeaderSettings(
               height: 20,
               textAlign: TextAlign.start,
-              weekTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20 : en18,
+              weekTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20 : en20,
             ),
             dayHeaderSettings: DayHeaderSettings(
-              dayTextStyle: en13,
+              dayTextStyle: en16,
               dateTextStyle: en18,
             ),
           ),
@@ -291,15 +291,15 @@ class CalendarState extends State<Calendar> {
                           appointments.subject,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko21 : en19,
+                          style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko21 : en20,
                         ),
                       ),
                     if ((appointments.isAllDay == false) & (appointments.startTime.year != appointments.endTime.year))
                       Flexible(
                         child: Text(
-                            '${appointments.startTime.year.toString()}/${appointments.startTime.month.toString()}/${appointments.startTime.day.toString()} ${appointments.startTime.hour.toString().padLeft(2, '0')}:${appointments.startTime.minute.toString().padLeft(2, '0')} - '
-                            '${appointments.endTime.year.toString()}/${appointments.endTime.month.toString()}/${appointments.endTime.day.toString()} ${appointments.endTime.hour.toString().padLeft(2, '0')}:${appointments.endTime.minute.toString().padLeft(2, '0')}',
-                            style: en16),
+                            '${appointments.startTime.year.toString().substring(2)}/${appointments.startTime.month.toString()}/${appointments.startTime.day.toString()} ${appointments.startTime.hour.toString().padLeft(2, '0')}:${appointments.startTime.minute.toString().padLeft(2, '0')} - '
+                            '${appointments.endTime.year.toString().substring(2)}/${appointments.endTime.month.toString()}/${appointments.endTime.day.toString()} ${appointments.endTime.hour.toString().padLeft(2, '0')}:${appointments.endTime.minute.toString().padLeft(2, '0')}',
+                            style: en17),
                       ),
                     if ((appointments.isAllDay == false) &
                         (appointments.startTime.year == appointments.endTime.year) &
@@ -308,7 +308,7 @@ class CalendarState extends State<Calendar> {
                         child: Text(
                             '${appointments.startTime.month.toString()}/${appointments.startTime.day.toString()} ${appointments.startTime.hour.toString().padLeft(2, '0')}:${appointments.startTime.minute.toString().padLeft(2, '0')} - '
                             '${appointments.endTime.month.toString()}/${appointments.endTime.day.toString()} ${appointments.endTime.hour.toString().padLeft(2, '0')}:${appointments.endTime.minute.toString().padLeft(2, '0')}',
-                            style: en16),
+                            style: en17),
                       ),
                     if ((appointments.isAllDay == false) &
                         (appointments.startTime.year == appointments.endTime.year) &
@@ -318,7 +318,7 @@ class CalendarState extends State<Calendar> {
                         child: Text(
                             '${appointments.startTime.hour.toString().padLeft(2, '0')}:${appointments.startTime.minute.toString().padLeft(2, '0')} - '
                             '${appointments.endTime.hour.toString().padLeft(2, '0')}:${appointments.endTime.minute.toString().padLeft(2, '0')}',
-                            style: en16),
+                            style: en17),
                       ),
                   ],
                 ),
@@ -347,7 +347,7 @@ class CalendarState extends State<Calendar> {
             appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
             agendaStyle: AgendaStyle(
               backgroundColor: Colors.white,
-              dateTextStyle: en18,
+              dateTextStyle: en20,
               dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko24 : en22,
               placeholderTextStyle: const TextStyle( // Make "No events" a invisible in Month View.
                 color: Colors.transparent,
@@ -356,12 +356,12 @@ class CalendarState extends State<Calendar> {
             monthCellStyle: MonthCellStyle(
               textStyle: en18,
               trailingDatesTextStyle: GoogleFonts.pangolin(
-                fontSize: 14,
+                fontSize: 16,
                 color: const Color(0xFFB7B7B7),
                 fontWeight: FontWeight.w500,
               ),
               leadingDatesTextStyle: GoogleFonts.pangolin(
-                fontSize: 14,
+                fontSize: 16,
                 color: const Color(0xFFB7B7B7),
                 fontWeight: FontWeight.w500,
               ),
@@ -369,11 +369,11 @@ class CalendarState extends State<Calendar> {
           ),
           headerStyle: CalendarHeaderStyle(
             textStyle: GoogleFonts.pangolin(
-              fontSize: 22,
+              fontSize: 24,
               color: (calendarController.view == CalendarView.month ||
                       calendarController.view == null)
                   // The screen appears before the CalendarView value is initially included in the calendarController.view in the first time.
-                  ? Colors.black
+                  ? Colors.black87
                   : Colors.transparent,
               fontWeight: FontWeight.w300,
             ),

@@ -109,7 +109,7 @@ class LoginPage extends StatelessWidget {
                         ),
                         Text(
                           'Sign in with Google',
-                          style: en20,
+                          style: en22,
                           textAlign: TextAlign.center,
                         ),
                         const CircleAvatar(

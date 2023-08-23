@@ -29,7 +29,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                 },
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko26 : en26,
+                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko26 : en28,
                 decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Add title',
@@ -51,7 +51,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                   Expanded(
                     child: Text(
                       'TO-DO',
-                      style: en24,
+                      style: en26,
                     ),
                   ),
                   Expanded(
@@ -90,7 +90,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                                   DateFormat('EEE, MMM dd yyyy')
                                       .format(_startDate),
                                   textAlign: TextAlign.left,
-                                  style: en18,
+                                  style: en20,
                                 ),
                       onTap: () async {
                         final DateTime? date = await showDatePicker(
@@ -155,7 +155,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                                         DateFormat('hh:mm a')
                                             .format(_startDate),
                                         textAlign: TextAlign.right,
-                                        style: en18,
+                                        style: en20,
                                       ),
                             onTap: () async {
                               final TimeOfDay? time = await showTimePicker(
@@ -211,7 +211,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                                   DateFormat('EEE, MMM dd yyyy')
                                       .format(_endDate),
                                   textAlign: TextAlign.left,
-                                  style: en18,
+                                  style: en20,
                                 ),
                       onTap: () async {
                         final DateTime? date = await showDatePicker(
@@ -259,7 +259,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                                 :Text(
                                         DateFormat('hh:mm a').format(_endDate),
                                         textAlign: TextAlign.right,
-                                        style: en18,
+                                        style: en20,
                                       ),
                             onTap: () async {
                               final TimeOfDay? time = await showTimePicker(
@@ -346,7 +346,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                           value: item,
                           child: Text(
                             '$item',
-                            style: en18,
+                            style: en20,
                           ),
                         );
                       }).toList(),
@@ -362,7 +362,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                       AppLocalizations.of(context)!.timesEvery,
                       style: (AppLocalizations.of(context)!.localeName == 'ko')
                           ? ko20
-                          : en18,
+                          : en20,
                     ),
                     DropdownButton(
                         menuMaxHeight: MediaQuery.of(context).size.height / 2.5,
@@ -372,7 +372,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                             value: item,
                             child: Text(
                               '$item',
-                              style: en18,
+                              style: en20,
                             ),
                           );
                         }).toList(),
@@ -390,20 +390,20 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                                 ? Text(AppLocalizations.of(context)!.days,
                                     style: (AppLocalizations.of(context)!.localeName == 'ko')
                                         ? ko20
-                                        : en18,
+                                        : en20,
                                   )
                                 : ((item == 'WEEKLY')
                                     ? Text(
                                         AppLocalizations.of(context)!.weeks,
                                         style: (AppLocalizations.of(context)!.localeName == 'ko')
                                             ? ko20
-                                            : en18,
+                                            : en20,
                                       )
                                     : Text(
                                         AppLocalizations.of(context)!.months,
                                         style: (AppLocalizations.of(context)!.localeName == 'ko')
                                             ? ko20
-                                            : en18,
+                                            : en20,
                                       )),
                           );
                         }).toList(),
@@ -457,7 +457,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                 },
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko23 : en20,
+                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko23 : en22,
                 decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Add description',

@@ -101,11 +101,11 @@ class _HomeState extends State<Home> {
                                       margin: const EdgeInsets.only(bottom: 0.0),
                                       accountName: Text(
                                         _displayName!,
-                                        style: en22
+                                        style: en26
                                       ),
                                       accountEmail: Text(
                                         _email!,
-                                        style: en20,
+                                        style: en22,
                                       ),
                                     ),
                                   ),

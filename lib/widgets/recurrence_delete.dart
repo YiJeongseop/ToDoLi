@@ -13,6 +13,10 @@ class RecurrenceDeleteState extends State<RecurrenceDelete> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        side: BorderSide(color: Colors.black, width: 2.0)
+      ),
       content: Container(
         height: MediaQuery.of(context).size.height / 4,
         width: double.maxFinite,
@@ -28,13 +32,13 @@ class RecurrenceDeleteState extends State<RecurrenceDelete> {
                 tileColor: _colorCollection[_selectedColorIndex],
                 // Button Color = Appointment Color
                 shape: RoundedRectangleBorder(
-                  side: const BorderSide(width: 1.5),
-                  borderRadius: BorderRadius.circular(22),
+                  side: const BorderSide(width: 1.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
                 title: Center(
                   child: Text(
                     _deleteOptionList[index],
-                    style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko24 : en20,
+                    style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko24 : en24,
                     textAlign: TextAlign.center,
                   ),
                 ),

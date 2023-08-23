@@ -13,6 +13,10 @@ class RecurrenceChangeState extends State<RecurrenceChange> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          side: BorderSide(color: Colors.black, width: 2.0)
+      ),
       content: Container(
         height: MediaQuery.of(context).size.height / 6,
         width: double.maxFinite,
@@ -26,8 +30,8 @@ class RecurrenceChangeState extends State<RecurrenceChange> {
               child: ListTile(
                 tileColor: _colorCollection[_selectedColorIndex],
                 shape: RoundedRectangleBorder(
-                  side: const BorderSide(width: 1.5),
-                  borderRadius: BorderRadius.circular(22),
+                  side: const BorderSide(width: 1.0),
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 title: Center(
                   child: Text(
