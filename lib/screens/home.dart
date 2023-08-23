@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todoli/screens/calendar.dart';
 import 'package:todoli/controllers/color_controller.dart';
@@ -101,11 +102,17 @@ class _HomeState extends State<Home> {
                                       margin: const EdgeInsets.only(bottom: 0.0),
                                       accountName: Text(
                                         _displayName!,
-                                        style: en26
+                                        style: (AppLocalizations.of(context)!.localeName == 'ko') ? GoogleFonts.poorStory(
+                                            fontSize: 29, color: Colors.black,
+                                          fontWeight: FontWeight.w500
+                                        ) : en26
                                       ),
                                       accountEmail: Text(
                                         _email!,
-                                        style: en22,
+                                        style: (AppLocalizations.of(context)!.localeName == 'ko') ? GoogleFonts.poorStory(
+                                            fontSize: 25, color: Colors.black,
+                                            fontWeight: FontWeight.w500
+                                        ) : en22,
                                       ),
                                     ),
                                   ),
@@ -129,7 +136,7 @@ class _HomeState extends State<Home> {
                                       size: 30, color: Colors.black),
                                   title: Text(
                                       AppLocalizations.of(context)!.logout,
-                                    style: AppLocalizations.of(context)!.localeName == 'ko' ? ko26 : en28
+                                    style: AppLocalizations.of(context)!.localeName == 'ko' ? ko28 : en28
                                   ),
                                   onTap: () {
                                     googleSignIn.disconnect();

@@ -251,16 +251,16 @@ class CalendarState extends State<Calendar> {
               textAlign: TextAlign.center,
               height: 95,
               backgroundColor: colorList[controller.numberOfColor],
-              monthTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko26 : en26,
+              monthTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko28 : en26,
             ),
             weekHeaderSettings: WeekHeaderSettings(
               height: 20,
               textAlign: TextAlign.start,
-              weekTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20 : en20,
+              weekTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko22 : en20,
             ),
             dayHeaderSettings: DayHeaderSettings(
-              dayTextStyle: en16,
-              dateTextStyle: en18,
+              dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko16 : en16,
+              dateTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko18 : en18,
             ),
           ),
           appointmentTimeTextFormat: 'HH:mm',
@@ -299,7 +299,7 @@ class CalendarState extends State<Calendar> {
                         child: Text(
                             '${appointments.startTime.year.toString().substring(2)}/${appointments.startTime.month.toString()}/${appointments.startTime.day.toString()} ${appointments.startTime.hour.toString().padLeft(2, '0')}:${appointments.startTime.minute.toString().padLeft(2, '0')} - '
                             '${appointments.endTime.year.toString().substring(2)}/${appointments.endTime.month.toString()}/${appointments.endTime.day.toString()} ${appointments.endTime.hour.toString().padLeft(2, '0')}:${appointments.endTime.minute.toString().padLeft(2, '0')}',
-                            style: en17),
+                            style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19 : en17),
                       ),
                     if ((appointments.isAllDay == false) &
                         (appointments.startTime.year == appointments.endTime.year) &
@@ -308,7 +308,7 @@ class CalendarState extends State<Calendar> {
                         child: Text(
                             '${appointments.startTime.month.toString()}/${appointments.startTime.day.toString()} ${appointments.startTime.hour.toString().padLeft(2, '0')}:${appointments.startTime.minute.toString().padLeft(2, '0')} - '
                             '${appointments.endTime.month.toString()}/${appointments.endTime.day.toString()} ${appointments.endTime.hour.toString().padLeft(2, '0')}:${appointments.endTime.minute.toString().padLeft(2, '0')}',
-                            style: en17),
+                            style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19 : en17),
                       ),
                     if ((appointments.isAllDay == false) &
                         (appointments.startTime.year == appointments.endTime.year) &
@@ -318,7 +318,7 @@ class CalendarState extends State<Calendar> {
                         child: Text(
                             '${appointments.startTime.hour.toString().padLeft(2, '0')}:${appointments.startTime.minute.toString().padLeft(2, '0')} - '
                             '${appointments.endTime.hour.toString().padLeft(2, '0')}:${appointments.endTime.minute.toString().padLeft(2, '0')}',
-                            style: en17),
+                            style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19 : en17),
                       ),
                   ],
                 ),
@@ -339,7 +339,7 @@ class CalendarState extends State<Calendar> {
           ),
           viewHeaderStyle: ViewHeaderStyle(
               backgroundColor: colorList[controller.numberOfColor],
-              dayTextStyle: en18),
+              dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19 : en18),
           monthViewSettings: MonthViewSettings( // https://help.syncfusion.com/flutter/calendar/month-view
             agendaItemHeight: 57,
             showAgenda: true,
@@ -347,20 +347,32 @@ class CalendarState extends State<Calendar> {
             appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
             agendaStyle: AgendaStyle(
               backgroundColor: Colors.white,
-              dateTextStyle: en20,
+              dateTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko22 : en20,
               dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko24 : en22,
               placeholderTextStyle: const TextStyle( // Make "No events" a invisible in Month View.
                 color: Colors.transparent,
               ),
             ),
             monthCellStyle: MonthCellStyle(
-              textStyle: en18,
-              trailingDatesTextStyle: GoogleFonts.pangolin(
+              textStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20 : en18,
+              trailingDatesTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ?
+                  GoogleFonts.poorStory(
+                    fontSize: 17,
+                    color: const Color(0xFFB7B7B7),
+                    fontWeight: FontWeight.w500,
+                  )
+                  : GoogleFonts.pangolin(
                 fontSize: 16,
                 color: const Color(0xFFB7B7B7),
                 fontWeight: FontWeight.w500,
               ),
-              leadingDatesTextStyle: GoogleFonts.pangolin(
+              leadingDatesTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ?
+              GoogleFonts.poorStory(
+                fontSize: 17,
+                color: const Color(0xFFB7B7B7),
+                fontWeight: FontWeight.w500,
+              )
+                  : GoogleFonts.pangolin(
                 fontSize: 16,
                 color: const Color(0xFFB7B7B7),
                 fontWeight: FontWeight.w500,
@@ -368,7 +380,15 @@ class CalendarState extends State<Calendar> {
             ),
           ),
           headerStyle: CalendarHeaderStyle(
-            textStyle: GoogleFonts.pangolin(
+            textStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? GoogleFonts.poorStory(
+              fontSize: 28,
+              color: (calendarController.view == CalendarView.month ||
+                  calendarController.view == null)
+              // The screen appears before the CalendarView value is initially included in the calendarController.view in the first time.
+                  ? Colors.black87
+                  : Colors.transparent,
+              fontWeight: FontWeight.w500,
+            ) : GoogleFonts.pangolin(
               fontSize: 24,
               color: (calendarController.view == CalendarView.month ||
                       calendarController.view == null)
@@ -378,7 +398,11 @@ class CalendarState extends State<Calendar> {
               fontWeight: FontWeight.w300,
             ),
           ),
-          todayTextStyle: GoogleFonts.pangolin(
+          todayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? GoogleFonts.poorStory(
+            fontSize: 19,
+            color: Colors.white
+          )
+              : GoogleFonts.pangolin(
             fontSize: 18,
             color: Colors.white,
           ),

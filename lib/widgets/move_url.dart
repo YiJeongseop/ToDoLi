@@ -35,8 +35,8 @@ class _MoveUrlState extends State<MoveUrl> {
             }
           },
           title: Text(
-            'Donation',
-            style: en28
+              AppLocalizations.of(context)!.donation,
+            style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko22 : en28
           ),
         ),
       ),

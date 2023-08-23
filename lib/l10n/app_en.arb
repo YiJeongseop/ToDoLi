@@ -12,5 +12,6 @@
   "days" : "DAYS",
   "weeks" : "WEEKS",
   "months" : "MONTHS",
-  "logout" : "Logout"
+  "logout" : "Logout",
+  "donation" : "Donation"
 }

@@ -38,7 +38,7 @@ class RecurrenceDeleteState extends State<RecurrenceDelete> {
                 title: Center(
                   child: Text(
                     _deleteOptionList[index],
-                    style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko24 : en24,
+                    style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko26 : en24,
                     textAlign: TextAlign.center,
                   ),
                 ),

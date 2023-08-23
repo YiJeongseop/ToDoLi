@@ -12,5 +12,6 @@
   "days" : "일",
   "weeks" : "주",
   "months" : "달",
-  "logout" : "로그아웃"
+  "logout" : "로그아웃",
+  "donation" : "개발자에게 기부"
 }

@@ -29,7 +29,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                 },
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko26 : en28,
+                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko30 : en28,
                 decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Add title',
@@ -51,7 +51,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                   Expanded(
                     child: Text(
                       'TO-DO',
-                      style: en26,
+                      style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko30 : en26,
                     ),
                   ),
                   Expanded(
@@ -84,7 +84,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                               DateFormat('yyyy년 MMM d일, EEE', 'ko')
                                   .format(_startDate),
                               textAlign: TextAlign.left,
-                              style: en18,
+                              style: ko22,
                             )
                           : Text(
                                   DateFormat('EEE, MMM dd yyyy')
@@ -149,7 +149,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                                     DateFormat('a hh:mm', 'ko')
                                         .format(_startDate),
                                     textAlign: TextAlign.right,
-                                    style: en18,
+                                    style: ko22,
                                   )
                                 : Text(
                                         DateFormat('hh:mm a')
@@ -205,7 +205,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                               DateFormat('yyyy년 MMM d일, EEE', 'ko')
                                   .format(_endDate),
                               textAlign: TextAlign.left,
-                              style: en18,
+                              style: ko22,
                             )
                           : Text(
                                   DateFormat('EEE, MMM dd yyyy')
@@ -254,7 +254,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                                 ? Text(
                                     DateFormat('a hh:mm', 'ko').format(_endDate),
                                     textAlign: TextAlign.right,
-                                    style: en18,
+                                    style: ko22,
                                   )
                                 :Text(
                                         DateFormat('hh:mm a').format(_endDate),
@@ -311,7 +311,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                     child: Text(
                       AppLocalizations.of(context)!.recurrence,
                       style: (AppLocalizations.of(context)!.localeName == 'ko')
-                          ? ko26
+                          ? ko24
                           : en22,
                     ),
                   ),
@@ -346,7 +346,9 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                           value: item,
                           child: Text(
                             '$item',
-                            style: en20,
+                            style: (AppLocalizations.of(context)!.localeName == 'ko')
+                                ? ko24
+                                : en20,
                           ),
                         );
                       }).toList(),
@@ -361,7 +363,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                     Text(
                       AppLocalizations.of(context)!.timesEvery,
                       style: (AppLocalizations.of(context)!.localeName == 'ko')
-                          ? ko20
+                          ? ko23
                           : en20,
                     ),
                     DropdownButton(
@@ -372,7 +374,9 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                             value: item,
                             child: Text(
                               '$item',
-                              style: en20,
+                              style: (AppLocalizations.of(context)!.localeName == 'ko')
+                                  ? ko24
+                                  : en20,
                             ),
                           );
                         }).toList(),
@@ -389,20 +393,20 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                             child: (item == 'DAILY')
                                 ? Text(AppLocalizations.of(context)!.days,
                                     style: (AppLocalizations.of(context)!.localeName == 'ko')
-                                        ? ko20
+                                        ? ko23
                                         : en20,
                                   )
                                 : ((item == 'WEEKLY')
                                     ? Text(
                                         AppLocalizations.of(context)!.weeks,
                                         style: (AppLocalizations.of(context)!.localeName == 'ko')
-                                            ? ko20
+                                            ? ko23
                                             : en20,
                                       )
                                     : Text(
                                         AppLocalizations.of(context)!.months,
                                         style: (AppLocalizations.of(context)!.localeName == 'ko')
-                                            ? ko20
+                                            ? ko23
                                             : en20,
                                       )),
                           );
@@ -413,7 +417,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                           });
                         }),
                     if (AppLocalizations.of(context)!.localeName == 'ko')
-                      Text('마다', style: ko20),
+                      Text('마다', style: ko23),
                   ],
                 ),
               ),
@@ -457,7 +461,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                 },
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko23 : en22,
+                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko24 : en22,
                 decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Add description',
