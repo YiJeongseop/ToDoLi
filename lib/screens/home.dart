@@ -42,6 +42,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    loadInterstitialAd();
   }
 
   Future<String?> _getCurrentUser() async {
@@ -66,131 +67,11 @@ class _HomeState extends State<Home> {
             actions: [
               Row(
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      callInterstitialAd();
-                      controller.changeToZero();
-                      _saveThemeStatus(controller.numberOfColor);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                      child: CircleAvatar(
-                        radius: 19,
-                        backgroundColor: Colors.white,
-                        child: CircleAvatar(
-                          radius: 17,
-                          backgroundColor: const Color(0xFF97D7E1),
-                          child: (controller.numberOfColor == 0)
-                              ? const Icon(
-                                  Icons.check,
-                                  size: 24.0,
-                                  color: Colors.white,
-                                )
-                              : null,
-                        ),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      callInterstitialAd();
-                      controller.changeToOne();
-                      _saveThemeStatus(controller.numberOfColor);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                      child: CircleAvatar(
-                        radius: 19,
-                        backgroundColor: Colors.white,
-                        child: CircleAvatar(
-                          radius: 17,
-                          backgroundColor: const Color(0xFFE5C1F5),
-                          child: (controller.numberOfColor == 1)
-                              ? const Icon(
-                                  Icons.check,
-                                  size: 24.0,
-                                  color: Colors.white,
-                                )
-                              : null,
-                        ),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      callInterstitialAd();
-                      controller.changeToTwo();
-                      _saveThemeStatus(controller.numberOfColor);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                      child: CircleAvatar(
-                        radius: 19,
-                        backgroundColor: Colors.white,
-                        child: CircleAvatar(
-                          radius: 17,
-                          backgroundColor: const Color(0xFFECB7B2),
-                          child: (controller.numberOfColor == 2)
-                              ? const Icon(
-                                  Icons.check,
-                                  size: 24.0,
-                                  color: Colors.white,
-                                )
-                              : null,
-                        ),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      callInterstitialAd();
-                      controller.changeToThree();
-                      _saveThemeStatus(controller.numberOfColor);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                      child: CircleAvatar(
-                        radius: 19,
-                        backgroundColor: Colors.white,
-                        child: CircleAvatar(
-                          radius: 17,
-                          backgroundColor: const Color(0xFFECDD83),
-                          child: (controller.numberOfColor == 3)
-                              ? const Icon(
-                                  Icons.check,
-                                  size: 24.0,
-                                  color: Colors.white,
-                                )
-                              : null,
-                        ),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      callInterstitialAd();
-                      controller.changeToFour();
-                      _saveThemeStatus(controller.numberOfColor);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                      child: CircleAvatar(
-                        radius: 19,
-                        backgroundColor: Colors.white,
-                        child: CircleAvatar(
-                          radius: 17,
-                          backgroundColor: const Color(0xFF8BD39A),
-                          child: (controller.numberOfColor == 4)
-                              ? const Icon(
-                                  Icons.check,
-                                  size: 24.0,
-                                  color: Colors.white,
-                                )
-                              : null,
-                        ),
-                      ),
-                    ),
-                  ),
+                  colorButton(color: colorList[0], number: 0),
+                  colorButton(color: colorList[1], number: 1),
+                  colorButton(color: colorList[2], number: 2),
+                  colorButton(color: colorList[3], number: 3),
+                  colorButton(color: colorList[4], number: 4),
                 ],
               )
             ],
@@ -273,6 +154,48 @@ class _HomeState extends State<Home> {
           ),
         );
       },
+    );
+  }
+
+  GestureDetector colorButton({
+    required Color color,
+    required int number,
+}){
+    return GestureDetector(
+      onTap: () {
+        callInterstitialAd();
+        loadInterstitialAd();
+        if(number == 0){
+          controller.changeToZero();
+        } else if(number == 1) {
+          controller.changeToOne();
+        } else if(number == 2) {
+          controller.changeToTwo();
+        } else if(number == 3) {
+          controller.changeToThree();
+        } else if(number == 4) {
+          controller.changeToFour();
+        }
+        _saveThemeStatus(controller.numberOfColor);
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+        child: CircleAvatar(
+          radius: 19,
+          backgroundColor: Colors.white,
+          child: CircleAvatar(
+            radius: 17,
+            backgroundColor: color,
+            child: (controller.numberOfColor == number)
+                ? const Icon(
+              Icons.check,
+              size: 24.0,
+              color: Colors.white,
+            )
+                : null,
+          ),
+        ),
+      ),
     );
   }
 }

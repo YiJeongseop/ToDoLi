@@ -2,33 +2,21 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 InterstitialAd? _interstitialAd;
 
-void callInterstitialAd() {
+void loadInterstitialAd() {
   InterstitialAd.load(
     adUnitId: 'ca-app-pub-3940256099942544/1033173712', // It's sample ID
     request: const AdRequest(),
     adLoadCallback: InterstitialAdLoadCallback(
-      onAdLoaded: (InterstitialAd ad) {
-        print('onAdLoaded: $ad');
-        _interstitialAd = ad;
-      },
-      onAdFailedToLoad: (LoadAdError error) {
-        print('onAdFailedToLoad: ${error.message}');
-      },
+      onAdLoaded: (InterstitialAd ad) => _interstitialAd = ad,
+      onAdFailedToLoad: (LoadAdError error) {},
     ),
   );
+}
 
+void callInterstitialAd() {
   _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
-    onAdShowedFullScreenContent: (InterstitialAd ad) =>
-        print('onAdShowedFullScreenContent: $ad'),
-    onAdDismissedFullScreenContent: (InterstitialAd ad) {
-      print('onAdShowedFullScreenContent: $ad');
-      ad.dispose();
-    },
-    onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-      print('$ad onAdFailedToShowFullScreenContent: $error');
-      ad.dispose();
-    },
-    onAdImpression: (InterstitialAd ad) => print('$ad impression occurred.'),
+    onAdDismissedFullScreenContent: (InterstitialAd ad) => ad.dispose(),
+    onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) => ad.dispose(),
   );
 
   _interstitialAd?.show();

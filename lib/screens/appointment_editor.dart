@@ -523,58 +523,13 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                     else if (int.parse(pieceOfRecurrenceRule[2].substring(6)) == 1) {
                       _events.appointments!.removeAt(_events.appointments!.indexOf(_selectedAppointment));
                       _events.notifyListeners(CalendarDataSourceAction.remove, <Appointment>[]..add(_selectedAppointment!));
-                      tempAppointments.add(Appointment(
-                        startTime: _startDate,
-                        endTime: _endDate,
-                        color: _colorCollection[_selectedColorIndex],
-                        notes: _notes,
-                        isAllDay: _isAllDay,
-                        subject: _subject == ''
-                            ? AppLocalizations.of(context)!.noTitle
-                            : _subject,
-                        recurrenceExceptionDates: _recurrenceExceptionDates,
-                        recurrenceRule: _isRecurrence & (_freq == "DAILY")
-                            ? 'FREQ=$_freq;INTERVAL=$_interval;COUNT=$_count'
-                            : (_isRecurrence & (_freq == "WEEKLY")
-                                ? 'FREQ=$_freq;INTERVAL=$_interval;COUNT=$_count;BYDAY=$_byDay'
-                                : (_isRecurrence & (_freq == "MONTHLY")
-                                    ? 'FREQ=$_freq;INTERVAL=$_interval;COUNT=$_count;BYMONTHDAY=${_startDate.day}'
-                                    : 'FREQ=DAILY;INTERVAL=1;COUNT=1')),
-                      ));
-                      print(tempAppointments[0]);
-                      _events.appointments!.add(tempAppointments[0]);
-                      _events.notifyListeners(CalendarDataSourceAction.add, tempAppointments);
-                      _selectedAppointment = null;
-                      uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
-                      Navigator.pop(context);
+                      addAppointment(tempAppointments);
                     }
                   }
 
                   // Save the new appointment
                   else {
-                    tempAppointments.add(Appointment(
-                      startTime: _startDate,
-                      endTime: _endDate,
-                      color: _colorCollection[_selectedColorIndex],
-                      notes: _notes,
-                      isAllDay: _isAllDay,
-                      subject: _subject == ''
-                          ? AppLocalizations.of(context)!.noTitle
-                          : _subject,
-                      recurrenceExceptionDates: _recurrenceExceptionDates,
-                      recurrenceRule: _isRecurrence & (_freq == "DAILY")
-                          ? 'FREQ=$_freq;INTERVAL=$_interval;COUNT=$_count'
-                          : (_isRecurrence & (_freq == "WEEKLY")
-                              ? 'FREQ=$_freq;INTERVAL=$_interval;COUNT=$_count;BYDAY=$_byDay'
-                              : (_isRecurrence & (_freq == "MONTHLY")
-                                  ? 'FREQ=$_freq;INTERVAL=$_interval;COUNT=$_count;BYMONTHDAY=${_startDate.day}'
-                                  : 'FREQ=DAILY;INTERVAL=1;COUNT=1')),
-                    ));
-                    _events.appointments!.add(tempAppointments[0]);
-                    _events.notifyListeners(CalendarDataSourceAction.add, tempAppointments);
-                    _selectedAppointment = null;
-                    uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
-                    Navigator.pop(context);
+                    addAppointment(tempAppointments);
                   }
                 },
             )
@@ -623,5 +578,31 @@ class AppointmentEditorState extends State<AppointmentEditor> {
             ),
       ),
     );
+  }
+
+  void addAppointment(List<Appointment> tempAppointments){
+    tempAppointments.add(Appointment(
+      startTime: _startDate,
+      endTime: _endDate,
+      color: _colorCollection[_selectedColorIndex],
+      notes: _notes,
+      isAllDay: _isAllDay,
+      subject: _subject == ''
+          ? AppLocalizations.of(context)!.noTitle
+          : _subject,
+      recurrenceExceptionDates: _recurrenceExceptionDates,
+      recurrenceRule: _isRecurrence & (_freq == "DAILY")
+          ? 'FREQ=$_freq;INTERVAL=$_interval;COUNT=$_count'
+          : (_isRecurrence & (_freq == "WEEKLY")
+          ? 'FREQ=$_freq;INTERVAL=$_interval;COUNT=$_count;BYDAY=$_byDay'
+          : (_isRecurrence & (_freq == "MONTHLY")
+          ? 'FREQ=$_freq;INTERVAL=$_interval;COUNT=$_count;BYMONTHDAY=${_startDate.day}'
+          : 'FREQ=DAILY;INTERVAL=1;COUNT=1')),
+    ));
+    _events.appointments!.add(tempAppointments[0]);
+    _events.notifyListeners(CalendarDataSourceAction.add, tempAppointments);
+    _selectedAppointment = null;
+    uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
+    Navigator.pop(context);
   }
 }

@@ -97,11 +97,12 @@ class RecurrenceDeleteState extends State<RecurrenceDelete> {
                         if (firstAppt.id == _selectedAppointment!.id) {
                           daysToDelete = SfCalendar.getRecurrenceDateTimeCollection(firstAppt.recurrenceRule!, firstAppt.startTime);
                           for (DateTime i in daysToDelete) {
-                            if (i.microsecondsSinceEpoch >= _selectedAppointment!.startTime.microsecondsSinceEpoch)
+                            if (i.microsecondsSinceEpoch >= _selectedAppointment!.startTime.microsecondsSinceEpoch){
                               if (!firstAppt.recurrenceExceptionDates!.contains(i)) {
                                 // Do not include date that already exist.
                                 firstAppt.recurrenceExceptionDates!.add(i);
                               }
+                            }
                           }
                           apptToAddAgain = firstAppt;
                           _events.appointments!
