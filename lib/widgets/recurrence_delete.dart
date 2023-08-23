@@ -1,4 +1,4 @@
-part of 'calendar.dart';
+part of '../screens/calendar.dart';
 
 class RecurrenceDelete extends StatefulWidget {
   const RecurrenceDelete({super.key});

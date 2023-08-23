@@ -12,17 +12,17 @@ import 'package:googleapis/drive/v3.dart' as drive;
 import "package:http/http.dart" as http;
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-import 'package:todoli/color_controller.dart';
+import 'package:todoli/controllers/color_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'fonts.dart';
+import '../fonts.dart';
 
-part 'color_picker.dart';
+part '../widgets/color_picker.dart';
 part 'appointment_editor.dart';
-part 'recurrence_delete.dart';
-part 'recurrence_change.dart';
+part '../widgets/recurrence_delete.dart';
+part '../widgets/recurrence_change.dart';
 part 'login.dart';
-part 'google_drive.dart';
+part '../services/google_drive.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);

@@ -1,4 +1,4 @@
-part of 'calendar.dart';
+part of '../screens/calendar.dart';
 
 class RecurrenceChange extends StatefulWidget {
   const RecurrenceChange({super.key});
