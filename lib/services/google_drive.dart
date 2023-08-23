@@ -43,6 +43,10 @@ Future<List<Appointment>> downloadAppointmentsFromDrive() async {
     List<DateTime> dateTimeOfRedList = List.generate(redList.length, (index) => redList[index] as DateTime);
     List<String> pieceOfRecurrenceRule = appt['recurrenceRule'].split(';');
 
+    if(pieceOfRecurrenceRule.length == 4){
+      if(pieceOfRecurrenceRule[3] == 'BYDAY=' || pieceOfRecurrenceRule[3] == 'BYMONTHDAY=') continue;
+    }
+
     // It does not import a fully deleted appointment
     if(dateTimeOfRedList.length != int.parse(pieceOfRecurrenceRule[2].substring(6))) {
       returnList.add(

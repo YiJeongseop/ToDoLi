@@ -40,6 +40,23 @@ class RecurrenceChangeState extends State<RecurrenceChange> {
                   setState(() {
                     List<DateTime> dateCollection;
                     List<Appointment> tempAppointments = <Appointment>[];
+                    _byMonthDay = _startDate.day;
+                    switch (_startDate.weekday) {
+                      case 1:
+                        _byDay = 'MO';
+                      case 2:
+                        _byDay = 'TU';
+                      case 3:
+                        _byDay = 'WE';
+                      case 4:
+                        _byDay = 'TH';
+                      case 5:
+                        _byDay = 'FR';
+                      case 6:
+                        _byDay = 'SA';
+                      case 7:
+                        _byDay = 'SU';
+                    }
                     if (index == 0) { // Change all since the appointment you choose
                       Appointment apptToAddAgain;
                       for (Appointment firstAppt in _events.appointments!) {

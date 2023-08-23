@@ -541,6 +541,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                                     ? 'FREQ=$_freq;INTERVAL=$_interval;COUNT=$_count;BYMONTHDAY=${_startDate.day}'
                                     : 'FREQ=DAILY;INTERVAL=1;COUNT=1')),
                       ));
+                      print(tempAppointments[0]);
                       _events.appointments!.add(tempAppointments[0]);
                       _events.notifyListeners(CalendarDataSourceAction.add, tempAppointments);
                       _selectedAppointment = null;
