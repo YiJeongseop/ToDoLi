@@ -63,14 +63,14 @@ TextStyle en28 = GoogleFonts.pangolin(
 TextStyle ko16 = GoogleFonts.poorStory(
     fontSize: 16,
     color: Colors.black,
-    fontWeight: FontWeight.bold
+    fontWeight: FontWeight.w500
 );
 
 // calendar.dart scheduleView-dateText
 TextStyle ko18 = GoogleFonts.poorStory(
     fontSize: 18,
     color: Colors.black,
-    fontWeight: FontWeight.bold
+    fontWeight: FontWeight.w500
 );
 
 // calendar.dart appointmentBuilder-startTime + endTime, viewHeader
@@ -79,20 +79,20 @@ TextStyle ko19 = GoogleFonts.poorStory(
     color: Colors.black
 );
 
-// calendar.dart monthCellText
+// calendar.dart monthCellText, scheduleView-weekHeader
 TextStyle ko20 = GoogleFonts.poorStory(
     fontSize: 20,
     color: Colors.black
 );
 
 // calendar.dart appointmentBuilder-subject
-TextStyle ko21 = GoogleFonts.poorStory(
-    fontSize: 21,
+TextStyle ko20subject = GoogleFonts.gowunDodum(
+    fontSize: 20,
     color: Colors.black
 );
 
 // appointment_editor.dart dateFormat
-// calendar.dart scheduleView-weekHeader, agenda-dateText
+// calendar.dart agenda-dateText
 // move_url.dart donation
 TextStyle ko22 = GoogleFonts.poorStory(
     fontSize: 22,

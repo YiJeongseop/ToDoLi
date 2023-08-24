@@ -23,6 +23,7 @@ part '../widgets/recurrence_delete.dart';
 part '../widgets/recurrence_change.dart';
 part 'login.dart';
 part '../services/google_drive.dart';
+part '../utilities/cancellation_line.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
@@ -244,6 +245,7 @@ class CalendarState extends State<Calendar> {
           controller: calendarController,
           dataSource: calendarDataSource,
           onTap: calendarTapCallback,
+          onLongPress: onCalendarLongPressed,
           scheduleViewSettings: ScheduleViewSettings( // https://help.syncfusion.com/flutter/calendar/schedule-view
             appointmentItemHeight: 52,
             hideEmptyScheduleWeek: true,
@@ -256,7 +258,7 @@ class CalendarState extends State<Calendar> {
             weekHeaderSettings: WeekHeaderSettings(
               height: 20,
               textAlign: TextAlign.start,
-              weekTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko22 : en20,
+              weekTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20 : en20,
             ),
             dayHeaderSettings: DayHeaderSettings(
               dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko16 : en16,
@@ -286,14 +288,32 @@ class CalendarState extends State<Calendar> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     if (calendarController.view == CalendarView.month || calendarController.view == CalendarView.schedule)
-                      Flexible(
-                        child: Text(
+                      if(appointments.subject.length > 2)
+                        Flexible(
+                        child: (appointments.subject.substring(appointments.subject.length - 3) == '(-)') ?
+                        Text(
+                          appointments.subject.substring(0, appointments.subject.length - 3),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: (AppLocalizations.of(context)!.localeName == 'ko') ?
+                          ko20subject.copyWith(decoration: TextDecoration.lineThrough,) :
+                          en20.copyWith(decoration: TextDecoration.lineThrough,),
+                        ) : Text(
                           appointments.subject,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko21 : en20,
+                          style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20subject : en20,
+                          ),
                         ),
-                      ),
+                      if(appointments.subject.length < 3)
+                        Flexible(
+                          child: Text(
+                            appointments.subject,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20subject : en20,
+                          ),
+                        ),
                     if ((appointments.isAllDay == false) & (appointments.startTime.year != appointments.endTime.year))
                       Flexible(
                         child: Text(
@@ -459,6 +479,12 @@ class CalendarState extends State<Calendar> {
             builder: (BuildContext context) => const AppointmentEditor()),
       );
     });
+  }
+
+  // Add Cancellation Line
+  void onCalendarLongPressed(CalendarLongPressDetails details) {
+    modifyCancellationLine(details);
+    setState(() {});
   }
 }
 
