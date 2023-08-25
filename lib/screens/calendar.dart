@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:todoli/controllers/color_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:confetti/confetti.dart';
 
 import '../fonts.dart';
 

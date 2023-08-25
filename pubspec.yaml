@@ -47,6 +47,7 @@ dependencies:
   url_launcher: ^6.1.12
   google_mobile_ads: ^3.0.0
   http: ^1.1.0
+  confetti: ^0.7.0
 
 dev_dependencies:
   flutter_test:
