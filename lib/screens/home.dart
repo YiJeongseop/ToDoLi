@@ -10,6 +10,8 @@ import 'package:todoli/services/interstitial_ad_widget.dart';
 import 'package:todoli/fonts.dart';
 import 'package:todoli/widgets/move_url.dart';
 
+import '../utilities/guide.dart';
+
 class Home extends StatefulWidget {
   const Home({
     Key? key,
@@ -132,18 +134,39 @@ class _HomeState extends State<Home> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                                 child: ListTile(
-                                  leading: const Icon(Icons.logout,
+                                  leading: const Icon(Icons.bar_chart,
                                       size: 30, color: Colors.black),
                                   title: Text(
-                                      AppLocalizations.of(context)!.logout,
-                                    style: AppLocalizations.of(context)!.localeName == 'ko' ? ko28 : en28
+                                      AppLocalizations.of(context)!.stats,
+                                      style: AppLocalizations.of(context)!.localeName == 'ko' ? ko28 : en28
                                   ),
                                   onTap: () {
-                                    googleSignIn.disconnect();
-                                    // It makes the pop up to choose between Google accounts always come out.
-                                    FirebaseAuth.instance.signOut();
                                   },
                                 ),
+                              ),
+                              ListTile(
+                                leading: const Icon(Icons.library_books_outlined,
+                                    size: 30, color: Colors.black),
+                                title: Text(
+                                    AppLocalizations.of(context)!.guide,
+                                    style: AppLocalizations.of(context)!.localeName == 'ko' ? ko28 : en28
+                                ),
+                                onTap: () {
+                                  guideDialog(context);
+                                },
+                              ),
+                              ListTile(
+                                leading: const Icon(Icons.logout,
+                                    size: 30, color: Colors.black),
+                                title: Text(
+                                    AppLocalizations.of(context)!.logout,
+                                  style: AppLocalizations.of(context)!.localeName == 'ko' ? ko28 : en28
+                                ),
+                                onTap: () {
+                                  googleSignIn.disconnect();
+                                  // It makes the pop up to choose between Google accounts always come out.
+                                  FirebaseAuth.instance.signOut();
+                                },
                               ),
                             ],
                           ),

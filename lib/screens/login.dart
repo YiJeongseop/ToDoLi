@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     _controller.forward();
 
     controller.play();
-    stopController();
+    // stopController();
   }
 
   @override
@@ -194,9 +194,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     );
   }
 
-  void stopController() async{
-    await Future.delayed(const Duration(seconds: 2));
-
-    controller.stop();
-  }
+  // void stopController() async{
+  //   await Future.delayed(const Duration(seconds: 2));
+  //
+  //   controller.stop();
+  // }
 }

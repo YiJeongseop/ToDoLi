@@ -13,5 +13,8 @@
   "weeks" : "WEEKS",
   "months" : "MONTHS",
   "logout" : "Logout",
-  "donation" : "Donation"
+  "donation" : "Donation",
+  "stats" : "Stats",
+  "guide" : "Guide",
+  "guideText" : "If you press it for a long time, you get a cancellation line! If there was a cancellation line, it would be gone!"
 }
