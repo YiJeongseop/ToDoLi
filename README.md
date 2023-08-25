@@ -43,3 +43,4 @@ It's available on the [Google Play Store](https://play.google.com/store/apps/det
 * [shared_preferences](https://pub.dev/packages/shared_preferences)
 * [url_launcher](https://pub.dev/packages/url_launcher)
 * [http](https://pub.dev/packages/http)
+* [confetti](https://pub.dev/packages/confetti)
