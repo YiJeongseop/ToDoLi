@@ -61,7 +61,7 @@ void modifyCancellationLine(CalendarLongPressDetails details) {
           appointmentAfterMod = Appointment(
               startTime: selectedAppointment.startTime,
               endTime: selectedAppointment.endTime,
-              subject: "${_selectedAppointment!.subject}(-)",
+              subject: "${selectedAppointment.subject}(-)",
               notes: selectedAppointment.notes,
               color: selectedAppointment.color,
               isAllDay: selectedAppointment.isAllDay,

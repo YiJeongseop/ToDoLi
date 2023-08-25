@@ -45,6 +45,7 @@ class RecurrenceDeleteState extends State<RecurrenceDelete> {
                 onTap: () {
                   setState(() {
                     List<Appointment> tempAppointments = <Appointment>[]; // Appointment
+                    List<String> pieceOfRecurrenceRule = _selectedAppointment!.recurrenceRule!.split(';');
                     if (index == 0) { // Delete all
                       if (_selectedAppointment!.appointmentType == AppointmentType.pattern) {
                         _events.appointments!.removeAt(_events.appointments!
@@ -83,11 +84,14 @@ class RecurrenceDeleteState extends State<RecurrenceDelete> {
                           _events.notifyListeners(
                               CalendarDataSourceAction.remove,
                               <Appointment>[]..add(firstAppt));
-                          // Add changes to the appointment and save it again.
-                          tempAppointments.add(apptToAddAgain);
-                          _events.appointments!.add(tempAppointments[0]);
-                          _events.notifyListeners(
-                              CalendarDataSourceAction.add, tempAppointments);
+
+                          if(apptToAddAgain.recurrenceExceptionDates!.length !=
+                              int.parse(pieceOfRecurrenceRule[2].substring(6))){
+                            tempAppointments.add(apptToAddAgain);
+                            _events.appointments!.add(tempAppointments[0]);
+                            _events.notifyListeners(
+                                CalendarDataSourceAction.add, tempAppointments);
+                          }
                           _selectedAppointment = null;
                           uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
                           break;
@@ -115,10 +119,13 @@ class RecurrenceDeleteState extends State<RecurrenceDelete> {
                               CalendarDataSourceAction.remove,
                               <Appointment>[]..add(firstAppt));
 
-                          tempAppointments.add(apptToAddAgain);
-                          _events.appointments!.add(tempAppointments[0]);
-                          _events.notifyListeners(
-                              CalendarDataSourceAction.add, tempAppointments);
+                          if(apptToAddAgain.recurrenceExceptionDates!.length !=
+                              int.parse(pieceOfRecurrenceRule[2].substring(6))){
+                            tempAppointments.add(apptToAddAgain);
+                            _events.appointments!.add(tempAppointments[0]);
+                            _events.notifyListeners(
+                                CalendarDataSourceAction.add, tempAppointments);
+                          }
                           _selectedAppointment = null;
                           uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
                           break;
