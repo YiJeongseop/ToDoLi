@@ -348,7 +348,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                             '$item',
                             style: (AppLocalizations.of(context)!.localeName == 'ko')
                                 ? ko24
-                                : en20,
+                                : en18,
                           ),
                         );
                       }).toList(),
@@ -364,7 +364,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                       AppLocalizations.of(context)!.timesEvery,
                       style: (AppLocalizations.of(context)!.localeName == 'ko')
                           ? ko23
-                          : en20,
+                          : en18,
                     ),
                     DropdownButton(
                         menuMaxHeight: MediaQuery.of(context).size.height / 2.5,
@@ -376,7 +376,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                               '$item',
                               style: (AppLocalizations.of(context)!.localeName == 'ko')
                                   ? ko24
-                                  : en20,
+                                  : en18,
                             ),
                           );
                         }).toList(),
@@ -394,20 +394,20 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                                 ? Text(AppLocalizations.of(context)!.days,
                                     style: (AppLocalizations.of(context)!.localeName == 'ko')
                                         ? ko23
-                                        : en20,
+                                        : en18,
                                   )
                                 : ((item == 'WEEKLY')
                                     ? Text(
                                         AppLocalizations.of(context)!.weeks,
                                         style: (AppLocalizations.of(context)!.localeName == 'ko')
                                             ? ko23
-                                            : en20,
+                                            : en18,
                                       )
                                     : Text(
                                         AppLocalizations.of(context)!.months,
                                         style: (AppLocalizations.of(context)!.localeName == 'ko')
                                             ? ko23
-                                            : en20,
+                                            : en18,
                                       )),
                           );
                         }).toList(),

@@ -15,6 +15,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:todoli/controllers/color_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:confetti/confetti.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../fonts.dart';
 
@@ -25,6 +26,7 @@ part '../widgets/recurrence_change.dart';
 part 'login.dart';
 part '../services/google_drive.dart';
 part '../utilities/cancellation_line.dart';
+part 'chart.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
@@ -128,13 +130,16 @@ class CalendarState extends State<Calendar> {
       builder: (controller) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
-          body: Center(
-            child: isLoading
-                ? const CircularProgressIndicator()
-                : Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                    child: getEventCalendar(_events, onCalendarTapped),
-                  ),
+          body: DefaultTextStyle(
+            style: AppLocalizations.of(context)!.localeName == 'ko' ? ko20 : en18,
+            child: Center(
+              child: isLoading
+                  ? const CircularProgressIndicator()
+                  : Padding(
+                      padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                      child: getEventCalendar(_events, onCalendarTapped),
+                    ),
+            ),
           ),
           floatingActionButton: Column(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -259,7 +264,7 @@ class CalendarState extends State<Calendar> {
             weekHeaderSettings: WeekHeaderSettings(
               height: 20,
               textAlign: TextAlign.start,
-              weekTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20 : en20,
+              weekTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20 : en18,
             ),
             dayHeaderSettings: DayHeaderSettings(
               dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko16 : en16,

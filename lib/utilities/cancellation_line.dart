@@ -108,8 +108,11 @@ void modifyCancellationLine(CalendarLongPressDetails details) {
 
       _events.appointments!.removeAt(_events.appointments!.indexOf(appointmentBeforeMod));
       _events.notifyListeners(CalendarDataSourceAction.remove, <Appointment>[]..add(appointmentBeforeMod));
-      _events.appointments!.add(temp);
-      _events.notifyListeners(CalendarDataSourceAction.add, <Appointment>[]..add(temp));
+      if(temp.recurrenceExceptionDates!.length !=
+          int.parse(pieceOfRecurrenceRule[2].substring(6))){
+        _events.appointments!.add(temp);
+        _events.notifyListeners(CalendarDataSourceAction.add, <Appointment>[]..add(temp));
+      }
     }
 
     _events.appointments!.add(appointmentAfterMod);

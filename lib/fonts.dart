@@ -14,14 +14,17 @@ TextStyle en17 = GoogleFonts.pangolin(
     color: Colors.black
 );
 
-// calendar.dart scheduleView-dateText, viewHeader, monthCellText
+// appointment_editor.dart _valueListCount, _valueListInterval, _valueListFreq, timesEvery
+// calendar.dart scheduleView-dateText, viewHeader, monthCellText, scheduleView-weekHeader
+// chart.dart
 TextStyle en18 = GoogleFonts.pangolin(
     fontSize: 18,
     color: Colors.black
 );
 
-// appointment_editor.dart dateFormat, _valueListCount, _valueListInterval, _valueListFreq, timesEvery
-// calendar.dart scheduleView-weekHeader, appointmentBuilder-subject, agenda-dateText
+// appointment_editor.dart dateFormat
+// calendar.dart appointmentBuilder-subject, agenda-dateText
+// chart.dart
 TextStyle en20 = GoogleFonts.pangolin(
     fontSize: 20,
     color: Colors.black
@@ -32,12 +35,12 @@ TextStyle en20 = GoogleFonts.pangolin(
 // home.dart email
 // login.dart Sign in with Google
 // color_picker.dart colorNames
+// recurrence_change.dart, recurrence_delete.dart
 TextStyle en22 = GoogleFonts.pangolin(
   fontSize: 22,
   color: Colors.black
 );
 
-// recurrence_change.dart, recurrence_delete.dart
 TextStyle en24 = GoogleFonts.pangolin(
     fontSize: 24,
     color: Colors.black
@@ -80,6 +83,7 @@ TextStyle ko19 = GoogleFonts.poorStory(
 );
 
 // calendar.dart monthCellText, scheduleView-weekHeader
+// chart.dart
 TextStyle ko20 = GoogleFonts.poorStory(
     fontSize: 20,
     color: Colors.black
@@ -94,6 +98,8 @@ TextStyle ko20subject = GoogleFonts.gowunDodum(
 // appointment_editor.dart dateFormat
 // calendar.dart agenda-dateText
 // move_url.dart donation
+// recurrence_change.dart recurrence_delete.dart
+// chart.dart
 TextStyle ko22 = GoogleFonts.poorStory(
     fontSize: 22,
     color: Colors.black
@@ -107,13 +113,13 @@ TextStyle ko23 = GoogleFonts.poorStory(
 
 // appointment_editor.dart recurrence, _valueListCount, _valueListInterval, description
 // calendar.dart agenda-dayText
+// home.dart chart
 TextStyle ko24 = GoogleFonts.poorStory(
     fontSize: 24,
     color: Colors.black
 );
 
 // appointment_editor.dart color
-// recurrence_change.dart, recurrence_delete.dart
 TextStyle ko26 = GoogleFonts.poorStory(
   fontSize: 26,
   color: Colors.black

@@ -506,14 +506,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "22.1.37"
+  syncfusion_flutter_charts:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_charts
+      sha256: "5c774905aad16bef8b3a10918900b013a942612475e58fb854b431b181be6ebe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "22.2.10"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: e2b49a16805a54714ba0712d62e9f3c6311081ec2bec835529b778cc5349430a
+      sha256: "438eb5008610df9dac9fe37263ea39f58f5e123fbe0f8c57b95b950a6424cae4"
       url: "https://pub.dev"
     source: hosted
-    version: "22.1.37"
+    version: "22.2.10"
   syncfusion_flutter_datepicker:
     dependency: transitive
     description:

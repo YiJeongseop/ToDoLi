@@ -36,7 +36,7 @@ class RecurrenceChangeState extends State<RecurrenceChange> {
                 title: Center(
                   child: Text(
                     _changeOptionList[index],
-                    style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko26 : en24,
+                    style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko22 : en22,
                     textAlign: TextAlign.center,
                   ),
                 ),

@@ -22,6 +22,7 @@ It's available on the [Google Play Store](https://play.google.com/store/apps/det
 
 ## Packages
 * [syncfusion_flutter_calendar](https://pub.dev/packages/syncfusion_flutter_calendar)
+* [syncfusion_flutter_charts](https://pub.dev/packages/syncfusion_flutter_charts)
 
   It is necessary to have __a commercial or community license__ to use syncfusion_flutter_calendar. Please refer to the links below.
   
