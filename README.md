@@ -1,37 +1,34 @@
 ![README image](https://github.com/YiJeongseop/ToDoLi/assets/112690335/4b21ea38-b499-420e-8a44-ff518604f21d)
 # ToDoLi ![README image2](https://github.com/YiJeongseop/ToDoLi/assets/112690335/29c62c59-f4f6-4dc2-a7b2-0ea721df60e1)
-I started studying flutter a few months ago. I heard that a simple app is good for the first app.
-I thought an app that combines __calendar and to-do list__ would be good, and I made it. 
-It's a really simple app, but I was able to create it with a lot of help from __SfCalendar__.
-
+This app is a combination of __Calendar and To-do list__.
 It's available on the [Google Play Store](https://play.google.com/store/apps/details?id=com.sanashi.todoli).
 
 ## Features
-* Google Login Using Firebase ( google-services.json used at this time is not in this repository. If you want to refer to this code, you should have your own google-services.json )
-* Upload appointments to Google Drive, download appointments from Google Drive
-* English and Korean translations 
+* Sign in with Google account using Firebase
+> __If you want to refer to this repo,__ you should have your own android/app/google-services.json.
+* Play interstitial ads
+> change AdMob APP ID in AndroidManifest.xml and adUnitId in interstitial_ad_widget.dart to your own.
+* Connect to donation site
+> change url in move_url.dart to your own.
+* Upload data to Google Drive, download data from Google Drive
+* Change the color of some parts of the UI
+* Change parts of recurring appointments, Delete parts of recurring appointments
+* A chart shows how many To-dos you saved and how many To-dos you completed
+* Press and hold the To-do to create or remove a cancellation line
+* English and Korean translations
 
 ![Translation](https://github.com/YiJeongseop/ToDoLi/assets/112690335/9b0a98db-f916-4639-a279-c72933c1777c)
-* Change the color of some parts of the UI
-* Change and delete parts of recurring appointments
-* Play interstitial ads when the UI changes color ( If you want to refer to this code, change App ID in AndroidManifest.xml and Ads ID in interstitial_ad_widget.dart to your own )
-* Connect to donation site ( If you want to refer to this code, change url in move_url.dart to your own )
+* Run animation on the login screen
+
+![loginScreen (1)](https://github.com/YiJeongseop/ToDoLi/assets/112690335/3a596e0f-f1ec-4163-8d59-af622a207385)
 
 ## Screenshots
-![Screenshots](https://github.com/YiJeongseop/ToDoLi/assets/112690335/4ee4c1e1-a6c9-4220-b5b9-49f5b2e2b835)
+![Screenshots](https://github.com/YiJeongseop/ToDoLi/assets/112690335/2dcbe9ed-25f4-40ec-8261-31100f306cfd)
 
 ## Packages
+> #### It is necessary to have [a commercial or community license](https://www.syncfusion.com/products/communitylicense) to use syncfusion packages.
 * [syncfusion_flutter_calendar](https://pub.dev/packages/syncfusion_flutter_calendar)
 * [syncfusion_flutter_charts](https://pub.dev/packages/syncfusion_flutter_charts)
-
-  It is necessary to have __a commercial or community license__ to use syncfusion_flutter_calendar. Please refer to the links below.
-  
-  https://github.com/syncfusion/flutter-examples/blob/master/LICENSE
-  
-  ​https://help.syncfusion.com/flutter/licensing/overview
-  
-  https://www.syncfusion.com/products/communitylicense
-  
 * [google_sign_in](https://pub.dev/packages/google_sign_in)
 * [googleapis](https://pub.dev/packages/googleapis)
 * [google_fonts](https://pub.dev/packages/google_fonts)
