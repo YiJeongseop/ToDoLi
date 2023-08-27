@@ -174,51 +174,6 @@ class _HomeState extends State<Home> {
                             ],
                           ),
                         ),
-                        // LayoutBuilder(
-                        //     builder: (BuildContext context, BoxConstraints constraints){
-                        //       double parentWidth = constraints.maxWidth;
-                        //       return Padding(
-                        //         padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
-                        //         child: Row(
-                        //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        //           crossAxisAlignment: CrossAxisAlignment.end,
-                        //           children: [
-                        //             Stack(
-                        //               children: [
-                        //                 Icon(Icons.emoji_events, size: parentWidth / 6, color: const Color(0x6F97D7E1),),
-                        //                 Icon(Icons.emoji_events_outlined, size: parentWidth / 6, color: const Color(0xFF97D7E1),),
-                        //               ],
-                        //             ),
-                        //             Stack(
-                        //               children: [
-                        //                 Icon(Icons.emoji_events, size: parentWidth / 6, color: const Color(0x6FE5C1F5),),
-                        //                 Icon(Icons.emoji_events_outlined, size: parentWidth / 6, color: const Color(0xFFE5C1F5),),
-                        //               ],
-                        //             ),
-                        //             Stack(
-                        //               children: [
-                        //                 Icon(Icons.emoji_events, size: parentWidth / 6, color: const Color(0x6FECB7B2),),
-                        //                 Icon(Icons.emoji_events_outlined, size: parentWidth / 6, color: const Color(0xFFECB7B2),),
-                        //               ],
-                        //             ),
-                        //             Stack(
-                        //               children: [
-                        //                 Icon(Icons.emoji_events, size: parentWidth / 6, color: const Color(0x6FECDD83),),
-                        //                 Icon(Icons.emoji_events_outlined, size: parentWidth / 6, color: const Color(0xFFECDD83),),
-                        //               ],
-                        //             ),
-                        //             Stack(
-                        //               children: [
-                        //                 Icon(Icons.emoji_events, size: parentWidth / 6, color: const Color(0x6F8BD39A),),
-                        //                 Icon(Icons.emoji_events_outlined, size: parentWidth / 6, color: const Color(0xFF8BD39A),),
-                        //               ],
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       );
-                        //     }
-                        // ),
-                        //const Icon(Icons.emoji_events),
                         const MoveUrl()
                       ],
                     ),

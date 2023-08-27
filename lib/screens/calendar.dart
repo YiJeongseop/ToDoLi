@@ -130,6 +130,9 @@ class CalendarState extends State<Calendar> {
       builder: (controller) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
+          // When the screen first turns on, the font does not apply.
+          // The font is applied when the screen is changed and returned.
+          // DefaultTextStyle prevents it. The font is applied from the beginning.
           body: DefaultTextStyle(
             style: AppLocalizations.of(context)!.localeName == 'ko' ? ko20 : en18,
             child: Center(
@@ -252,7 +255,8 @@ class CalendarState extends State<Calendar> {
           dataSource: calendarDataSource,
           onTap: calendarTapCallback,
           onLongPress: onCalendarLongPressed,
-          scheduleViewSettings: ScheduleViewSettings( // https://help.syncfusion.com/flutter/calendar/schedule-view
+          // https://help.syncfusion.com/flutter/calendar/schedule-view
+          scheduleViewSettings: ScheduleViewSettings(
             appointmentItemHeight: 52,
             hideEmptyScheduleWeek: true,
             monthHeaderSettings: MonthHeaderSettings(
@@ -294,6 +298,8 @@ class CalendarState extends State<Calendar> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     if (calendarController.view == CalendarView.month || calendarController.view == CalendarView.schedule)
+                      // If the title is followed by a (-), cancellation line is displayed.
+                      // (-) is not visible. you can see it when you modify it.
                       if(appointments.subject.length > 2)
                         Flexible(
                         child: (appointments.subject.substring(appointments.subject.length - 3) == '(-)') ?
@@ -366,7 +372,8 @@ class CalendarState extends State<Calendar> {
           viewHeaderStyle: ViewHeaderStyle(
               backgroundColor: colorList[controller.numberOfColor],
               dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19 : en18),
-          monthViewSettings: MonthViewSettings( // https://help.syncfusion.com/flutter/calendar/month-view
+          // https://help.syncfusion.com/flutter/calendar/month-view
+          monthViewSettings: MonthViewSettings(
             agendaItemHeight: 57,
             showAgenda: true,
             agendaViewHeight: MediaQuery.of(context).size.height / 3,

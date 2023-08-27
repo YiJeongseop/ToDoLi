@@ -9,6 +9,7 @@ void modifyCancellationLine(CalendarLongPressDetails details) {
     Appointment? appointmentBeforeMod, appointmentAfterMod;
     List<String> pieceOfRecurrenceRule = selectedAppointment.recurrenceRule!.split(';');
     String subject = '';
+    // You have to find selectedAppointment in _events.appointments.
     for(Appointment i in _events.appointments!){
       if(i.id == selectedAppointment.id){
         appointmentBeforeMod = i;
@@ -26,16 +27,17 @@ void modifyCancellationLine(CalendarLongPressDetails details) {
           appointmentAfterMod!.subject = "${selectedAppointment.subject}(-)";
         }
       }
+      // If the length is less than 3, there cannot be a (-).
       else if(selectedAppointment.subject.length < 3){
         appointmentAfterMod!.subject = "${selectedAppointment.subject}(-)";
       }
 
-      // If you insert selectedAppointment, An error occurs. ( 35 Line )
-      // You have to find selectedAppointment in _events.appointments and put it in. ( 12 Line )
+      // If you insert selectedAppointment, An error occurs.
       _events.appointments!.removeAt(_events.appointments!.indexOf(appointmentBeforeMod));
       _events.notifyListeners(CalendarDataSourceAction.remove, <Appointment>[]..add(appointmentBeforeMod!));
     }
 
+    // selectedAppointment - recurrence
     else if(int.parse(pieceOfRecurrenceRule[2].substring(6)) != 1){
       // The type of the first appointment among repeated appointments is pattern.
       if(selectedAppointment.appointmentType == AppointmentType.pattern){
@@ -71,6 +73,7 @@ void modifyCancellationLine(CalendarLongPressDetails details) {
         }
       }
 
+      // Other types of appointments are occurence.
       else if(selectedAppointment.appointmentType == AppointmentType.occurrence){
         if(selectedAppointment.subject.length > 2){
           if(selectedAppointment.subject.substring(selectedAppointment.subject.length - 3) == '(-)'){
@@ -108,6 +111,8 @@ void modifyCancellationLine(CalendarLongPressDetails details) {
 
       _events.appointments!.removeAt(_events.appointments!.indexOf(appointmentBeforeMod));
       _events.notifyListeners(CalendarDataSourceAction.remove, <Appointment>[]..add(appointmentBeforeMod));
+
+      // If all dates of recurrence appointment are excluded, you do not need to add it.
       if(temp.recurrenceExceptionDates!.length !=
           int.parse(pieceOfRecurrenceRule[2].substring(6))){
         _events.appointments!.add(temp);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-// https://fonts.google.com/  You can see various fonts available here.
+// https://fonts.google.com/ You can see various fonts available here.
 
 // calendar.dart scheduleView-dateText
 TextStyle en16 = GoogleFonts.pangolin(
@@ -16,7 +16,8 @@ TextStyle en17 = GoogleFonts.pangolin(
 
 // appointment_editor.dart _valueListCount, _valueListInterval, _valueListFreq, timesEvery
 // calendar.dart scheduleView-dateText, viewHeader, monthCellText, scheduleView-weekHeader
-// chart.dart
+// chart.dart SfCartesianChart
+// guide.dart
 TextStyle en18 = GoogleFonts.pangolin(
     fontSize: 18,
     color: Colors.black
@@ -24,7 +25,7 @@ TextStyle en18 = GoogleFonts.pangolin(
 
 // appointment_editor.dart dateFormat
 // calendar.dart appointmentBuilder-subject, agenda-dateText
-// chart.dart
+// chart.dart ChartRow
 TextStyle en20 = GoogleFonts.pangolin(
     fontSize: 20,
     color: Colors.black
@@ -39,11 +40,6 @@ TextStyle en20 = GoogleFonts.pangolin(
 TextStyle en22 = GoogleFonts.pangolin(
   fontSize: 22,
   color: Colors.black
-);
-
-TextStyle en24 = GoogleFonts.pangolin(
-    fontSize: 24,
-    color: Colors.black
 );
 
 // calendar.dart scheduleView-monthHeader
@@ -70,6 +66,7 @@ TextStyle ko16 = GoogleFonts.poorStory(
 );
 
 // calendar.dart scheduleView-dateText
+// guide.dart
 TextStyle ko18 = GoogleFonts.poorStory(
     fontSize: 18,
     color: Colors.black,
@@ -83,7 +80,7 @@ TextStyle ko19 = GoogleFonts.poorStory(
 );
 
 // calendar.dart monthCellText, scheduleView-weekHeader
-// chart.dart
+// chart.dart SfCartesianChart
 TextStyle ko20 = GoogleFonts.poorStory(
     fontSize: 20,
     color: Colors.black
@@ -99,7 +96,7 @@ TextStyle ko20subject = GoogleFonts.gowunDodum(
 // calendar.dart agenda-dateText
 // move_url.dart donation
 // recurrence_change.dart recurrence_delete.dart
-// chart.dart
+// chart.dart ChartRow
 TextStyle ko22 = GoogleFonts.poorStory(
     fontSize: 22,
     color: Colors.black
@@ -132,7 +129,7 @@ TextStyle ko28 = GoogleFonts.poorStory(
     color: Colors.black
 );
 
-// Appointment_editor.dart subject, To-Do
+// appointment_editor.dart subject, To-Do
 TextStyle ko30 = GoogleFonts.poorStory(
     fontSize: 30,
     color: Colors.black

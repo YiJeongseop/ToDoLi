@@ -44,7 +44,7 @@ class RecurrenceDeleteState extends State<RecurrenceDelete> {
                 ),
                 onTap: () {
                   setState(() {
-                    List<Appointment> tempAppointments = <Appointment>[]; // Appointment
+                    List<Appointment> tempAppointments = <Appointment>[];
                     List<String> pieceOfRecurrenceRule = _selectedAppointment!.recurrenceRule!.split(';');
                     if (index == 0) { // Delete all
                       if (_selectedAppointment!.appointmentType == AppointmentType.pattern) {

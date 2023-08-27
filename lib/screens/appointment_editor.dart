@@ -7,7 +7,6 @@ class AppointmentEditor extends StatefulWidget {
   AppointmentEditorState createState() => AppointmentEditorState();
 }
 
-// Here's more information.
 // https://support.syncfusion.com/kb/article/9667/how-to-design-and-configure-your-appointment-editor-in-flutter-calendar
 class AppointmentEditorState extends State<AppointmentEditor> {
   Widget _getAppointmentEditor(BuildContext context) {

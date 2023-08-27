@@ -106,12 +106,11 @@ class _ChartState extends State<Chart> {
                   flex: 3,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    // https://help.syncfusion.com/winui/cartesian-charts/overview
                     child: SfCartesianChart(
                       legend: Legend(
                         position: LegendPosition.bottom,
                         isVisible: true,
-                        // offset:
-                        //     Offset(10, -MediaQuery.of(context).size.height / 7),
                         textStyle: AppLocalizations.of(context)!.localeName == 'ko' ? ko20 : en18,
                       ),
                       primaryXAxis: CategoryAxis(

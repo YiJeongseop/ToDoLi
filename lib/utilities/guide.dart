@@ -9,8 +9,7 @@ void guideDialog(BuildContext context) {
     barrierDismissible: true,
     builder: (BuildContext context) {
       return AlertDialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.0)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.0)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
