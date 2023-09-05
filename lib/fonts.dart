@@ -51,7 +51,6 @@ TextStyle en26 = GoogleFonts.pangolin(
 
 // Appointment_editor.dart subject, To-Do
 // home.dart Logout
-// move_url.dart donation
 TextStyle en28 = GoogleFonts.pangolin(
   fontSize: 28,
   color: Colors.black
@@ -94,7 +93,6 @@ TextStyle ko20subject = GoogleFonts.gowunDodum(
 
 // appointment_editor.dart dateFormat
 // calendar.dart agenda-dateText
-// move_url.dart donation
 // recurrence_change.dart recurrence_delete.dart
 // chart.dart ChartRow
 TextStyle ko22 = GoogleFonts.poorStory(

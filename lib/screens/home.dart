@@ -8,7 +8,6 @@ import 'package:todoli/controllers/color_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todoli/services/interstitial_ad_widget.dart';
 import 'package:todoli/fonts.dart';
-import 'package:todoli/widgets/move_url.dart';
 
 import '../utilities/guide.dart';
 
@@ -174,7 +173,6 @@ class _HomeState extends State<Home> {
                             ],
                           ),
                         ),
-                        const MoveUrl()
                       ],
                     ),
                   ),
