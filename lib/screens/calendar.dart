@@ -1,15 +1,11 @@
 library event_calendar;
 
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
-import "package:http/http.dart" as http;
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:todoli/controllers/color_controller.dart';
@@ -18,13 +14,13 @@ import 'package:confetti/confetti.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../fonts.dart';
+import '../services/google_drive.dart';
+import '../widgets/color_picker.dart';
 
-part '../widgets/color_picker.dart';
 part 'appointment_editor.dart';
 part '../widgets/recurrence_delete.dart';
 part '../widgets/recurrence_change.dart';
 part 'login.dart';
-part '../services/google_drive.dart';
 part '../utilities/cancellation_line.dart';
 part 'chart.dart';
 
@@ -35,13 +31,13 @@ class Calendar extends StatefulWidget {
   State<Calendar> createState() => CalendarState();
 }
 
-late List<Color> _colorCollection;
-late List<String> _colorNames;
+late List<Color> colorCollection;
+late List<String> colorNames;
+late int selectedColorIndex;
 late DataSource _events;
 late List<String> _deleteOptionList;
 late List<String> _changeOptionList;
 late Appointment? _selectedAppointment;
-late int _selectedColorIndex;
 late DateTime _startDate;
 late TimeOfDay _startTime;
 late DateTime _endDate;
@@ -88,29 +84,29 @@ class CalendarState extends State<Calendar> {
   initState() {
     _initializeAsyncStuff();
     _selectedAppointment = null;
-    _selectedColorIndex = 0;
+    selectedColorIndex = 0;
 
-    _colorCollection = <Color>[];
-    _colorCollection.add(const Color(0xFFA9D39E)); // Pistachio Green
-    _colorCollection.add(const Color(0xFFC89ED3)); // Light Purple
-    _colorCollection.add(const Color(0xFFFFFACD)); // Chiffon Yellow
-    _colorCollection.add(const Color(0xFFF4C2C2)); // Baby Pink
-    _colorCollection.add(const Color(0xFFFBB474)); // Soft Orange
-    _colorCollection.add(const Color(0xFF89CFF0)); // Baby Blue
-    _colorCollection.add(const Color(0xFFC8F3CD)); // Creamy Mint
-    _colorCollection.add(const Color(0xFFFFE5B4)); // Peach
-    _colorCollection.add(const Color(0xFFFF8680)); // Pastel Red
+    colorCollection = <Color>[];
+    colorCollection.add(const Color(0xFFA9D39E)); // Pistachio Green
+    colorCollection.add(const Color(0xFFC89ED3)); // Light Purple
+    colorCollection.add(const Color(0xFFFFFACD)); // Chiffon Yellow
+    colorCollection.add(const Color(0xFFF4C2C2)); // Baby Pink
+    colorCollection.add(const Color(0xFFFBB474)); // Soft Orange
+    colorCollection.add(const Color(0xFF89CFF0)); // Baby Blue
+    colorCollection.add(const Color(0xFFC8F3CD)); // Creamy Mint
+    colorCollection.add(const Color(0xFFFFE5B4)); // Peach
+    colorCollection.add(const Color(0xFFFF8680)); // Pastel Red
 
-    _colorNames = <String>[];
-    _colorNames.add('Pistachio Green');
-    _colorNames.add('Light Purple');
-    _colorNames.add('Chiffon Yellow');
-    _colorNames.add('Baby Pink');
-    _colorNames.add('Soft Orange');
-    _colorNames.add('Baby Blue');
-    _colorNames.add('Creamy Mint');
-    _colorNames.add('Peach');
-    _colorNames.add('Pastel Red');
+    colorNames = <String>[];
+    colorNames.add('Green');
+    colorNames.add('Purple');
+    colorNames.add('Yellow');
+    colorNames.add('Pink');
+    colorNames.add('Orange');
+    colorNames.add('Blue');
+    colorNames.add('Mint');
+    colorNames.add('Peach');
+    colorNames.add('Red');
 
     super.initState();
   }
@@ -160,7 +156,7 @@ class CalendarState extends State<Calendar> {
                       setState(() {
                           isCanceled = false;
                           _selectedAppointment = null;
-                          _selectedColorIndex = 0;
+                          selectedColorIndex = 0;
 
                           final DateTime date = calendarController.selectedDate!;
                           _startDate = date;
@@ -309,13 +305,13 @@ class CalendarState extends State<Calendar> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: (AppLocalizations.of(context)!.localeName == 'ko') ?
-                              ko20subject.copyWith(decoration: TextDecoration.lineThrough,) :
+                              ko20Subject.copyWith(decoration: TextDecoration.lineThrough,) :
                               en20.copyWith(decoration: TextDecoration.lineThrough,),
                             ) : Text(
                               appointments.subject,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20subject : en20,
+                              style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20Subject : en20,
                               ),
                             ),
                           if(appointments.subject.length < 3)
@@ -324,7 +320,7 @@ class CalendarState extends State<Calendar> {
                                 appointments.subject,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20subject : en20,
+                                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20Subject : en20,
                               ),
                             ),
                         if ((appointments.isAllDay == false) & (appointments.startTime.year != appointments.endTime.year))
@@ -477,7 +473,7 @@ class CalendarState extends State<Calendar> {
             _byMonthDay = int.parse(pieceOfRecurrenceRule[3].substring(11));
           }
         }
-        _selectedColorIndex = _colorCollection.indexOf(meetingDetails.color);
+        selectedColorIndex = colorCollection.indexOf(meetingDetails.color);
 
         if(meetingDetails.subject.length > 2){
           if(meetingDetails.subject.substring(meetingDetails.subject.length - 3) == '(-)'){

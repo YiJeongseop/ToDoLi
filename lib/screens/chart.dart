@@ -89,17 +89,6 @@ class _ChartState extends State<Chart> {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
             final data = snapshot.data;
-            // final data = [
-            //   // for test
-            //   [210, 252, "Total"],
-            //   [0, 3, "Mon"],
-            //   [8, 5, "Tue"],
-            //   [17, 7, "Wed"],
-            //   [10, 45, "Thu"],
-            //   [5, 150, "Fri"],
-            //   [52, 30, "Sat"],
-            //   [118, 12, "Sun"],
-            // ];
             return Column(
               children: [
                 Flexible(
@@ -135,7 +124,7 @@ class _ChartState extends State<Chart> {
                                 colors: [Color(0xA418B2BE), Color(0x9418B2BE)],
                                 stops: [0.1, 0.9])),
                         ColumnSeries<List<dynamic>, String>(
-                            dataSource: data!,
+                            dataSource: data,
                             name: AppLocalizations.of(context)!.notDone,
                             xValueMapper: (List<dynamic> value, _) =>
                                 value[2].toString(),

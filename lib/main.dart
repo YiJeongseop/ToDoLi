@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,14 +11,14 @@ import 'package:todoli/controllers/color_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:todoli/services/interstitial_ad_widget.dart';
-
 import 'screens/calendar.dart';
 
+// https://developers.google.com/admob/flutter/eu-consent?hl=en
 final params = ConsentRequestParameters();
 // ConsentDebugSettings debugSettings = ConsentDebugSettings(
 //     debugGeography: DebugGeography.debugGeographyEea,
-//     testIdentifiers: ['TEST-DEVICE-HASHED-ID']); // for test
-// final params = ConsentRequestParameters(consentDebugSettings: debugSettings); // for test
+//     testIdentifiers: ['TEST-DEVICE-HASHED-ID']); // for TEST
+// final params = ConsentRequestParameters(consentDebugSettings: debugSettings); // for TEST
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,7 +36,7 @@ class MyApp extends StatelessWidget {
     var number = _prefs.then((SharedPreferences prefs) {
       return prefs.getInt('colorNumber') ?? 0;
     });
-    colorController.numberOfColor = (await number);
+    colorController.numberOfColor = await number;
   }
 
   MyApp() {
@@ -52,7 +51,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]); // prevent landscape orientation
     return GetMaterialApp(
       // https://help.syncfusion.com/flutter/calendar/localization
       localizationsDelegates: const [

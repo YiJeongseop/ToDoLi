@@ -427,9 +427,9 @@ class AppointmentEditorState extends State<AppointmentEditor> {
             ListTile(
               contentPadding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
               leading: Icon(Icons.lens,
-                  color: _colorCollection[_selectedColorIndex]),
+                  color: colorCollection[selectedColorIndex]),
               title: Text(
-                _colorNames[_selectedColorIndex],
+                colorNames[selectedColorIndex],
                 style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko26 : en22,
               ),
               onTap: () {
@@ -437,7 +437,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                   context: context,
                   barrierDismissible: true,
                   builder: (BuildContext context) {
-                    return _ColorPicker();
+                    return ColorPicker();
                   },
                 ).then((dynamic value) => setState(() {}));
                 // Use setState to make the changed color come out right away
@@ -483,7 +483,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: _colorCollection[_selectedColorIndex],
+          backgroundColor: colorCollection[selectedColorIndex],
           leading: IconButton(
             icon: const Icon(
               Icons.close,
@@ -587,14 +587,11 @@ class AppointmentEditorState extends State<AppointmentEditor> {
     tempAppointments.add(Appointment(
       startTime: _startDate,
       endTime: _endDate,
-      color: _colorCollection[_selectedColorIndex],
+      color: colorCollection[selectedColorIndex],
       notes: _notes,
       isAllDay: _isAllDay,
       subject: isCanceled ? (_subject == '' ? "${AppLocalizations.of(context)!.noTitle}(-)" : "${_subject}(-)") :
       (_subject == '' ? AppLocalizations.of(context)!.noTitle : _subject),
-      // subject: _subject == ''
-      //     ? AppLocalizations.of(context)!.noTitle
-      //     : _subject,
       recurrenceExceptionDates: _recurrenceExceptionDates,
       recurrenceRule: _isRecurrence & (_freq == "DAILY")
           ? 'FREQ=$_freq;INTERVAL=$_interval;COUNT=$_count'

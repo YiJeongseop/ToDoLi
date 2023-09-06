@@ -199,7 +199,7 @@ class _HomeState extends State<Home> {
                           leading: const Icon(Icons.ads_click,
                               size: 30, color: Colors.black),
                           title:
-                              Text("Consent for personalized ads", style: en20),
+                              Text("Consent for personalized ads", style: en18),
                           onTap: () {
                             consentPersonalizedAds();
                             Get.back();
@@ -210,7 +210,7 @@ class _HomeState extends State<Home> {
                           leading: const Icon(Icons.ads_click,
                               size: 30, color: Colors.black),
                           title: Text("Cancle consent for personalized ads",
-                              style: en20),
+                              style: en18),
                           onTap: () {
                             cancelConsentPersonalizedAds();
                             Get.back();

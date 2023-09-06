@@ -14,6 +14,7 @@ TextStyle en17 = GoogleFonts.pangolin(
     color: Colors.black
 );
 
+// home.dart Consent for personalized ads, Cancle consent for personalized ads
 // appointment_editor.dart _valueListCount, _valueListInterval, _valueListFreq, timesEvery
 // calendar.dart scheduleView-dateText, viewHeader, monthCellText, scheduleView-weekHeader
 // chart.dart SfCartesianChart
@@ -86,7 +87,7 @@ TextStyle ko20 = GoogleFonts.poorStory(
 );
 
 // calendar.dart appointmentBuilder-subject
-TextStyle ko20subject = GoogleFonts.gowunDodum(
+TextStyle ko20Subject = GoogleFonts.gowunDodum(
     fontSize: 20,
     color: Colors.black
 );

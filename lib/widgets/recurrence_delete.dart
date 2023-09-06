@@ -5,11 +5,11 @@ class RecurrenceDelete extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return RecurrenceDeleteState();
+    return _RecurrenceDeleteState();
   }
 }
 
-class RecurrenceDeleteState extends State<RecurrenceDelete> {
+class _RecurrenceDeleteState extends State<RecurrenceDelete> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -29,7 +29,7 @@ class RecurrenceDeleteState extends State<RecurrenceDelete> {
             return Padding(
               padding: const EdgeInsets.all(4.0),
               child: ListTile(
-                tileColor: _colorCollection[_selectedColorIndex],
+                tileColor: colorCollection[selectedColorIndex],
                 // Button Color = Appointment Color
                 shape: RoundedRectangleBorder(
                   side: const BorderSide(width: 1.0),

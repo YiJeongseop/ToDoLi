@@ -1,15 +1,15 @@
 part of '../screens/calendar.dart';
 
 class RecurrenceChange extends StatefulWidget {
-  const RecurrenceChange({super.key});
+  const RecurrenceChange({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return RecurrenceChangeState();
+    return _RecurrenceChangeState();
   }
 }
 
-class RecurrenceChangeState extends State<RecurrenceChange> {
+class _RecurrenceChangeState extends State<RecurrenceChange> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -28,7 +28,7 @@ class RecurrenceChangeState extends State<RecurrenceChange> {
             return Padding(
               padding: const EdgeInsets.all(4.0),
               child: ListTile(
-                tileColor: _colorCollection[_selectedColorIndex],
+                tileColor: colorCollection[selectedColorIndex],
                 shape: RoundedRectangleBorder(
                   side: const BorderSide(width: 1.0),
                   borderRadius: BorderRadius.circular(20),
@@ -124,12 +124,11 @@ class RecurrenceChangeState extends State<RecurrenceChange> {
     tempAppointments.add(Appointment(
       startTime: _startDate,
       endTime: _endDate,
-      color: _colorCollection[_selectedColorIndex],
+      color: colorCollection[selectedColorIndex],
       notes: _notes,
       isAllDay: _isAllDay,
       subject: isCanceled ? (_subject == '' ? "${AppLocalizations.of(context)!.noTitle}(-)" : "${_subject}(-)") :
       (_subject == '' ? AppLocalizations.of(context)!.noTitle : _subject),
-      // subject: _subject == '' ? AppLocalizations.of(context)!.noTitle : _subject,
       recurrenceExceptionDates: <DateTime>[],
       recurrenceRule: _isRecurrence & (_freq == "DAILY")
           ? 'FREQ=$_freq;INTERVAL=$_interval;COUNT=$_count'
