@@ -11,9 +11,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todoli/controllers/color_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-
+import 'package:todoli/services/interstitial_ad_widget.dart';
 
 import 'screens/calendar.dart';
+
+final params = ConsentRequestParameters();
+// ConsentDebugSettings debugSettings = ConsentDebugSettings(
+//     debugGeography: DebugGeography.debugGeographyEea,
+//     testIdentifiers: ['TEST-DEVICE-HASHED-ID']); // for test
+// final params = ConsentRequestParameters(consentDebugSettings: debugSettings); // for test
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,18 +30,24 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  final ColorController controller = Get.put(ColorController());
+  final ColorController colorController = Get.put(ColorController());
   final String defaultLocale = Platform.localeName;
 
   _getThemeStatus() async {
     var number = _prefs.then((SharedPreferences prefs) {
       return prefs.getInt('colorNumber') ?? 0;
     });
-    controller.numberOfColor = (await number);
+    colorController.numberOfColor = (await number);
   }
 
   MyApp() {
     _getThemeStatus();
+
+    ConsentInformation.instance.requestConsentInfoUpdate(params, () async {
+      if (await ConsentInformation.instance.isConsentFormAvailable()) {
+        status = await ConsentInformation.instance.getConsentStatus();
+      }
+    }, (error) {});
   }
 
   @override
@@ -53,7 +65,8 @@ class MyApp extends StatelessWidget {
         Locale('en'),
         Locale('ko'),
       ],
-      locale: (defaultLocale == 'ko_KR') ? const Locale('ko') : const Locale('en'),
+      locale:
+          (defaultLocale == 'ko_KR') ? const Locale('ko') : const Locale('en'),
       debugShowCheckedModeBanner: false,
       title: 'ToDoLi',
       home: StreamBuilder<User?>(

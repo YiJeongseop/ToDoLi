@@ -68,7 +68,7 @@ class CalendarState extends State<Calendar> {
   CalendarState();
 
   CalendarController calendarController = CalendarController();
-  final ColorController controller = Get.put(ColorController());
+  final ColorController colorController = Get.put(ColorController());
   final List<Color> colorList = [
     const Color(0xFF97D7E1),
     const Color(0xFFE5C1F5),
@@ -126,322 +126,322 @@ class CalendarState extends State<Calendar> {
     _changeOptionList.add(AppLocalizations.of(context)!.changeSinceThis);
     _changeOptionList.add(AppLocalizations.of(context)!.changeThisOnly);
 
-    return GetBuilder<ColorController>(
-      builder: (controller) {
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          // When the screen first turns on, the font does not apply.
-          // The font is applied when the screen is changed and returned.
-          // DefaultTextStyle prevents it. The font is applied from the beginning.
-          body: DefaultTextStyle(
-            style: AppLocalizations.of(context)!.localeName == 'ko' ? ko20 : en18,
-            child: Center(
-              child: isLoading
-                  ? const CircularProgressIndicator()
-                  : Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                      child: getEventCalendar(_events, onCalendarTapped),
-                    ),
-            ),
-          ),
-          floatingActionButton: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              FloatingActionButton(
-                heroTag: 'addAppointment',
-                backgroundColor: colorList[controller.numberOfColor],
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  weight: 20,
-                  size: 40,
+        return GetBuilder<ColorController>(
+          builder: (colorController) {
+            return Scaffold(
+              resizeToAvoidBottomInset: false,
+              // When the screen first turns on, the font does not apply.
+              // The font is applied when the screen is changed and returned.
+              // DefaultTextStyle prevents it. The font is applied from the beginning.
+              body: DefaultTextStyle(
+                style: AppLocalizations.of(context)!.localeName == 'ko' ? ko20 : en18,
+                child: Center(
+                  child: isLoading
+                      ? const CircularProgressIndicator()
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                          child: getEventCalendar(_events, onCalendarTapped),
+                        ),
                 ),
-                onPressed: () {
-                  setState(() {
-                      _selectedAppointment = null;
-                      _selectedColorIndex = 0;
+              ),
+              floatingActionButton: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  FloatingActionButton(
+                    heroTag: 'addAppointment',
+                    backgroundColor: colorList[colorController.numberOfColor],
+                    child: const Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      weight: 20,
+                      size: 40,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                          _selectedAppointment = null;
+                          _selectedColorIndex = 0;
 
-                      final DateTime date = calendarController.selectedDate!;
-                      _startDate = date;
-                      _endDate = date.add(const Duration(hours: 1));
-                      _startTime = TimeOfDay(
-                          hour: _startDate.hour, minute: _startDate.minute);
-                      _endTime = TimeOfDay(
-                          hour: _endDate.hour, minute: _endDate.minute);
-                      _byMonthDay = _startDate.day;
-                      _isAllDay = false;
-                      _subject = '';
-                      _notes = '';
-                      _recurrenceExceptionDates = <DateTime>[];
-                      _recurrenceRule = 'FREQ=DAILY;INTERVAL=1;COUNT=1';
-                      _isRecurrence = false;
-                      _freq = 'DAILY';
-                      _interval = 1;
-                      _count = 1;
+                          final DateTime date = calendarController.selectedDate!;
+                          _startDate = date;
+                          _endDate = date.add(const Duration(hours: 1));
+                          _startTime = TimeOfDay(
+                              hour: _startDate.hour, minute: _startDate.minute);
+                          _endTime = TimeOfDay(
+                              hour: _endDate.hour, minute: _endDate.minute);
+                          _byMonthDay = _startDate.day;
+                          _isAllDay = false;
+                          _subject = '';
+                          _notes = '';
+                          _recurrenceExceptionDates = <DateTime>[];
+                          _recurrenceRule = 'FREQ=DAILY;INTERVAL=1;COUNT=1';
+                          _isRecurrence = false;
+                          _freq = 'DAILY';
+                          _interval = 1;
+                          _count = 1;
 
-                      switch (_startDate.weekday) {
-                        case 1:
-                          _byDay = 'MO';
-                        case 2:
-                          _byDay = 'TU';
-                        case 3:
-                          _byDay = 'WE';
-                        case 4:
-                          _byDay = 'TH';
-                        case 5:
-                          _byDay = 'FR';
-                        case 6:
-                          _byDay = 'SA';
-                        case 7:
-                          _byDay = 'SU';
-                      }
+                          switch (_startDate.weekday) {
+                            case 1:
+                              _byDay = 'MO';
+                            case 2:
+                              _byDay = 'TU';
+                            case 3:
+                              _byDay = 'WE';
+                            case 4:
+                              _byDay = 'TH';
+                            case 5:
+                              _byDay = 'FR';
+                            case 6:
+                              _byDay = 'SA';
+                            case 7:
+                              _byDay = 'SU';
+                          }
 
-                      Navigator.push<Widget>(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const AppointmentEditor()),
+                          Navigator.push<Widget>(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    const AppointmentEditor()),
+                          );
+                        },
                       );
                     },
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              FloatingActionButton(
-                heroTag: 'changeView',
-                backgroundColor: colorList[controller.numberOfColor],
-                child: (calendarController.view == CalendarView.month)
-                    ? const Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                        weight: 20,
-                        size: 40,
-                      )
-                    : const Icon(
-                        Icons.calendar_month,
-                        color: Colors.white,
-                        weight: 20,
-                        size: 40,
-                      ),
-                onPressed: () {
-                  setState(
-                    () {
-                      if (calendarController.view == CalendarView.month) {
-                        calendarController.view = CalendarView.schedule;
-                      } else {
-                        calendarController.view = CalendarView.month;
-                      }
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  FloatingActionButton(
+                    heroTag: 'changeView',
+                    backgroundColor: colorList[colorController.numberOfColor],
+                    child: (calendarController.view == CalendarView.month)
+                        ? const Icon(
+                            Icons.list_alt,
+                            color: Colors.white,
+                            weight: 20,
+                            size: 40,
+                          )
+                        : const Icon(
+                            Icons.calendar_month,
+                            color: Colors.white,
+                            weight: 20,
+                            size: 40,
+                          ),
+                    onPressed: () {
+                      setState(
+                        () {
+                          if (calendarController.view == CalendarView.month) {
+                            calendarController.view = CalendarView.schedule;
+                          } else {
+                            calendarController.view = CalendarView.month;
+                          }
+                        },
+                      );
                     },
-                  );
-                },
+                  ),
+                ],
               ),
-            ],
-          ),
+            );
+          }
         );
-      },
-    );
   }
 
   GetBuilder<ColorController> getEventCalendar(
       CalendarDataSource calendarDataSource,
       CalendarTapCallback calendarTapCallback) {
-    return GetBuilder<ColorController>(
-      builder: (controller) {
-        return SfCalendar(
-          view: CalendarView.month,
-          controller: calendarController,
-          dataSource: calendarDataSource,
-          onTap: calendarTapCallback,
-          onLongPress: onCalendarLongPressed,
-          // https://help.syncfusion.com/flutter/calendar/schedule-view
-          scheduleViewSettings: ScheduleViewSettings(
-            appointmentItemHeight: 52,
-            hideEmptyScheduleWeek: true,
-            monthHeaderSettings: MonthHeaderSettings(
-              textAlign: TextAlign.center,
-              height: 95,
-              backgroundColor: colorList[controller.numberOfColor],
-              monthTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko28 : en26,
-            ),
-            weekHeaderSettings: WeekHeaderSettings(
-              height: 20,
-              textAlign: TextAlign.start,
-              weekTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20 : en18,
-            ),
-            dayHeaderSettings: DayHeaderSettings(
-              dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko16 : en16,
-              dateTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko18 : en18,
-            ),
-          ),
-          appointmentTimeTextFormat: 'HH:mm',
-          // https://support.syncfusion.com/kb/article/10679/how-to-customize-the-appointments-using-custom-builder-in-the-flutter-calendar
-          appointmentBuilder: (context, calendarAppointmentDetails) {
-            final Appointment appointments = calendarAppointmentDetails.appointments.first;
-            return Container(
-              decoration: (calendarController.view == CalendarView.month)
-                  ? BoxDecoration(
-                      color: appointments.color.withOpacity(0.8),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.black12, width: 1))
-                  : BoxDecoration(
-                      color: appointments.color.withOpacity(0.8),
-                      borderRadius: BorderRadius.circular(3.5),
-                      border: Border.all(color: Colors.black12, width: 1)),
-              child: Padding(
-                padding: (calendarController.view != CalendarView.week)
-                    ? const EdgeInsets.fromLTRB(8, 0, 0, 0)
-                    : const EdgeInsets.fromLTRB(1, 0, 0, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    if (calendarController.view == CalendarView.month || calendarController.view == CalendarView.schedule)
-                      // If the title is followed by a (-), cancellation line is displayed.
-                      // (-) is not visible. you can see it when you modify it.
-                      if(appointments.subject.length > 2)
-                        Flexible(
-                        child: (appointments.subject.substring(appointments.subject.length - 3) == '(-)') ?
-                        Text(
-                          appointments.subject.substring(0, appointments.subject.length - 3),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: (AppLocalizations.of(context)!.localeName == 'ko') ?
-                          ko20subject.copyWith(decoration: TextDecoration.lineThrough,) :
-                          en20.copyWith(decoration: TextDecoration.lineThrough,),
-                        ) : Text(
-                          appointments.subject,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20subject : en20,
-                          ),
-                        ),
-                      if(appointments.subject.length < 3)
-                        Flexible(
-                          child: Text(
-                            appointments.subject,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20subject : en20,
-                          ),
-                        ),
-                    if ((appointments.isAllDay == false) & (appointments.startTime.year != appointments.endTime.year))
-                      Flexible(
-                        child: Text(
-                            '${appointments.startTime.year.toString().substring(2)}/${appointments.startTime.month.toString()}/${appointments.startTime.day.toString()} ${appointments.startTime.hour.toString().padLeft(2, '0')}:${appointments.startTime.minute.toString().padLeft(2, '0')} - '
-                            '${appointments.endTime.year.toString().substring(2)}/${appointments.endTime.month.toString()}/${appointments.endTime.day.toString()} ${appointments.endTime.hour.toString().padLeft(2, '0')}:${appointments.endTime.minute.toString().padLeft(2, '0')}',
-                            style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19 : en17),
-                      ),
-                    if ((appointments.isAllDay == false) &
-                        (appointments.startTime.year == appointments.endTime.year) &
-                        ((appointments.startTime.month != appointments.endTime.month) || (appointments.startTime.day != appointments.endTime.day)))
-                      Flexible(
-                        child: Text(
-                            '${appointments.startTime.month.toString()}/${appointments.startTime.day.toString()} ${appointments.startTime.hour.toString().padLeft(2, '0')}:${appointments.startTime.minute.toString().padLeft(2, '0')} - '
-                            '${appointments.endTime.month.toString()}/${appointments.endTime.day.toString()} ${appointments.endTime.hour.toString().padLeft(2, '0')}:${appointments.endTime.minute.toString().padLeft(2, '0')}',
-                            style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19 : en17),
-                      ),
-                    if ((appointments.isAllDay == false) &
-                        (appointments.startTime.year == appointments.endTime.year) &
-                        (appointments.startTime.month == appointments.endTime.month) &
-                        (appointments.startTime.day == appointments.endTime.day))
-                      Flexible(
-                        child: Text(
-                            '${appointments.startTime.hour.toString().padLeft(2, '0')}:${appointments.startTime.minute.toString().padLeft(2, '0')} - '
-                            '${appointments.endTime.hour.toString().padLeft(2, '0')}:${appointments.endTime.minute.toString().padLeft(2, '0')}',
-                            style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19 : en17),
-                      ),
-                  ],
+        return GetBuilder<ColorController>(
+          builder: (colorController) {
+            return SfCalendar(
+              view: CalendarView.month,
+              controller: calendarController,
+              dataSource: calendarDataSource,
+              onTap: calendarTapCallback,
+              onLongPress: onCalendarLongPressed,
+              // https://help.syncfusion.com/flutter/calendar/schedule-view
+              scheduleViewSettings: ScheduleViewSettings(
+                appointmentItemHeight: 52,
+                hideEmptyScheduleWeek: true,
+                monthHeaderSettings: MonthHeaderSettings(
+                  textAlign: TextAlign.center,
+                  height: 95,
+                  backgroundColor: colorList[colorController.numberOfColor],
+                  monthTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko28 : en26,
+                ),
+                weekHeaderSettings: WeekHeaderSettings(
+                  height: 20,
+                  textAlign: TextAlign.start,
+                  weekTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20 : en18,
+                ),
+                dayHeaderSettings: DayHeaderSettings(
+                  dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko16 : en16,
+                  dateTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko18 : en18,
                 ),
               ),
-            );
-          },
-          initialDisplayDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0),
-          initialSelectedDate: DateTime.now(),
-          backgroundColor: Colors.white,
-          todayHighlightColor: Colors.black,
-          minDate: DateTime(2023, 1, 1, 0, 1),
-          maxDate: DateTime(2052, 12, 31, 23, 59),
-          selectionDecoration: BoxDecoration(
-            color: Colors.transparent,
-            border: Border.all(color: const Color(0xFFFDBC75), width: 2),
-            borderRadius: const BorderRadius.all(Radius.circular(4)),
-            shape: BoxShape.rectangle,
-          ),
-          viewHeaderStyle: ViewHeaderStyle(
-              backgroundColor: colorList[controller.numberOfColor],
-              dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19 : en18),
-          // https://help.syncfusion.com/flutter/calendar/month-view
-          monthViewSettings: MonthViewSettings(
-            agendaItemHeight: 57,
-            showAgenda: true,
-            agendaViewHeight: MediaQuery.of(context).size.height / 3,
-            appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
-            agendaStyle: AgendaStyle(
+              appointmentTimeTextFormat: 'HH:mm',
+              // https://support.syncfusion.com/kb/article/10679/how-to-customize-the-appointments-using-custom-builder-in-the-flutter-calendar
+              appointmentBuilder: (context, calendarAppointmentDetails) {
+                final Appointment appointments = calendarAppointmentDetails.appointments.first;
+                return Container(
+                  decoration: (calendarController.view == CalendarView.month)
+                      ? BoxDecoration(
+                          color: appointments.color.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.black12, width: 1))
+                      : BoxDecoration(
+                          color: appointments.color.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(3.5),
+                          border: Border.all(color: Colors.black12, width: 1)),
+                  child: Padding(
+                    padding: (calendarController.view != CalendarView.week)
+                        ? const EdgeInsets.fromLTRB(8, 0, 0, 0)
+                        : const EdgeInsets.fromLTRB(1, 0, 0, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        if (calendarController.view == CalendarView.month || calendarController.view == CalendarView.schedule)
+                          // If the title is followed by a (-), cancellation line is displayed.
+                          // (-) is not visible. you can see it when you modify it.
+                          if(appointments.subject.length > 2)
+                            Flexible(
+                            child: (appointments.subject.substring(appointments.subject.length - 3) == '(-)') ?
+                            Text(
+                              appointments.subject.substring(0, appointments.subject.length - 3),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: (AppLocalizations.of(context)!.localeName == 'ko') ?
+                              ko20subject.copyWith(decoration: TextDecoration.lineThrough,) :
+                              en20.copyWith(decoration: TextDecoration.lineThrough,),
+                            ) : Text(
+                              appointments.subject,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20subject : en20,
+                              ),
+                            ),
+                          if(appointments.subject.length < 3)
+                            Flexible(
+                              child: Text(
+                                appointments.subject,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20subject : en20,
+                              ),
+                            ),
+                        if ((appointments.isAllDay == false) & (appointments.startTime.year != appointments.endTime.year))
+                          Flexible(
+                            child: Text(
+                                '${appointments.startTime.year.toString().substring(2)}/${appointments.startTime.month.toString()}/${appointments.startTime.day.toString()} ${appointments.startTime.hour.toString().padLeft(2, '0')}:${appointments.startTime.minute.toString().padLeft(2, '0')} - '
+                                '${appointments.endTime.year.toString().substring(2)}/${appointments.endTime.month.toString()}/${appointments.endTime.day.toString()} ${appointments.endTime.hour.toString().padLeft(2, '0')}:${appointments.endTime.minute.toString().padLeft(2, '0')}',
+                                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19 : en17),
+                          ),
+                        if ((appointments.isAllDay == false) &
+                            (appointments.startTime.year == appointments.endTime.year) &
+                            ((appointments.startTime.month != appointments.endTime.month) || (appointments.startTime.day != appointments.endTime.day)))
+                          Flexible(
+                            child: Text(
+                                '${appointments.startTime.month.toString()}/${appointments.startTime.day.toString()} ${appointments.startTime.hour.toString().padLeft(2, '0')}:${appointments.startTime.minute.toString().padLeft(2, '0')} - '
+                                '${appointments.endTime.month.toString()}/${appointments.endTime.day.toString()} ${appointments.endTime.hour.toString().padLeft(2, '0')}:${appointments.endTime.minute.toString().padLeft(2, '0')}',
+                                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19 : en17),
+                          ),
+                        if ((appointments.isAllDay == false) &
+                            (appointments.startTime.year == appointments.endTime.year) &
+                            (appointments.startTime.month == appointments.endTime.month) &
+                            (appointments.startTime.day == appointments.endTime.day))
+                          Flexible(
+                            child: Text(
+                                '${appointments.startTime.hour.toString().padLeft(2, '0')}:${appointments.startTime.minute.toString().padLeft(2, '0')} - '
+                                '${appointments.endTime.hour.toString().padLeft(2, '0')}:${appointments.endTime.minute.toString().padLeft(2, '0')}',
+                                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19 : en17),
+                          ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+              initialDisplayDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0),
+              initialSelectedDate: DateTime.now(),
               backgroundColor: Colors.white,
-              dateTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko22 : en20,
-              dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko24 : en22,
-              placeholderTextStyle: const TextStyle( // Make "No events" a invisible in Month View.
+              todayHighlightColor: Colors.black,
+              minDate: DateTime(2023, 1, 1, 0, 1),
+              maxDate: DateTime(2052, 12, 31, 23, 59),
+              selectionDecoration: BoxDecoration(
                 color: Colors.transparent,
+                border: Border.all(color: const Color(0xFFFDBC75), width: 2),
+                borderRadius: const BorderRadius.all(Radius.circular(4)),
+                shape: BoxShape.rectangle,
               ),
-            ),
-            monthCellStyle: MonthCellStyle(
-              textStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20 : en18,
-              trailingDatesTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ?
+              viewHeaderStyle: ViewHeaderStyle(
+                  backgroundColor: colorList[colorController.numberOfColor],
+                  dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19 : en18),
+              // https://help.syncfusion.com/flutter/calendar/month-view
+              monthViewSettings: MonthViewSettings(
+                agendaItemHeight: 57,
+                showAgenda: true,
+                agendaViewHeight: MediaQuery.of(context).size.height / 3,
+                appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
+                agendaStyle: AgendaStyle(
+                  backgroundColor: Colors.white,
+                  dateTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko22 : en20,
+                  dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko24 : en22,
+                  placeholderTextStyle: const TextStyle( // Make "No events" a invisible in Month View.
+                    color: Colors.transparent,
+                  ),
+                ),
+                monthCellStyle: MonthCellStyle(
+                  textStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20 : en18,
+                  trailingDatesTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ?
+                      GoogleFonts.poorStory(
+                        fontSize: 17,
+                        color: const Color(0xFFB7B7B7),
+                        fontWeight: FontWeight.w500,
+                      )
+                      : GoogleFonts.pangolin(
+                    fontSize: 16,
+                    color: const Color(0xFFB7B7B7),
+                    fontWeight: FontWeight.w500,
+                  ),
+                  leadingDatesTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ?
                   GoogleFonts.poorStory(
                     fontSize: 17,
                     color: const Color(0xFFB7B7B7),
                     fontWeight: FontWeight.w500,
                   )
-                  : GoogleFonts.pangolin(
-                fontSize: 16,
-                color: const Color(0xFFB7B7B7),
-                fontWeight: FontWeight.w500,
+                      : GoogleFonts.pangolin(
+                    fontSize: 16,
+                    color: const Color(0xFFB7B7B7),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
-              leadingDatesTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ?
-              GoogleFonts.poorStory(
-                fontSize: 17,
-                color: const Color(0xFFB7B7B7),
-                fontWeight: FontWeight.w500,
-              )
-                  : GoogleFonts.pangolin(
-                fontSize: 16,
-                color: const Color(0xFFB7B7B7),
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-          headerStyle: CalendarHeaderStyle(
-            textStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? GoogleFonts.poorStory(
-              fontSize: 28,
-              color: (calendarController.view == CalendarView.month ||
-                  calendarController.view == null)
-              // The screen appears before the CalendarView value is initially included in the calendarController.view in the first time.
-                  ? Colors.black87
-                  : Colors.transparent,
-              fontWeight: FontWeight.w500,
-            ) : GoogleFonts.pangolin(
-              fontSize: 24,
-              color: (calendarController.view == CalendarView.month ||
+              headerStyle: CalendarHeaderStyle(
+                textStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? GoogleFonts.poorStory(
+                  fontSize: 28,
+                  color: (calendarController.view == CalendarView.month ||
                       calendarController.view == null)
                   // The screen appears before the CalendarView value is initially included in the calendarController.view in the first time.
-                  ? Colors.black87
-                  : Colors.transparent,
-              fontWeight: FontWeight.w300,
-            ),
-          ),
-          todayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? GoogleFonts.poorStory(
-            fontSize: 19,
-            color: Colors.white
-          )
-              : GoogleFonts.pangolin(
-            fontSize: 18,
-            color: Colors.white,
-          ),
+                      ? Colors.black87
+                      : Colors.transparent,
+                  fontWeight: FontWeight.w500,
+                ) : GoogleFonts.pangolin(
+                  fontSize: 24,
+                  color: (calendarController.view == CalendarView.month ||
+                          calendarController.view == null)
+                      // The screen appears before the CalendarView value is initially included in the calendarController.view in the first time.
+                      ? Colors.black87
+                      : Colors.transparent,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+              todayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? GoogleFonts.poorStory(
+                fontSize: 19,
+                color: Colors.white
+              )
+                  : GoogleFonts.pangolin(
+                fontSize: 18,
+                color: Colors.white,
+              ),
+            );
+          }
         );
-      },
-    );
   }
 
   // Modify an appointment that exists.
