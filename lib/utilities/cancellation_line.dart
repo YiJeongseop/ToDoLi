@@ -1,5 +1,7 @@
 part of event_calendar;
 
+bool isCanceled = false;
+
 // If there is a '(-)' at the end of the subject, a cancellation line will be created.
 void modifyCancellationLine(CalendarLongPressDetails details) {
   if (details.targetElement != CalendarElement.appointment) return;

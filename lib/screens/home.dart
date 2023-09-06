@@ -61,7 +61,6 @@ class _HomeState extends State<Home> {
       return Scaffold(
         onDrawerChanged: (isOpened) {
           setStatus();
-          print(status);
         },
         backgroundColor: const Color(0xFFFFFFFF),
         appBar: AppBar(

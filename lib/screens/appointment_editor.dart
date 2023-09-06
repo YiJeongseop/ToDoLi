@@ -590,9 +590,11 @@ class AppointmentEditorState extends State<AppointmentEditor> {
       color: _colorCollection[_selectedColorIndex],
       notes: _notes,
       isAllDay: _isAllDay,
-      subject: _subject == ''
-          ? AppLocalizations.of(context)!.noTitle
-          : _subject,
+      subject: isCanceled ? (_subject == '' ? "${AppLocalizations.of(context)!.noTitle}(-)" : "${_subject}(-)") :
+      (_subject == '' ? AppLocalizations.of(context)!.noTitle : _subject),
+      // subject: _subject == ''
+      //     ? AppLocalizations.of(context)!.noTitle
+      //     : _subject,
       recurrenceExceptionDates: _recurrenceExceptionDates,
       recurrenceRule: _isRecurrence & (_freq == "DAILY")
           ? 'FREQ=$_freq;INTERVAL=$_interval;COUNT=$_count'

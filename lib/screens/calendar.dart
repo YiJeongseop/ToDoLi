@@ -158,6 +158,7 @@ class CalendarState extends State<Calendar> {
                     ),
                     onPressed: () {
                       setState(() {
+                          isCanceled = false;
                           _selectedAppointment = null;
                           _selectedColorIndex = 0;
 
@@ -477,10 +478,25 @@ class CalendarState extends State<Calendar> {
           }
         }
         _selectedColorIndex = _colorCollection.indexOf(meetingDetails.color);
-        _subject =
+
+        if(meetingDetails.subject.length > 2){
+          if(meetingDetails.subject.substring(meetingDetails.subject.length - 3) == '(-)'){
+            isCanceled = true;
+            _subject = meetingDetails.subject.substring(0, meetingDetails.subject.length - 3);
+          } else{
+            isCanceled = false;
+            _subject =
             meetingDetails.subject == AppLocalizations.of(context)!.noTitle
                 ? ''
                 : meetingDetails.subject;
+          }
+        } else{
+          isCanceled = false;
+          _subject =
+          meetingDetails.subject == AppLocalizations.of(context)!.noTitle
+              ? ''
+              : meetingDetails.subject;
+        }
         _notes = meetingDetails.notes!;
         _selectedAppointment = meetingDetails;
       }

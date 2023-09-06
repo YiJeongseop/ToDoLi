@@ -127,7 +127,9 @@ class RecurrenceChangeState extends State<RecurrenceChange> {
       color: _colorCollection[_selectedColorIndex],
       notes: _notes,
       isAllDay: _isAllDay,
-      subject: _subject == '' ? AppLocalizations.of(context)!.noTitle : _subject,
+      subject: isCanceled ? (_subject == '' ? "${AppLocalizations.of(context)!.noTitle}(-)" : "${_subject}(-)") :
+      (_subject == '' ? AppLocalizations.of(context)!.noTitle : _subject),
+      // subject: _subject == '' ? AppLocalizations.of(context)!.noTitle : _subject,
       recurrenceExceptionDates: <DateTime>[],
       recurrenceRule: _isRecurrence & (_freq == "DAILY")
           ? 'FREQ=$_freq;INTERVAL=$_interval;COUNT=$_count'
