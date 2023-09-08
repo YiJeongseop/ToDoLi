@@ -72,6 +72,7 @@ class _ChartState extends State<Chart> {
     Color appBarColor = widget.appBarColor;
 
     return Scaffold(
+      backgroundColor: (!Get.isDarkMode) ? Colors.white : const Color(0xFF505458),
       appBar: AppBar(
         iconTheme: const IconThemeData(
           size: 35,
@@ -100,13 +101,13 @@ class _ChartState extends State<Chart> {
                       legend: Legend(
                         position: LegendPosition.bottom,
                         isVisible: true,
-                        textStyle: AppLocalizations.of(context)!.localeName == 'ko' ? ko20 : en18,
+                        textStyle: AppLocalizations.of(context)!.localeName == 'ko' ? ko20.copyWith(color: Theme.of(context).primaryColorDark,) : en18.copyWith(color: Theme.of(context).primaryColorDark,),
                       ),
                       primaryXAxis: CategoryAxis(
-                        labelStyle: AppLocalizations.of(context)!.localeName == 'ko' ? ko20 : en18,
+                        labelStyle: AppLocalizations.of(context)!.localeName == 'ko' ? ko20.copyWith(color: Theme.of(context).primaryColorDark,) : en18.copyWith(color: Theme.of(context).primaryColorDark,),
                       ),
                       primaryYAxis: NumericAxis(
-                        labelStyle: AppLocalizations.of(context)!.localeName == 'ko' ? ko20 : en18,
+                        labelStyle: AppLocalizations.of(context)!.localeName == 'ko' ? ko20.copyWith(color: Theme.of(context).primaryColorDark,) : en18.copyWith(color: Theme.of(context).primaryColorDark,),
                       ),
                       axes: <ChartAxis>[
                         NumericAxis(opposedPosition: true),

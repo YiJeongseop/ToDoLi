@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
 import '../screens/calendar.dart';
 import '../fonts.dart';
 
@@ -14,6 +15,7 @@ class _ColorPickerState extends State<ColorPicker> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: (!Get.isDarkMode) ? Colors.white : const Color(0xFF505458),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
           side: BorderSide(color: Colors.black, width: 1.0)
@@ -32,8 +34,8 @@ class _ColorPickerState extends State<ColorPicker> {
                   color: colorCollection[index]),
               title: Text(colorNames[index],
                   style: (AppLocalizations.of(context)!.localeName == 'ko')
-                      ? ko26
-                      : en22),
+                      ? ko26.copyWith(color: Theme.of(context).primaryColorDark,)
+                      : en22.copyWith(color: Theme.of(context).primaryColorDark,)),
               onTap: () {
                 setState(() {
                   selectedColorIndex = index;

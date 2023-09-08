@@ -9,7 +9,6 @@ import 'package:todoli/controllers/color_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todoli/services/interstitial_ad_widget.dart';
 import 'package:todoli/fonts.dart';
-
 import '../utilities/guide.dart';
 
 class Home extends StatefulWidget {
@@ -37,9 +36,14 @@ class _HomeState extends State<Home> {
   String? _displayName;
   String? _email;
 
-  _saveThemeStatus(int value) async {
+  _saveColorStatus(int value) async {
     SharedPreferences pref = await _prefs;
     pref.setInt('colorNumber', value);
+  }
+
+  _saveThemeStatus(int value) async {
+    SharedPreferences pref = await _prefs;
+    pref.setInt('themeNumber', value);
   }
 
   @override
@@ -62,23 +66,24 @@ class _HomeState extends State<Home> {
         onDrawerChanged: (isOpened) {
           setStatus();
         },
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: Theme.of(context).primaryColorLight,
         appBar: AppBar(
-          iconTheme: const IconThemeData(
+          iconTheme: IconThemeData(
             size: 35,
-            color: Color(0xFFFFFFFF),
+            color: Colors.white,
           ),
-          backgroundColor: colorList[colorController.numberOfColor],
+          backgroundColor: (!Get.isDarkMode) ? colorList[colorController.numberOfColor] : const Color(0xFF3D4146),
           actions: [
-            Row(
-              children: [
-                colorButton(color: colorList[0], number: 0),
-                colorButton(color: colorList[1], number: 1),
-                colorButton(color: colorList[2], number: 2),
-                colorButton(color: colorList[3], number: 3),
-                colorButton(color: colorList[4], number: 4),
-              ],
-            )
+            if(!Get.isDarkMode)
+              Row(
+                children: [
+                  colorButton(color: colorList[0], number: 0),
+                  colorButton(color: colorList[1], number: 1),
+                  colorButton(color: colorList[2], number: 2),
+                  colorButton(color: colorList[3], number: 3),
+                  colorButton(color: colorList[4], number: 4),
+                ],
+              )
           ],
           elevation: 0.0,
         ),
@@ -91,7 +96,7 @@ class _HomeState extends State<Home> {
               return Container(
                 width: MediaQuery.of(context).size.width / 1.75,
                 child: Drawer(
-                  backgroundColor: const Color(0xFFFFFFFF),
+                  backgroundColor: (!Get.isDarkMode) ? Colors.white : const Color(0xFF505458),
                   child: Column(
                     children: [
                       Expanded(
@@ -105,8 +110,8 @@ class _HomeState extends State<Home> {
                                           15,
                                   child: UserAccountsDrawerHeader(
                                     decoration: BoxDecoration(
-                                        color: colorList[colorController
-                                            .numberOfColor]),
+                                        color: (!Get.isDarkMode) ? colorList[colorController
+                                            .numberOfColor] : const Color(0xFF3D4146)),
                                     margin: const EdgeInsets.only(bottom: 0.0),
                                     accountName: Text(_displayName!,
                                         style: (AppLocalizations.of(context)!
@@ -114,9 +119,9 @@ class _HomeState extends State<Home> {
                                                 'ko')
                                             ? GoogleFonts.poorStory(
                                                 fontSize: 29,
-                                                color: Colors.black,
+                                                color: Theme.of(context).primaryColorDark,
                                                 fontWeight: FontWeight.w500)
-                                            : en26),
+                                            : en26.copyWith(color: Theme.of(context).primaryColorDark,)),
                                     accountEmail: Text(
                                       _email!,
                                       style: (AppLocalizations.of(context)!
@@ -124,9 +129,9 @@ class _HomeState extends State<Home> {
                                               'ko')
                                           ? GoogleFonts.poorStory(
                                               fontSize: 25,
-                                              color: Colors.black,
+                                              color: Theme.of(context).primaryColorDark,
                                               fontWeight: FontWeight.w500)
-                                          : en22,
+                                          : en22.copyWith(color: Theme.of(context).primaryColorDark,),
                                     ),
                                   ),
                                 ),
@@ -146,45 +151,45 @@ class _HomeState extends State<Home> {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                               child: ListTile(
-                                leading: const Icon(Icons.bar_chart,
-                                    size: 30, color: Colors.black),
+                                leading: Icon(Icons.bar_chart,
+                                    size: 30, color: Theme.of(context).primaryColorDark,),
                                 title: Text(AppLocalizations.of(context)!.chart,
                                     style: AppLocalizations.of(context)!
                                                 .localeName ==
                                             'ko'
-                                        ? ko24
-                                        : en28),
+                                        ? ko24.copyWith(color: Theme.of(context).primaryColorDark,)
+                                        : en28.copyWith(color: Theme.of(context).primaryColorDark,)),
                                 onTap: () {
                                   Get.to(() => Chart(
-                                      appBarColor: colorList[colorController
-                                          .numberOfColor]));
+                                      appBarColor: (!Get.isDarkMode) ? colorList[colorController
+                                          .numberOfColor] : const Color(0xFF3D4146)));
                                   callInterstitialAd();
                                   loadInterstitialAd();
                                 },
                               ),
                             ),
                             ListTile(
-                              leading: const Icon(Icons.library_books_outlined,
-                                  size: 30, color: Colors.black),
+                              leading: Icon(Icons.library_books_outlined,
+                                  size: 30, color: Theme.of(context).primaryColorDark,),
                               title: Text(AppLocalizations.of(context)!.guide,
                                   style: AppLocalizations.of(context)!
                                               .localeName ==
                                           'ko'
-                                      ? ko28
-                                      : en28),
+                                      ? ko28.copyWith(color: Theme.of(context).primaryColorDark,)
+                                      : en28.copyWith(color: Theme.of(context).primaryColorDark,)),
                               onTap: () {
                                 guideDialog(context);
                               },
                             ),
                             ListTile(
-                              leading: const Icon(Icons.logout,
-                                  size: 30, color: Colors.black),
+                              leading: Icon(Icons.logout,
+                                  size: 30, color: Theme.of(context).primaryColorDark,),
                               title: Text(AppLocalizations.of(context)!.logout,
                                   style: AppLocalizations.of(context)!
                                               .localeName ==
                                           'ko'
-                                      ? ko28
-                                      : en28),
+                                      ? ko28.copyWith(color: Theme.of(context).primaryColorDark,)
+                                      : en28.copyWith(color: Theme.of(context).primaryColorDark,)),
                               onTap: () {
                                 googleSignIn.disconnect();
                                 // It makes the pop up to choose between Google accounts always come out.
@@ -194,12 +199,35 @@ class _HomeState extends State<Home> {
                           ],
                         ),
                       ),
+                      ListTile(
+                        leading: (!Get.isDarkMode) ? const Icon(Icons.dark_mode,
+                            size: 30, color: Colors.black) : const Icon(Icons.light_mode,
+                            size: 30, color: Colors.white),
+                        title: (!Get.isDarkMode) ? Text("Dark Theme", style: en22.copyWith(color: Theme.of(context).primaryColorDark,),) : Text("Light Theme", style: en22.copyWith(color: Theme.of(context).primaryColorDark,),),
+                        // title: Text((isLightTheme == 1) ? "Dark Theme" : "Light Theme", style: en22,),
+                        onTap: () {
+                          Get.changeThemeMode(
+                            Get.isDarkMode ? ThemeMode.light : ThemeMode.dark,
+                          );
+                          if(!Get.isDarkMode){
+                            _saveThemeStatus(0);
+                            callInterstitialAd();
+                            loadInterstitialAd();
+                            Get.back();
+                          } else{
+                            _saveThemeStatus(1);
+                            callInterstitialAd();
+                            loadInterstitialAd();
+                            Get.back();
+                          }
+                        },
+                      ),
                       if (status == ConsentStatus.required)
                         ListTile(
-                          leading: const Icon(Icons.ads_click,
-                              size: 30, color: Colors.black),
+                          leading: Icon(Icons.ads_click,
+                              size: 30, color: Theme.of(context).primaryColorDark,),
                           title:
-                              Text("Consent for personalized ads", style: en18),
+                              Text("Consent for personalized ads", style: en18.copyWith(color: Theme.of(context).primaryColorDark,)),
                           onTap: () {
                             consentPersonalizedAds();
                             Get.back();
@@ -207,10 +235,10 @@ class _HomeState extends State<Home> {
                         ),
                       if (status == ConsentStatus.obtained)
                         ListTile(
-                          leading: const Icon(Icons.ads_click,
-                              size: 30, color: Colors.black),
+                          leading: Icon(Icons.ads_click,
+                              size: 30, color: Theme.of(context).primaryColorDark,),
                           title: Text("Cancle consent for personalized ads",
-                              style: en18),
+                              style: en18.copyWith(color: Theme.of(context).primaryColorDark,)),
                           onTap: () {
                             cancelConsentPersonalizedAds();
                             Get.back();
@@ -218,11 +246,11 @@ class _HomeState extends State<Home> {
                               SnackBar(
                                 content: Text(
                                   'Cancel complete',
-                                  style: en20,
+                                  style: en20.copyWith(color: Theme.of(context).primaryColorDark,),
                                   textAlign: TextAlign.center,
                                 ),
                                 duration: const Duration(seconds: 3),
-                                backgroundColor: Colors.white,
+                                backgroundColor: Theme.of(context).primaryColorLight,
                               ),
                             );
                           },
@@ -260,7 +288,7 @@ class _HomeState extends State<Home> {
         } else if (number == 4) {
           colorController.changeToFour();
         }
-        _saveThemeStatus(colorController.numberOfColor);
+        _saveColorStatus(colorController.numberOfColor);
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 5.0, right: 5.0),

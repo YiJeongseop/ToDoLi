@@ -11,7 +11,7 @@ class AppointmentEditor extends StatefulWidget {
 class AppointmentEditorState extends State<AppointmentEditor> {
   Widget _getAppointmentEditor(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: (!Get.isDarkMode) ? Colors.white : const Color(0xFF505458),
       child: GestureDetector(
         // If you tap anywhere else on the screen, the keyboard disappears
         onTap: () => FocusScope.of(context).unfocus(),
@@ -28,10 +28,11 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                 },
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko30 : en28,
-                decoration: const InputDecoration(
+                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko30.copyWith(color: Theme.of(context).primaryColorDark,) : en28.copyWith(color: Theme.of(context).primaryColorDark,),
+                decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Add title',
+                  hintStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko30.copyWith(color: Theme.of(context).primaryColorDark,) : en28.copyWith(color: Theme.of(context).primaryColorDark,),
                 ),
               ),
             ),
@@ -41,16 +42,16 @@ class AppointmentEditorState extends State<AppointmentEditor> {
             ),
             ListTile(
               contentPadding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
-              leading: const Icon(
+              leading: Icon(
                 Icons.access_time,
-                color: Colors.black54,
+                color: Theme.of(context).primaryColorDark,
               ),
               title: Row(
                 children: [
                   Expanded(
                     child: Text(
                       'TO-DO',
-                      style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko30 : en26,
+                      style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko30.copyWith(color: Theme.of(context).primaryColorDark,) : en26.copyWith(color: Theme.of(context).primaryColorDark,),
                     ),
                   ),
                   Expanded(
@@ -83,13 +84,13 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                               DateFormat('yyyy년 MMM d일, EEE', 'ko')
                                   .format(_startDate),
                               textAlign: TextAlign.left,
-                              style: ko22,
+                              style: ko22.copyWith(color: Theme.of(context).primaryColorDark,),
                             )
                           : Text(
                                   DateFormat('EEE, MMM dd yyyy')
                                       .format(_startDate),
                                   textAlign: TextAlign.left,
-                                  style: en20,
+                                  style: en20.copyWith(color: Theme.of(context).primaryColorDark,),
                                 ),
                       onTap: () async {
                         final DateTime? date = await showDatePicker(
@@ -148,13 +149,13 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                                     DateFormat('a hh:mm', 'ko')
                                         .format(_startDate),
                                     textAlign: TextAlign.right,
-                                    style: ko22,
+                                    style: ko22.copyWith(color: Theme.of(context).primaryColorDark,),
                                   )
                                 : Text(
                                         DateFormat('hh:mm a')
                                             .format(_startDate),
                                         textAlign: TextAlign.right,
-                                        style: en20,
+                                        style: en20.copyWith(color: Theme.of(context).primaryColorDark,),
                                       ),
                             onTap: () async {
                               final TimeOfDay? time = await showTimePicker(
@@ -204,13 +205,13 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                               DateFormat('yyyy년 MMM d일, EEE', 'ko')
                                   .format(_endDate),
                               textAlign: TextAlign.left,
-                              style: ko22,
+                              style: ko22.copyWith(color: Theme.of(context).primaryColorDark,),
                             )
                           : Text(
                                   DateFormat('EEE, MMM dd yyyy')
                                       .format(_endDate),
                                   textAlign: TextAlign.left,
-                                  style: en20,
+                                  style: en20.copyWith(color: Theme.of(context).primaryColorDark,),
                                 ),
                       onTap: () async {
                         final DateTime? date = await showDatePicker(
@@ -253,12 +254,12 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                                 ? Text(
                                     DateFormat('a hh:mm', 'ko').format(_endDate),
                                     textAlign: TextAlign.right,
-                                    style: ko22,
+                                    style: ko22.copyWith(color: Theme.of(context).primaryColorDark,),
                                   )
                                 :Text(
                                         DateFormat('hh:mm a').format(_endDate),
                                         textAlign: TextAlign.right,
-                                        style: en20,
+                                        style: en20.copyWith(color: Theme.of(context).primaryColorDark,),
                                       ),
                             onTap: () async {
                               final TimeOfDay? time = await showTimePicker(
@@ -300,9 +301,9 @@ class AppointmentEditorState extends State<AppointmentEditor> {
             ),
             ListTile(
               contentPadding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
-              leading: const Icon(
+              leading: Icon(
                 Icons.repeat,
-                color: Colors.black54,
+                color: Theme.of(context).primaryColorDark,
               ),
               title: Row(
                 children: [
@@ -310,8 +311,8 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                     child: Text(
                       AppLocalizations.of(context)!.recurrence,
                       style: (AppLocalizations.of(context)!.localeName == 'ko')
-                          ? ko24
-                          : en22,
+                          ? ko24.copyWith(color: Theme.of(context).primaryColorDark,)
+                          : en22.copyWith(color: Theme.of(context).primaryColorDark,),
                     ),
                   ),
                   Expanded(
@@ -338,6 +339,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     DropdownButton(
+                      dropdownColor: (!Get.isDarkMode) ? Colors.white : const Color(0xFF505458),
                       menuMaxHeight: MediaQuery.of(context).size.height / 2.5,
                       value: _count,
                       items: _valueListCount.map((item) {
@@ -346,8 +348,8 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                           child: Text(
                             '$item',
                             style: (AppLocalizations.of(context)!.localeName == 'ko')
-                                ? ko24
-                                : en18,
+                                ? ko24.copyWith(color: Theme.of(context).primaryColorDark,)
+                                : en18.copyWith(color: Theme.of(context).primaryColorDark,),
                           ),
                         );
                       }).toList(),
@@ -362,10 +364,11 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                     Text(
                       AppLocalizations.of(context)!.timesEvery,
                       style: (AppLocalizations.of(context)!.localeName == 'ko')
-                          ? ko23
-                          : en18,
+                          ? ko23.copyWith(color: Theme.of(context).primaryColorDark,)
+                          : en18.copyWith(color: Theme.of(context).primaryColorDark,),
                     ),
                     DropdownButton(
+                        dropdownColor: (!Get.isDarkMode) ? Colors.white : const Color(0xFF505458),
                         menuMaxHeight: MediaQuery.of(context).size.height / 2.5,
                         value: _interval,
                         items: _valueListInterval.map((item) {
@@ -374,8 +377,8 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                             child: Text(
                               '$item',
                               style: (AppLocalizations.of(context)!.localeName == 'ko')
-                                  ? ko24
-                                  : en18,
+                                  ? ko24.copyWith(color: Theme.of(context).primaryColorDark,)
+                                  : en18.copyWith(color: Theme.of(context).primaryColorDark,),
                             ),
                           );
                         }).toList(),
@@ -385,6 +388,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                           });
                         }),
                     DropdownButton(
+                        dropdownColor: (!Get.isDarkMode) ? Colors.white : const Color(0xFF505458),
                         value: _freq,
                         items: _valueListFreq.map((item) {
                           return DropdownMenuItem(
@@ -392,21 +396,21 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                             child: (item == 'DAILY')
                                 ? Text(AppLocalizations.of(context)!.days,
                                     style: (AppLocalizations.of(context)!.localeName == 'ko')
-                                        ? ko23
-                                        : en18,
+                                        ? ko23.copyWith(color: Theme.of(context).primaryColorDark,)
+                                        : en18.copyWith(color: Theme.of(context).primaryColorDark,),
                                   )
                                 : ((item == 'WEEKLY')
                                     ? Text(
                                         AppLocalizations.of(context)!.weeks,
                                         style: (AppLocalizations.of(context)!.localeName == 'ko')
-                                            ? ko23
-                                            : en18,
+                                            ? ko23.copyWith(color: Theme.of(context).primaryColorDark,)
+                                            : en18.copyWith(color: Theme.of(context).primaryColorDark,),
                                       )
                                     : Text(
                                         AppLocalizations.of(context)!.months,
                                         style: (AppLocalizations.of(context)!.localeName == 'ko')
-                                            ? ko23
-                                            : en18,
+                                            ? ko23.copyWith(color: Theme.of(context).primaryColorDark,)
+                                            : en18.copyWith(color: Theme.of(context).primaryColorDark,),
                                       )),
                           );
                         }).toList(),
@@ -416,7 +420,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                           });
                         }),
                     if (AppLocalizations.of(context)!.localeName == 'ko')
-                      Text('마다', style: ko23),
+                      Text('마다', style: ko23.copyWith(color: Theme.of(context).primaryColorDark,)),
                   ],
                 ),
               ),
@@ -430,7 +434,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                   color: colorCollection[selectedColorIndex]),
               title: Text(
                 colorNames[selectedColorIndex],
-                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko26 : en22,
+                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko26.copyWith(color: Theme.of(context).primaryColorDark,) : en22.copyWith(color: Theme.of(context).primaryColorDark,),
               ),
               onTap: () {
                 showDialog<Widget>(
@@ -449,9 +453,9 @@ class AppointmentEditorState extends State<AppointmentEditor> {
             ),
             ListTile(
               contentPadding: const EdgeInsets.all(5),
-              leading: const Icon(
+              leading: Icon(
                 Icons.subject,
-                color: Colors.black87,
+                color: Theme.of(context).primaryColorDark,
               ),
               title: TextField(
                 controller: TextEditingController(text: _notes),
@@ -460,10 +464,11 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                 },
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko24 : en22,
-                decoration: const InputDecoration(
+                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko24.copyWith(color: Theme.of(context).primaryColorDark,) : en22.copyWith(color: Theme.of(context).primaryColorDark,),
+                decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Add description',
+                  hintStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko24.copyWith(color: Theme.of(context).primaryColorDark,) : en22.copyWith(color: Theme.of(context).primaryColorDark,),
                 ),
               ),
             ),
@@ -483,7 +488,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: colorCollection[selectedColorIndex],
+          backgroundColor: (!Get.isDarkMode) ? colorCollection[selectedColorIndex] : const Color(0xFF3D4146),
           leading: IconButton(
             icon: const Icon(
               Icons.close,
@@ -537,13 +542,11 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                 },
             )
           ],
+          elevation: 0.0,
         ),
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-          child: Stack(
+        body: Stack(
             children: [_getAppointmentEditor(context)],
           ),
-        ),
         floatingActionButton: _selectedAppointment == null
             ? const Text('')
             : FloatingActionButton(
@@ -576,7 +579,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                     );
                   }
                 },
-                backgroundColor: Colors.red,
+                backgroundColor: (!Get.isDarkMode) ? Colors.red : const Color(0xFF3D4146),
                 child: const Icon(Icons.delete_outline, color: Colors.white),
             ),
       ),

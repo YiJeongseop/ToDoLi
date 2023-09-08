@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 // https://fonts.google.com/ You can see various fonts available here.
 
+import 'main.dart';
+
+
 // calendar.dart scheduleView-dateText
 TextStyle en16 = GoogleFonts.pangolin(
     fontSize: 16,
@@ -27,6 +30,7 @@ TextStyle en18 = GoogleFonts.pangolin(
 // appointment_editor.dart dateFormat
 // calendar.dart appointmentBuilder-subject, agenda-dateText
 // chart.dart ChartRow
+// recurrence_change.dart, recurrence_delete.dart
 TextStyle en20 = GoogleFonts.pangolin(
     fontSize: 20,
     color: Colors.black
@@ -34,10 +38,9 @@ TextStyle en20 = GoogleFonts.pangolin(
 
 // appointment_editor.dart recurrence, color, description
 // calendar.dart agenda-dayText
-// home.dart email
+// home.dart email, darkTheme
 // login.dart Sign in with Google
 // color_picker.dart colorNames
-// recurrence_change.dart, recurrence_delete.dart
 TextStyle en22 = GoogleFonts.pangolin(
   fontSize: 22,
   color: Colors.black
@@ -76,20 +79,20 @@ TextStyle ko18 = GoogleFonts.poorStory(
 // calendar.dart appointmentBuilder-startTime + endTime, viewHeader
 TextStyle ko19 = GoogleFonts.poorStory(
     fontSize: 19,
-    color: Colors.black
+    color: Colors.black,
 );
 
 // calendar.dart monthCellText, scheduleView-weekHeader
 // chart.dart SfCartesianChart
 TextStyle ko20 = GoogleFonts.poorStory(
     fontSize: 20,
-    color: Colors.black
+    color: Colors.black,
 );
 
 // calendar.dart appointmentBuilder-subject
 TextStyle ko20Subject = GoogleFonts.gowunDodum(
     fontSize: 20,
-    color: Colors.black
+    color: Colors.black,
 );
 
 // appointment_editor.dart dateFormat
@@ -98,13 +101,13 @@ TextStyle ko20Subject = GoogleFonts.gowunDodum(
 // chart.dart ChartRow
 TextStyle ko22 = GoogleFonts.poorStory(
     fontSize: 22,
-    color: Colors.black
+    color: Colors.black,
 );
 
 // appointment_editor.dart timesEvery, _valueListFreq, "마다"
 TextStyle ko23 = GoogleFonts.poorStory(
     fontSize: 23,
-    color: Colors.black
+    color: Colors.black,
 );
 
 // appointment_editor.dart recurrence, _valueListCount, _valueListInterval, description
@@ -112,24 +115,24 @@ TextStyle ko23 = GoogleFonts.poorStory(
 // home.dart chart
 TextStyle ko24 = GoogleFonts.poorStory(
     fontSize: 24,
-    color: Colors.black
+    color: Colors.black,
 );
 
 // appointment_editor.dart color
 TextStyle ko26 = GoogleFonts.poorStory(
   fontSize: 26,
-  color: Colors.black
+  color: Colors.black,
 );
 
 // calendar.dart scheduleView-monthHeader
 // home.dart Logout
 TextStyle ko28 = GoogleFonts.poorStory(
     fontSize: 28,
-    color: Colors.black
+    color: Colors.black,
 );
 
 // appointment_editor.dart subject, To-Do
 TextStyle ko30 = GoogleFonts.poorStory(
     fontSize: 30,
-    color: Colors.black
+    color: Colors.black,
 );

@@ -28,7 +28,7 @@ class _RecurrenceChangeState extends State<RecurrenceChange> {
             return Padding(
               padding: const EdgeInsets.all(4.0),
               child: ListTile(
-                tileColor: colorCollection[selectedColorIndex],
+                tileColor: (!Get.isDarkMode) ? colorCollection[selectedColorIndex] : const Color(0xFF505458),
                 shape: RoundedRectangleBorder(
                   side: const BorderSide(width: 1.0),
                   borderRadius: BorderRadius.circular(20),
@@ -36,7 +36,7 @@ class _RecurrenceChangeState extends State<RecurrenceChange> {
                 title: Center(
                   child: Text(
                     _changeOptionList[index],
-                    style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko22 : en22,
+                    style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko22.copyWith(color: Theme.of(context).primaryColorDark,) : en20.copyWith(color: Theme.of(context).primaryColorDark,),
                     textAlign: TextAlign.center,
                   ),
                 ),

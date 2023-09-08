@@ -119,14 +119,10 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       builder: (context, child) {
                         return Transform.translate(
                           offset: Offset(0, _animation.value),
-                          child: Text(
-                            'ToDoLi',
-                            style: GoogleFonts.pangolin(
-                              fontSize: 110.0,
-                              fontWeight: FontWeight.w600,
-                              color: const Color(0xFF000000),
-                            ),
-                            textAlign: TextAlign.center,
+                          child: Image.asset(
+                            'images/todoli.png',
+                            fit: BoxFit.cover,
+                            width: MediaQuery.of(context).size.width * 0.9,
                           ),
                         );
                       },
@@ -139,8 +135,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                           border: Border.all(color: const Color(0xFF000000), width: 2),
                           borderRadius: BorderRadius.circular(25.0),
                         ),
-                        width: MediaQuery.of(context).size.width / 1.25,
-                        height: MediaQuery.of(context).size.height / 11.7,
+                        width: MediaQuery.of(context).size.width * 0.77,
+                        height: MediaQuery.of(context).size.height * 0.085,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           mainAxisSize: MainAxisSize.min,
@@ -151,12 +147,12 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                 'images/google_logo.png',
                                 // You can get this image from https://about.google/brand-resource-center/logos-list/
                                 fit: BoxFit.cover,
-                                width: MediaQuery.of(context).size.width / 10,
+                                width: MediaQuery.of(context).size.width * 0.1,
                               ),
                             ),
                             Text(
                               'Sign in with Google',
-                              style: en22,
+                              style: en22.copyWith(color: Colors.black),
                               textAlign: TextAlign.center,
                             ),
                             const CircleAvatar(

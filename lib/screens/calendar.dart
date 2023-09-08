@@ -12,7 +12,6 @@ import 'package:todoli/controllers/color_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:confetti/confetti.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
 import '../fonts.dart';
 import '../services/google_drive.dart';
 import '../widgets/color_picker.dart';
@@ -87,15 +86,15 @@ class CalendarState extends State<Calendar> {
     selectedColorIndex = 0;
 
     colorCollection = <Color>[];
-    colorCollection.add(const Color(0xFFA9D39E)); // Pistachio Green
-    colorCollection.add(const Color(0xFFC89ED3)); // Light Purple
-    colorCollection.add(const Color(0xFFFFFACD)); // Chiffon Yellow
-    colorCollection.add(const Color(0xFFF4C2C2)); // Baby Pink
-    colorCollection.add(const Color(0xFFFBB474)); // Soft Orange
-    colorCollection.add(const Color(0xFF89CFF0)); // Baby Blue
-    colorCollection.add(const Color(0xFFC8F3CD)); // Creamy Mint
-    colorCollection.add(const Color(0xFFFFE5B4)); // Peach
-    colorCollection.add(const Color(0xFFFF8680)); // Pastel Red
+    colorCollection.add(const Color(0xFFA9D39E));
+    colorCollection.add(const Color(0xFFC89ED3));
+    colorCollection.add(const Color(0xFFFFFACD));
+    colorCollection.add(const Color(0xFFF4C2C2));
+    colorCollection.add(const Color(0xFFFBB474));
+    colorCollection.add(const Color(0xFF89CFF0));
+    colorCollection.add(const Color(0xFFC8F3CD));
+    colorCollection.add(const Color(0xFFFFE5B4));
+    colorCollection.add(const Color(0xFFFF8680));
 
     colorNames = <String>[];
     colorNames.add('Green');
@@ -130,14 +129,11 @@ class CalendarState extends State<Calendar> {
               // The font is applied when the screen is changed and returned.
               // DefaultTextStyle prevents it. The font is applied from the beginning.
               body: DefaultTextStyle(
-                style: AppLocalizations.of(context)!.localeName == 'ko' ? ko20 : en18,
+                style: AppLocalizations.of(context)!.localeName == 'ko' ? ko20.copyWith(color: Theme.of(context).primaryColorDark) : en18.copyWith(color: Theme.of(context).primaryColorDark),
                 child: Center(
                   child: isLoading
                       ? const CircularProgressIndicator()
-                      : Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                          child: getEventCalendar(_events, onCalendarTapped),
-                        ),
+                      : getEventCalendar(_events, onCalendarTapped),
                 ),
               ),
               floatingActionButton: Column(
@@ -145,7 +141,7 @@ class CalendarState extends State<Calendar> {
                 children: [
                   FloatingActionButton(
                     heroTag: 'addAppointment',
-                    backgroundColor: colorList[colorController.numberOfColor],
+                    backgroundColor: (!Get.isDarkMode) ? colorList[colorController.numberOfColor] : const Color(0xFF3D4146),
                     child: const Icon(
                       Icons.add,
                       color: Colors.white,
@@ -208,7 +204,7 @@ class CalendarState extends State<Calendar> {
                   ),
                   FloatingActionButton(
                     heroTag: 'changeView',
-                    backgroundColor: colorList[colorController.numberOfColor],
+                    backgroundColor: (!Get.isDarkMode) ? colorList[colorController.numberOfColor] : const Color(0xFF3D4146),
                     child: (calendarController.view == CalendarView.month)
                         ? const Icon(
                             Icons.list_alt,
@@ -259,17 +255,18 @@ class CalendarState extends State<Calendar> {
                 monthHeaderSettings: MonthHeaderSettings(
                   textAlign: TextAlign.center,
                   height: 95,
-                  backgroundColor: colorList[colorController.numberOfColor],
-                  monthTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko28 : en26,
+                  backgroundColor: (!Get.isDarkMode) ? colorList[colorController.numberOfColor] : const Color(
+                      0xFF3D4146),
+                  monthTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko28.copyWith(color: Theme.of(context).primaryColorDark) : en26.copyWith(color: Theme.of(context).primaryColorDark),
                 ),
                 weekHeaderSettings: WeekHeaderSettings(
                   height: 20,
                   textAlign: TextAlign.start,
-                  weekTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20 : en18,
+                  weekTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20.copyWith(color: Theme.of(context).primaryColorDark) : en18.copyWith(color: Theme.of(context).primaryColorDark),
                 ),
                 dayHeaderSettings: DayHeaderSettings(
-                  dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko16 : en16,
-                  dateTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko18 : en18,
+                  dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko16.copyWith(color: Theme.of(context).primaryColorDark) : en16.copyWith(color: Theme.of(context).primaryColorDark),
+                  dateTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko18.copyWith(color: Theme.of(context).primaryColorDark) : en18.copyWith(color: Theme.of(context).primaryColorDark),
                 ),
               ),
               appointmentTimeTextFormat: 'HH:mm',
@@ -356,19 +353,21 @@ class CalendarState extends State<Calendar> {
               },
               initialDisplayDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0),
               initialSelectedDate: DateTime.now(),
-              backgroundColor: Colors.white,
-              todayHighlightColor: Colors.black,
+              backgroundColor: (!Get.isDarkMode) ? Colors.white : const Color(
+                  0xFF505458),
+              todayHighlightColor: Theme.of(context).primaryColorDark,
               minDate: DateTime(2023, 1, 1, 0, 1),
               maxDate: DateTime(2052, 12, 31, 23, 59),
               selectionDecoration: BoxDecoration(
                 color: Colors.transparent,
-                border: Border.all(color: const Color(0xFFFDBC75), width: 2),
+                border: Border.all(color: (!Get.isDarkMode) ? const Color(0xFFFDBC75) : const Color(
+                    0xFAE09C1E), width: 2),
                 borderRadius: const BorderRadius.all(Radius.circular(4)),
                 shape: BoxShape.rectangle,
               ),
               viewHeaderStyle: ViewHeaderStyle(
-                  backgroundColor: colorList[colorController.numberOfColor],
-                  dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19 : en18),
+                  backgroundColor: (!Get.isDarkMode) ? colorList[colorController.numberOfColor] : const Color(0xFF3D4146),
+                  dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19.copyWith(color: Theme.of(context).primaryColorDark) : en18.copyWith(color: Theme.of(context).primaryColorDark)),
               // https://help.syncfusion.com/flutter/calendar/month-view
               monthViewSettings: MonthViewSettings(
                 agendaItemHeight: 57,
@@ -376,35 +375,35 @@ class CalendarState extends State<Calendar> {
                 agendaViewHeight: MediaQuery.of(context).size.height / 3,
                 appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
                 agendaStyle: AgendaStyle(
-                  backgroundColor: Colors.white,
-                  dateTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko22 : en20,
-                  dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko24 : en22,
+                  backgroundColor: (!Get.isDarkMode) ? Colors.white : const Color(0xFF3D4146),
+                  dateTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko22.copyWith(color: Theme.of(context).primaryColorDark) : en20.copyWith(color: Theme.of(context).primaryColorDark),
+                  dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko24.copyWith(color: Theme.of(context).primaryColorDark) : en22.copyWith(color: Theme.of(context).primaryColorDark),
                   placeholderTextStyle: const TextStyle( // Make "No events" a invisible in Month View.
                     color: Colors.transparent,
                   ),
                 ),
                 monthCellStyle: MonthCellStyle(
-                  textStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20 : en18,
+                  textStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20.copyWith(color: Theme.of(context).primaryColorDark) : en18.copyWith(color: Theme.of(context).primaryColorDark),
                   trailingDatesTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ?
                       GoogleFonts.poorStory(
                         fontSize: 17,
-                        color: const Color(0xFFB7B7B7),
+                        color: (!Get.isDarkMode) ? const Color(0xFFB7B7B7) : Colors.grey,
                         fontWeight: FontWeight.w500,
                       )
                       : GoogleFonts.pangolin(
                     fontSize: 16,
-                    color: const Color(0xFFB7B7B7),
+                    color: (!Get.isDarkMode) ? const Color(0xFFB7B7B7) : Colors.grey,
                     fontWeight: FontWeight.w500,
                   ),
                   leadingDatesTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ?
                   GoogleFonts.poorStory(
                     fontSize: 17,
-                    color: const Color(0xFFB7B7B7),
+                    color: (!Get.isDarkMode) ? const Color(0xFFB7B7B7) : Colors.grey,
                     fontWeight: FontWeight.w500,
                   )
                       : GoogleFonts.pangolin(
                     fontSize: 16,
-                    color: const Color(0xFFB7B7B7),
+                    color: (!Get.isDarkMode) ? const Color(0xFFB7B7B7) : Colors.grey,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -415,7 +414,7 @@ class CalendarState extends State<Calendar> {
                   color: (calendarController.view == CalendarView.month ||
                       calendarController.view == null)
                   // The screen appears before the CalendarView value is initially included in the calendarController.view in the first time.
-                      ? Colors.black87
+                      ? ((!Get.isDarkMode) ? Colors.black87 : Colors.white)
                       : Colors.transparent,
                   fontWeight: FontWeight.w500,
                 ) : GoogleFonts.pangolin(
@@ -423,18 +422,18 @@ class CalendarState extends State<Calendar> {
                   color: (calendarController.view == CalendarView.month ||
                           calendarController.view == null)
                       // The screen appears before the CalendarView value is initially included in the calendarController.view in the first time.
-                      ? Colors.black87
+                      ? (!Get.isDarkMode ? Colors.black87 : Colors.white)
                       : Colors.transparent,
                   fontWeight: FontWeight.w300,
                 ),
               ),
               todayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? GoogleFonts.poorStory(
                 fontSize: 19,
-                color: Colors.white
+                color: !Get.isDarkMode ? Colors.white : Colors.black,
               )
                   : GoogleFonts.pangolin(
                 fontSize: 18,
-                color: Colors.white,
+                color: !Get.isDarkMode ? Colors.white : Colors.black,
               ),
             );
           }
@@ -498,6 +497,8 @@ class CalendarState extends State<Calendar> {
       }
       _startTime = TimeOfDay(hour: _startDate.hour, minute: _startDate.minute);
       _endTime = TimeOfDay(hour: _endDate.hour, minute: _endDate.minute);
+      isLoading = false;
+      print(isLoading);
       Navigator.push<Widget>(
         context,
         MaterialPageRoute(

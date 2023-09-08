@@ -29,7 +29,7 @@ class _RecurrenceDeleteState extends State<RecurrenceDelete> {
             return Padding(
               padding: const EdgeInsets.all(4.0),
               child: ListTile(
-                tileColor: colorCollection[selectedColorIndex],
+                tileColor: (!Get.isDarkMode) ? colorCollection[selectedColorIndex] : const Color(0xFF505458),
                 // Button Color = Appointment Color
                 shape: RoundedRectangleBorder(
                   side: const BorderSide(width: 1.0),
@@ -38,7 +38,7 @@ class _RecurrenceDeleteState extends State<RecurrenceDelete> {
                 title: Center(
                   child: Text(
                     _deleteOptionList[index],
-                    style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko22 : en22,
+                    style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko22.copyWith(color: Theme.of(context).primaryColorDark,) : en20.copyWith(color: Theme.of(context).primaryColorDark,),
                     textAlign: TextAlign.center,
                   ),
                 ),
