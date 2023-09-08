@@ -8,6 +8,8 @@ It's available on the [Google Play Store](https://play.google.com/store/apps/det
 > __If you want to refer to this repo,__ you should have your own android/app/google-services.json.
 * Play interstitial ads
 > change AdMob APP ID in AndroidManifest.xml and adUnitId in interstitial_ad_widget.dart to your own.
+* UMP SDK for requesting consent from European Users
+* Dark Theme
 * Upload data to Google Drive, download data from Google Drive
 * Change the color of some parts of the UI
 * Change parts of recurring appointments, Delete parts of recurring appointments
@@ -19,7 +21,9 @@ It's available on the [Google Play Store](https://play.google.com/store/apps/det
 ![Translation](https://github.com/YiJeongseop/ToDoLi/assets/112690335/9b0a98db-f916-4639-a279-c72933c1777c)
 
 ## Screenshots
-![Screenshots](https://github.com/YiJeongseop/ToDoLi/assets/112690335/2dcbe9ed-25f4-40ec-8261-31100f306cfd)
+![ReadmeOne](https://github.com/YiJeongseop/ToDoLi/assets/112690335/08f87fa5-0c95-4d8f-9e85-c7cc044c970b)
+
+![ReadmeTwo](https://github.com/YiJeongseop/ToDoLi/assets/112690335/a8475651-ad7e-452a-bbc9-c4dc717a336d)
 
 ## Packages
 > #### It is necessary to have [a commercial or community license](https://www.syncfusion.com/products/communitylicense) to use syncfusion packages.
