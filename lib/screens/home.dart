@@ -206,20 +206,17 @@ class _HomeState extends State<Home> {
                         title: (!Get.isDarkMode) ? Text("Dark Theme", style: en22.copyWith(color: Theme.of(context).primaryColorDark,),) : Text("Light Theme", style: en22.copyWith(color: Theme.of(context).primaryColorDark,),),
                         // title: Text((isLightTheme == 1) ? "Dark Theme" : "Light Theme", style: en22,),
                         onTap: () {
+                          if(Get.isDarkMode){
+                            _saveThemeStatus(1);
+                          } else{
+                            _saveThemeStatus(0);
+                          }
                           Get.changeThemeMode(
                             Get.isDarkMode ? ThemeMode.light : ThemeMode.dark,
                           );
-                          if(!Get.isDarkMode){
-                            _saveThemeStatus(0);
-                            callInterstitialAd();
-                            loadInterstitialAd();
-                            Get.back();
-                          } else{
-                            _saveThemeStatus(1);
-                            callInterstitialAd();
-                            loadInterstitialAd();
-                            Get.back();
-                          }
+                          callInterstitialAd();
+                          loadInterstitialAd();
+                          Get.back();
                         },
                       ),
                       if (status == ConsentStatus.required)
