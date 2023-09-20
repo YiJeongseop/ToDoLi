@@ -13,12 +13,13 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:todoli/services/interstitial_ad_widget.dart';
 import 'screens/calendar.dart';
 
-// https://developers.google.com/admob/flutter/eu-consent?hl=en
 final params = ConsentRequestParameters();
-// ConsentDebugSettings debugSettings = ConsentDebugSettings(
-//     debugGeography: DebugGeography.debugGeographyEea,
-//     testIdentifiers: ['TEST-DEVICE-HASHED-ID']); // for TEST
-// final params = ConsentRequestParameters(consentDebugSettings: debugSettings); // for TEST
+/*  for Test
+ConsentDebugSettings debugSettings = ConsentDebugSettings(
+    debugGeography: DebugGeography.debugGeographyEea,
+    testIdentifiers: ['TEST-DEVICE-HASHED-ID']);
+final params = ConsentRequestParameters(consentDebugSettings: debugSettings);
+*/
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,8 +37,7 @@ class MyApp extends StatelessWidget {
     final isLightTheme = _prefs.then((SharedPreferences prefs) {
       return prefs.getInt('themeNumber') ?? 1;
     });
-    Get.changeThemeMode(
-        (await isLightTheme) == 1 ? ThemeMode.light : ThemeMode.dark);
+    Get.changeThemeMode((await isLightTheme) == 1 ? ThemeMode.light : ThemeMode.dark);
   }
 
   _getColorStatus() async {
@@ -60,10 +60,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp]); // prevent landscape orientation
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return GetMaterialApp(
-      // https://help.syncfusion.com/flutter/calendar/localization
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -74,14 +72,11 @@ class MyApp extends StatelessWidget {
         Locale('en'),
         Locale('ko'),
       ],
-      locale:
-          (defaultLocale == 'ko_KR') ? const Locale('ko') : const Locale('en'),
+      locale: (defaultLocale == 'ko_KR') ? const Locale('ko') : const Locale('en'),
       debugShowCheckedModeBanner: false,
       title: 'ToDoLi',
-      theme: ThemeData.light()
-          .copyWith(primaryColorLight: Colors.white, primaryColorDark: Colors.black),
-      darkTheme: ThemeData.dark()
-          .copyWith(primaryColorLight: Colors.black, primaryColorDark: const Color(0xFFEBECEC)),
+      theme: ThemeData.light().copyWith(primaryColorLight: Colors.white, primaryColorDark: Colors.black, secondaryHeaderColor: Colors.black38),
+      darkTheme: ThemeData.dark().copyWith(primaryColorLight: Colors.black, primaryColorDark: const Color(0xFFEBECEC), secondaryHeaderColor: Colors.white70),
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {

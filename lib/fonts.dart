@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-// https://fonts.google.com/ You can see various fonts available here.
-
-import 'main.dart';
-
 
 // calendar.dart scheduleView-dateText
 TextStyle en16 = GoogleFonts.pangolin(
@@ -53,7 +49,7 @@ TextStyle en26 = GoogleFonts.pangolin(
     color: Colors.black
 );
 
-// Appointment_editor.dart subject, To-Do
+// Appointment_editor.dart subject, All Day
 // home.dart Logout
 TextStyle en28 = GoogleFonts.pangolin(
   fontSize: 28,
@@ -95,7 +91,7 @@ TextStyle ko20Subject = GoogleFonts.gowunDodum(
     color: Colors.black,
 );
 
-// appointment_editor.dart dateFormat
+// appointment_editor.dart dateFormat, description
 // calendar.dart agenda-dateText
 // recurrence_change.dart recurrence_delete.dart
 // chart.dart ChartRow
@@ -110,15 +106,15 @@ TextStyle ko23 = GoogleFonts.poorStory(
     color: Colors.black,
 );
 
-// appointment_editor.dart recurrence, _valueListCount, _valueListInterval, description
+// appointment_editor.dart recurrence, _valueListCount, _valueListInterval
 // calendar.dart agenda-dayText
-// home.dart chart
+// home.dart chart, darkTheme
 TextStyle ko24 = GoogleFonts.poorStory(
     fontSize: 24,
     color: Colors.black,
 );
 
-// appointment_editor.dart color
+// appointment_editor.dart color, All Day
 TextStyle ko26 = GoogleFonts.poorStory(
   fontSize: 26,
   color: Colors.black,
@@ -131,7 +127,7 @@ TextStyle ko28 = GoogleFonts.poorStory(
     color: Colors.black,
 );
 
-// appointment_editor.dart subject, To-Do
+// appointment_editor.dart subject
 TextStyle ko30 = GoogleFonts.poorStory(
     fontSize: 30,
     color: Colors.black,

@@ -25,5 +25,10 @@
   "sat" : "Sat",
   "sun" : "Sun",
   "done" : "Done",
-  "notDone" : "Not Done"
+  "notDone" : "Not Done",
+  "addTitle" : "Add Title",
+  "allDay" : "All Day",
+  "addDescription" : "Add description",
+  "darkTheme" : "Dark Theme",
+  "lightTheme" : "Light Theme"
 }

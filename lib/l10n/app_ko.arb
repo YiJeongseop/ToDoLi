@@ -25,5 +25,10 @@
   "sat" : "토",
   "sun" : "일",
   "done" : "완료",
-  "notDone" : "미완료"
+  "notDone" : "미완료",
+  "addTitle" : "제목을 써주세요.",
+  "allDay" : "하루종일",
+  "addDescription" : "설명을 써주세요.",
+  "darkTheme" : "어두운 테마",
+  "lightTheme" : "밝은 테마"
 }

@@ -12,9 +12,7 @@ import 'package:todoli/fonts.dart';
 import '../utilities/guide.dart';
 
 class Home extends StatefulWidget {
-  const Home({
-    Key? key,
-  }) : super(key: key);
+  const Home({Key? key,}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -105,18 +103,13 @@ class _HomeState extends State<Home> {
                             Stack(
                               children: [
                                 Container(
-                                  height:
-                                      MediaQuery.of(context).size.height / 7.2 -
-                                          15,
+                                  height: MediaQuery.of(context).size.height / 7.2 - 15,
                                   child: UserAccountsDrawerHeader(
                                     decoration: BoxDecoration(
-                                        color: (!Get.isDarkMode) ? colorList[colorController
-                                            .numberOfColor] : const Color(0xFF3D4146)),
+                                        color: (!Get.isDarkMode) ? colorList[colorController.numberOfColor] : const Color(0xFF3D4146)),
                                     margin: const EdgeInsets.only(bottom: 0.0),
                                     accountName: Text(_displayName!,
-                                        style: (AppLocalizations.of(context)!
-                                                    .localeName ==
-                                                'ko')
+                                        style: (AppLocalizations.of(context)!.localeName == 'ko')
                                             ? GoogleFonts.poorStory(
                                                 fontSize: 29,
                                                 color: Theme.of(context).primaryColorDark,
@@ -124,9 +117,7 @@ class _HomeState extends State<Home> {
                                             : en26.copyWith(color: Theme.of(context).primaryColorDark,)),
                                     accountEmail: Text(
                                       _email!,
-                                      style: (AppLocalizations.of(context)!
-                                                  .localeName ==
-                                              'ko')
+                                      style: (AppLocalizations.of(context)!.localeName == 'ko')
                                           ? GoogleFonts.poorStory(
                                               fontSize: 25,
                                               color: Theme.of(context).primaryColorDark,
@@ -144,8 +135,8 @@ class _HomeState extends State<Home> {
                                       ),
                                       color: Colors.transparent,
                                     ),
-                                    height: MediaQuery.of(context).size.height /
-                                        7.2)
+                                    height: MediaQuery.of(context).size.height / 7.2
+                                ),
                               ],
                             ),
                             Padding(
@@ -154,15 +145,14 @@ class _HomeState extends State<Home> {
                                 leading: Icon(Icons.bar_chart,
                                     size: 30, color: Theme.of(context).primaryColorDark,),
                                 title: Text(AppLocalizations.of(context)!.chart,
-                                    style: AppLocalizations.of(context)!
-                                                .localeName ==
-                                            'ko'
+                                    style: AppLocalizations.of(context)!.localeName == 'ko'
                                         ? ko24.copyWith(color: Theme.of(context).primaryColorDark,)
                                         : en28.copyWith(color: Theme.of(context).primaryColorDark,)),
                                 onTap: () {
                                   Get.to(() => Chart(
-                                      appBarColor: (!Get.isDarkMode) ? colorList[colorController
-                                          .numberOfColor] : const Color(0xFF3D4146)));
+                                      appBarColor: (!Get.isDarkMode)
+                                          ? colorList[colorController.numberOfColor]
+                                          : const Color(0xFF3D4146)));
                                   callInterstitialAd();
                                   loadInterstitialAd();
                                 },
@@ -172,9 +162,7 @@ class _HomeState extends State<Home> {
                               leading: Icon(Icons.library_books_outlined,
                                   size: 30, color: Theme.of(context).primaryColorDark,),
                               title: Text(AppLocalizations.of(context)!.guide,
-                                  style: AppLocalizations.of(context)!
-                                              .localeName ==
-                                          'ko'
+                                  style: AppLocalizations.of(context)!.localeName == 'ko'
                                       ? ko28.copyWith(color: Theme.of(context).primaryColorDark,)
                                       : en28.copyWith(color: Theme.of(context).primaryColorDark,)),
                               onTap: () {
@@ -182,14 +170,11 @@ class _HomeState extends State<Home> {
                               },
                             ),
                             ListTile(
-                              leading: Icon(Icons.logout,
-                                  size: 30, color: Theme.of(context).primaryColorDark,),
+                              leading: Icon(Icons.logout, size: 30, color: Theme.of(context).primaryColorDark),
                               title: Text(AppLocalizations.of(context)!.logout,
-                                  style: AppLocalizations.of(context)!
-                                              .localeName ==
-                                          'ko'
-                                      ? ko28.copyWith(color: Theme.of(context).primaryColorDark,)
-                                      : en28.copyWith(color: Theme.of(context).primaryColorDark,)),
+                                  style: AppLocalizations.of(context)!.localeName == 'ko'
+                                      ? ko28.copyWith(color: Theme.of(context).primaryColorDark)
+                                      : en28.copyWith(color: Theme.of(context).primaryColorDark)),
                               onTap: () {
                                 googleSignIn.disconnect();
                                 // It makes the pop up to choose between Google accounts always come out.
@@ -203,8 +188,15 @@ class _HomeState extends State<Home> {
                         leading: (!Get.isDarkMode) ? const Icon(Icons.dark_mode,
                             size: 30, color: Colors.black) : const Icon(Icons.light_mode,
                             size: 30, color: Colors.white),
-                        title: (!Get.isDarkMode) ? Text("Dark Theme", style: en22.copyWith(color: Theme.of(context).primaryColorDark,),) : Text("Light Theme", style: en22.copyWith(color: Theme.of(context).primaryColorDark,),),
-                        // title: Text((isLightTheme == 1) ? "Dark Theme" : "Light Theme", style: en22,),
+                        title: (!Get.isDarkMode)
+                            ? Text(AppLocalizations.of(context)!.darkTheme,
+                              style: AppLocalizations.of(context)!.localeName == 'ko'
+                                  ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
+                                  : en22.copyWith(color: Theme.of(context).primaryColorDark),)
+                            : Text(AppLocalizations.of(context)!.lightTheme,
+                              style: AppLocalizations.of(context)!.localeName == 'ko'
+                                  ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
+                                  : en22.copyWith(color: Theme.of(context).primaryColorDark),),
                         onTap: () {
                           if(Get.isDarkMode){
                             _saveThemeStatus(1);
@@ -223,8 +215,7 @@ class _HomeState extends State<Home> {
                         ListTile(
                           leading: Icon(Icons.ads_click,
                               size: 30, color: Theme.of(context).primaryColorDark,),
-                          title:
-                              Text("Consent for personalized ads", style: en18.copyWith(color: Theme.of(context).primaryColorDark,)),
+                          title: Text("Consent for personalized ads", style: en18.copyWith(color: Theme.of(context).primaryColorDark,)),
                           onTap: () {
                             consentPersonalizedAds();
                             Get.back();
@@ -232,10 +223,8 @@ class _HomeState extends State<Home> {
                         ),
                       if (status == ConsentStatus.obtained)
                         ListTile(
-                          leading: Icon(Icons.ads_click,
-                              size: 30, color: Theme.of(context).primaryColorDark,),
-                          title: Text("Cancle consent for personalized ads",
-                              style: en18.copyWith(color: Theme.of(context).primaryColorDark,)),
+                          leading: Icon(Icons.ads_click, size: 30, color: Theme.of(context).primaryColorDark,),
+                          title: Text("Cancle consent for personalized ads", style: en18.copyWith(color: Theme.of(context).primaryColorDark,)),
                           onTap: () {
                             cancelConsentPersonalizedAds();
                             Get.back();
@@ -296,11 +285,7 @@ class _HomeState extends State<Home> {
             radius: 17,
             backgroundColor: color,
             child: (colorController.numberOfColor == number)
-                ? const Icon(
-                    Icons.check,
-                    size: 24.0,
-                    color: Colors.white,
-                  )
+                ? const Icon(Icons.check, size: 24.0, color: Colors.white,)
                 : null,
           ),
         ),

@@ -7,16 +7,13 @@ class AppointmentEditor extends StatefulWidget {
   AppointmentEditorState createState() => AppointmentEditorState();
 }
 
-// https://support.syncfusion.com/kb/article/9667/how-to-design-and-configure-your-appointment-editor-in-flutter-calendar
 class AppointmentEditorState extends State<AppointmentEditor> {
   Widget _getAppointmentEditor(BuildContext context) {
     return Container(
       color: (!Get.isDarkMode) ? Colors.white : const Color(0xFF505458),
       child: GestureDetector(
-        // If you tap anywhere else on the screen, the keyboard disappears
-        onTap: () => FocusScope.of(context).unfocus(),
+        onTap: () => FocusScope.of(context).unfocus(), // If you tap anywhere else on the screen, the keyboard disappears
         child: ListView(
-          padding: const EdgeInsets.all(0),
           children: [
             ListTile(
               contentPadding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
@@ -31,8 +28,8 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                 style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko30.copyWith(color: Theme.of(context).primaryColorDark,) : en28.copyWith(color: Theme.of(context).primaryColorDark,),
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: 'Add title',
-                  hintStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko30.copyWith(color: Theme.of(context).primaryColorDark,) : en28.copyWith(color: Theme.of(context).primaryColorDark,),
+                  hintText: AppLocalizations.of(context)!.addTitle,
+                  hintStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko30.copyWith(color: Theme.of(context).secondaryHeaderColor,) : en28.copyWith(color: Theme.of(context).secondaryHeaderColor,),
                 ),
               ),
             ),
@@ -50,8 +47,8 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                 children: [
                   Expanded(
                     child: Text(
-                      'TO-DO',
-                      style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko30.copyWith(color: Theme.of(context).primaryColorDark,) : en26.copyWith(color: Theme.of(context).primaryColorDark,),
+                      AppLocalizations.of(context)!.allDay,
+                      style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko26.copyWith(color: Theme.of(context).primaryColorDark,) : en26.copyWith(color: Theme.of(context).primaryColorDark,),
                     ),
                   ),
                   Expanded(
@@ -81,17 +78,15 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                     child: GestureDetector(
                       child: (AppLocalizations.of(context)!.localeName == 'ko')
                           ? Text(
-                              DateFormat('yyyy년 MMM d일, EEE', 'ko')
-                                  .format(_startDate),
+                              DateFormat('yyyy년 MMM d일, EEE', 'ko').format(_startDate),
                               textAlign: TextAlign.left,
-                              style: ko22.copyWith(color: Theme.of(context).primaryColorDark,),
+                              style: ko22.copyWith(color: Theme.of(context).primaryColorDark),
                             )
                           : Text(
-                                  DateFormat('EEE, MMM dd yyyy')
-                                      .format(_startDate),
-                                  textAlign: TextAlign.left,
-                                  style: en20.copyWith(color: Theme.of(context).primaryColorDark,),
-                                ),
+                              DateFormat('EEE, MMM dd yyyy').format(_startDate),
+                              textAlign: TextAlign.left,
+                              style: en20.copyWith(color: Theme.of(context).primaryColorDark),
+                            ),
                       onTap: () async {
                         final DateTime? date = await showDatePicker(
                           context: context,
@@ -100,22 +95,11 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                           lastDate: DateTime(2042),
                         );
                         if (date != null && date != _startDate) {
-                          setState(
-                            () {
-                              final Duration difference =
-                                  _endDate.difference(_startDate);
-                              _startDate = DateTime(
-                                  date.year,
-                                  date.month,
-                                  date.day,
-                                  _startTime.hour,
-                                  _startTime.minute,
-                                  0,
-                                  0,
-                                  0);
+                          setState(() {
+                              final Duration difference = _endDate.difference(_startDate);
+                              _startDate = DateTime(date.year, date.month, date.day, _startTime.hour, _startTime.minute, 0, 0, 0);
                               _endDate = _startDate.add(difference);
-                              _endTime = TimeOfDay(
-                                  hour: _endDate.hour, minute: _endDate.minute);
+                              _endTime = TimeOfDay(hour: _endDate.hour, minute: _endDate.minute);
                               _byMonthDay = _startDate.day;
                               switch (_startDate.weekday) {
                                 case 1:
@@ -146,42 +130,27 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                         : GestureDetector(
                             child: (AppLocalizations.of(context)!.localeName == 'ko')
                                 ? Text(
-                                    DateFormat('a hh:mm', 'ko')
-                                        .format(_startDate),
+                                    DateFormat('a hh:mm', 'ko').format(_startDate),
                                     textAlign: TextAlign.right,
-                                    style: ko22.copyWith(color: Theme.of(context).primaryColorDark,),
+                                    style: ko22.copyWith(color: Theme.of(context).primaryColorDark),
                                   )
                                 : Text(
-                                        DateFormat('hh:mm a')
-                                            .format(_startDate),
-                                        textAlign: TextAlign.right,
-                                        style: en20.copyWith(color: Theme.of(context).primaryColorDark,),
-                                      ),
+                                    DateFormat('hh:mm a').format(_startDate),
+                                    textAlign: TextAlign.right,
+                                    style: en20.copyWith(color: Theme.of(context).primaryColorDark),
+                                  ),
                             onTap: () async {
                               final TimeOfDay? time = await showTimePicker(
                                   context: context,
-                                  initialTime: TimeOfDay(
-                                      hour: _startTime.hour,
-                                      minute: _startTime.minute));
+                                  initialTime: TimeOfDay(hour: _startTime.hour, minute: _startTime.minute));
                               if (time != null && time != _startTime) {
-                                setState(
-                                  () {
+                                setState(() {
                                     _startTime = time;
                                     final Duration difference =
-                                        _endDate.difference(_startDate);
-                                    _startDate = DateTime(
-                                        _startDate.year,
-                                        _startDate.month,
-                                        _startDate.day,
-                                        _startTime.hour,
-                                        _startTime.minute,
-                                        0,
-                                        0,
-                                        0);
+                                    _endDate.difference(_startDate);
+                                    _startDate = DateTime(_startDate.year, _startDate.month, _startDate.day, _startTime.hour, _startTime.minute, 0, 0, 0);
                                     _endDate = _startDate.add(difference);
-                                    _endTime = TimeOfDay(
-                                        hour: _endDate.hour,
-                                        minute: _endDate.minute);
+                                    _endTime = TimeOfDay(hour: _endDate.hour, minute: _endDate.minute);
                                   },
                                 );
                               }
@@ -202,17 +171,15 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                     child: GestureDetector(
                       child: (AppLocalizations.of(context)!.localeName == 'ko')
                           ? Text(
-                              DateFormat('yyyy년 MMM d일, EEE', 'ko')
-                                  .format(_endDate),
+                              DateFormat('yyyy년 MMM d일, EEE', 'ko').format(_endDate),
                               textAlign: TextAlign.left,
                               style: ko22.copyWith(color: Theme.of(context).primaryColorDark,),
                             )
                           : Text(
-                                  DateFormat('EEE, MMM dd yyyy')
-                                      .format(_endDate),
-                                  textAlign: TextAlign.left,
-                                  style: en20.copyWith(color: Theme.of(context).primaryColorDark,),
-                                ),
+                              DateFormat('EEE, MMM dd yyyy').format(_endDate),
+                              textAlign: TextAlign.left,
+                              style: en20.copyWith(color: Theme.of(context).primaryColorDark,),
+                            ),
                       onTap: () async {
                         final DateTime? date = await showDatePicker(
                           context: context,
@@ -221,23 +188,12 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                           lastDate: DateTime(2100),
                         );
                         if (date != null && date != _endDate) {
-                          setState(
-                            () {
+                          setState(() {
                               final Duration difference = _endDate.difference(_startDate);
-                              _endDate = DateTime(
-                                  date.year,
-                                  date.month,
-                                  date.day,
-                                  _endTime.hour,
-                                  _endTime.minute,
-                                  0,
-                                  0,
-                                  0);
+                              _endDate = DateTime(date.year, date.month, date.day, _endTime.hour, _endTime.minute, 0, 0, 0);
                               if (_endDate.isBefore(_startDate)) {
                                 _startDate = _endDate.subtract(difference);
-                                _startTime = TimeOfDay(
-                                    hour: _startDate.hour,
-                                    minute: _startDate.minute);
+                                _startTime = TimeOfDay(hour: _startDate.hour, minute: _startDate.minute);
                               }
                             },
                           );
@@ -257,34 +213,22 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                                     style: ko22.copyWith(color: Theme.of(context).primaryColorDark,),
                                   )
                                 :Text(
-                                        DateFormat('hh:mm a').format(_endDate),
-                                        textAlign: TextAlign.right,
-                                        style: en20.copyWith(color: Theme.of(context).primaryColorDark,),
-                                      ),
+                                    DateFormat('hh:mm a').format(_endDate),
+                                    textAlign: TextAlign.right,
+                                    style: en20.copyWith(color: Theme.of(context).primaryColorDark,),
+                                  ),
                             onTap: () async {
                               final TimeOfDay? time = await showTimePicker(
                                   context: context,
-                                  initialTime: TimeOfDay(
-                                      hour: _endTime.hour,
-                                      minute: _endTime.minute));
+                                  initialTime: TimeOfDay(hour: _endTime.hour, minute: _endTime.minute));
                               if (time != null && time != _endTime) {
                                 setState(() {
                                     _endTime = time;
                                     final Duration difference = _endDate.difference(_startDate);
-                                    _endDate = DateTime(
-                                        _endDate.year,
-                                        _endDate.month,
-                                        _endDate.day,
-                                        _endTime.hour,
-                                        _endTime.minute,
-                                        0,
-                                        0,
-                                        0);
+                                    _endDate = DateTime(_endDate.year, _endDate.month, _endDate.day, _endTime.hour, _endTime.minute, 0, 0, 0);
                                     if (_endDate.isBefore(_startDate)) {
                                       _startDate = _endDate.subtract(difference);
-                                      _startTime = TimeOfDay(
-                                          hour: _startDate.hour,
-                                          minute: _startDate.minute);
+                                      _startTime = TimeOfDay(hour: _startDate.hour, minute: _startDate.minute);
                                     }
                                   },
                                 );
@@ -354,11 +298,9 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                         );
                       }).toList(),
                       onChanged: (item) {
-                        setState(
-                          () {
-                            _count = item!;
-                          },
-                        );
+                        setState(() {
+                          _count = item!;
+                        });
                       },
                     ),
                     Text(
@@ -430,8 +372,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
             ),
             ListTile(
               contentPadding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
-              leading: Icon(Icons.lens,
-                  color: colorCollection[selectedColorIndex]),
+              leading: Icon(Icons.lens, color: colorCollection[selectedColorIndex]),
               title: Text(
                 colorNames[selectedColorIndex],
                 style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko26.copyWith(color: Theme.of(context).primaryColorDark,) : en22.copyWith(color: Theme.of(context).primaryColorDark,),
@@ -467,8 +408,8 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                 style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko24.copyWith(color: Theme.of(context).primaryColorDark,) : en22.copyWith(color: Theme.of(context).primaryColorDark,),
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: 'Add description',
-                  hintStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko24.copyWith(color: Theme.of(context).primaryColorDark,) : en22.copyWith(color: Theme.of(context).primaryColorDark,),
+                  hintText: AppLocalizations.of(context)!.addDescription,
+                  hintStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko22.copyWith(color: Theme.of(context).secondaryHeaderColor,) : en22.copyWith(color: Theme.of(context).secondaryHeaderColor,),
                 ),
               ),
             ),
