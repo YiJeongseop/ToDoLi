@@ -42,3 +42,4 @@ It's available on the [Google Play Store](https://play.google.com/store/apps/det
 * [url_launcher](https://pub.dev/packages/url_launcher)
 * [http](https://pub.dev/packages/http)
 * [confetti](https://pub.dev/packages/confetti)
+* [klc](https://pub.dev/packages/klc)

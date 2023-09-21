@@ -49,6 +49,7 @@ dependencies:
   http: ^1.1.0
   confetti: ^0.7.0
   syncfusion_flutter_charts: ^22.2.10
+  klc: ^0.1.0
 
 dev_dependencies:
   flutter_test:

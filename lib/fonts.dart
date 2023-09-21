@@ -43,7 +43,7 @@ TextStyle en22 = GoogleFonts.pangolin(
 );
 
 // calendar.dart scheduleView-monthHeader
-// home.dart displayName
+// home.dart displayName, chart
 TextStyle en26 = GoogleFonts.pangolin(
     fontSize: 26,
     color: Colors.black

@@ -12,6 +12,7 @@ import 'package:todoli/controllers/color_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:confetti/confetti.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:klc/klc.dart';
 import '../fonts.dart';
 import '../services/google_drive.dart';
 import '../widgets/color_picker.dart';
@@ -248,7 +249,6 @@ class CalendarState extends State<Calendar> {
               dataSource: calendarDataSource,
               onTap: calendarTapCallback,
               onLongPress: onCalendarLongPressed,
-              // https://help.syncfusion.com/flutter/calendar/schedule-view
               scheduleViewSettings: ScheduleViewSettings(
                 appointmentItemHeight: 52,
                 hideEmptyScheduleWeek: true,
@@ -270,7 +270,6 @@ class CalendarState extends State<Calendar> {
                 ),
               ),
               appointmentTimeTextFormat: 'HH:mm',
-              // https://support.syncfusion.com/kb/article/10679/how-to-customize-the-appointments-using-custom-builder-in-the-flutter-calendar
               appointmentBuilder: (context, calendarAppointmentDetails) {
                 final Appointment appointments = calendarAppointmentDetails.appointments.first;
                 return Container(
@@ -353,22 +352,20 @@ class CalendarState extends State<Calendar> {
               },
               initialDisplayDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0),
               initialSelectedDate: DateTime.now(),
-              backgroundColor: (!Get.isDarkMode) ? Colors.white : const Color(
-                  0xFF505458),
+              backgroundColor: (!Get.isDarkMode) ? Colors.white : const Color(0xFF505458),
               todayHighlightColor: Theme.of(context).primaryColorDark,
               minDate: DateTime(2023, 1, 1, 0, 1),
               maxDate: DateTime(2052, 12, 31, 23, 59),
               selectionDecoration: BoxDecoration(
                 color: Colors.transparent,
-                border: Border.all(color: (!Get.isDarkMode) ? const Color(0xFFFDBC75) : const Color(
-                    0xFAE09C1E), width: 2),
+                border: Border.all(color: (!Get.isDarkMode) ? const Color(0xFFFDBC75) : const Color(0xFAE09C1E), width: 2),
                 borderRadius: const BorderRadius.all(Radius.circular(4)),
                 shape: BoxShape.rectangle,
               ),
               viewHeaderStyle: ViewHeaderStyle(
                   backgroundColor: (!Get.isDarkMode) ? colorList[colorController.numberOfColor] : const Color(0xFF3D4146),
-                  dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19.copyWith(color: Theme.of(context).primaryColorDark) : en18.copyWith(color: Theme.of(context).primaryColorDark)),
-              // https://help.syncfusion.com/flutter/calendar/month-view
+                  dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19.copyWith(color: Theme.of(context).primaryColorDark) : en18.copyWith(color: Theme.of(context).primaryColorDark)
+              ),
               monthViewSettings: MonthViewSettings(
                 agendaItemHeight: 57,
                 showAgenda: true,
@@ -427,17 +424,69 @@ class CalendarState extends State<Calendar> {
                   fontWeight: FontWeight.w300,
                 ),
               ),
-              todayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? GoogleFonts.poorStory(
-                fontSize: 19,
-                color: !Get.isDarkMode ? Colors.white : Colors.black,
-              )
+              todayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko')
+                  ? GoogleFonts.poorStory(
+                      fontSize: 19,
+                      color: !Get.isDarkMode ? Colors.white : Colors.black,
+                    )
                   : GoogleFonts.pangolin(
-                fontSize: 18,
-                color: !Get.isDarkMode ? Colors.white : Colors.black,
-              ),
+                      fontSize: 18,
+                      color: !Get.isDarkMode ? Colors.white : Colors.black,
+                    ),
+
+              monthCellBuilder: (AppLocalizations.of(context)!.localeName == 'ko') ? (BuildContext buildContext, MonthCellDetails details) {
+                var mid = details.visibleDates.length~/2.toInt();
+                var midDate = details.visibleDates[0].add(Duration(days: mid));
+                final DateTime now = DateTime.now();
+                return Container(
+                  decoration: BoxDecoration(border: Border.all(color: Colors.black12, width: 0.5)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            details.date.day.toString(),
+                            style: (details.date.month == midDate.month) ? GoogleFonts.poorStory(
+                              fontSize: (details.date.year == now.year && details.date.month == now.month && details.date.day == now.day) ? 21 : 20,
+                              color: !Get.isDarkMode ? Colors.black : Colors.white,
+                              fontWeight: (details.date.year == now.year && details.date.month == now.month && details.date.day == now.day) ? FontWeight.w600 : FontWeight.w400
+                            ) : GoogleFonts.poorStory(
+                              fontSize: 16,
+                              color: !Get.isDarkMode ? Colors.grey : Colors.white70,
+                            ),
+                          ),
+                          (details.date.month == midDate.month) ? Text(
+                            getLunarDay(details.date.year, details.date.month, details.date.day),
+                            style: GoogleFonts.poorStory(
+                              fontSize: 14,
+                              color: !Get.isDarkMode ? Colors.black45 : Colors.grey,
+                            ),
+                          ) : Container(),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              } : null,
+
             );
           }
         );
+  }
+
+  String getLunarDay(int year, int month, int day){
+    setSolarDate(year, month, day);
+    final lunar = getLunarIsoFormat();
+    List<String> temp = lunar.split('-');
+    if(temp[1][0] == '0'){
+      temp[1] = temp[1][1];
+    }
+    if(temp[2][0] == '0'){
+      temp[2] = temp[2][1];
+    }
+    return "${temp[1]}.${temp[2]}";
   }
 
   // Modify an appointment that exists.
@@ -498,7 +547,6 @@ class CalendarState extends State<Calendar> {
       _startTime = TimeOfDay(hour: _startDate.hour, minute: _startDate.minute);
       _endTime = TimeOfDay(hour: _endDate.hour, minute: _endDate.minute);
       isLoading = false;
-      print(isLoading);
       Navigator.push<Widget>(
         context,
         MaterialPageRoute(

@@ -147,7 +147,7 @@ class _HomeState extends State<Home> {
                                 title: Text(AppLocalizations.of(context)!.chart,
                                     style: AppLocalizations.of(context)!.localeName == 'ko'
                                         ? ko24.copyWith(color: Theme.of(context).primaryColorDark,)
-                                        : en28.copyWith(color: Theme.of(context).primaryColorDark,)),
+                                        : en26.copyWith(color: Theme.of(context).primaryColorDark,)),
                                 onTap: () {
                                   Get.to(() => Chart(
                                       appBarColor: (!Get.isDarkMode)

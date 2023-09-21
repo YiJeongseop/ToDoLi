@@ -285,6 +285,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.7"
+  klc:
+    dependency: "direct main"
+    description:
+      name: klc
+      sha256: "11a4fb100ccc618ead1ccefe0b3dd5eab751b7bfdf1d10b0cd2288d4cc03dcbb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   lints:
     dependency: transitive
     description:
@@ -474,6 +482,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  sprintf:
+    dependency: transitive
+    description:
+      name: sprintf
+      sha256: "1fc9ffe69d4df602376b52949af107d8f5703b77cda567c4d7d86a0693120f23"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.0"
   stack_trace:
     dependency: transitive
     description:
