@@ -1,18 +1,22 @@
 import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
-import 'package:todoli/screens/home.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todoli/controllers/color_controller.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:todoli/services/interstitial_ad_widget.dart';
-import 'screens/calendar.dart';
 
+import 'controllers/color_controller.dart';
+import 'screens/calendar.dart';
+import 'screens/home.dart';
+import 'services/interstitial_ad_widget.dart';
+
+
+// for Requesting Consent from European Users https://developers.google.com/admob/flutter/eu-consent?hl=en
 final params = ConsentRequestParameters();
 /*  for Test
 ConsentDebugSettings debugSettings = ConsentDebugSettings(

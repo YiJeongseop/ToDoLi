@@ -1,5 +1,6 @@
 part of event_calendar;
 
+
 class Chart extends StatefulWidget {
   const Chart({Key? key, required this.appBarColor}) : super(key: key);
 
@@ -27,14 +28,10 @@ class _ChartState extends State<Chart> {
         List<String> pieceOfRecurrenceRule = i.recurrenceRule!.split(';');
 
         if (int.parse(pieceOfRecurrenceRule[2].substring(6)) != 1) {
-          int numberToAdd = int.parse(pieceOfRecurrenceRule[2].substring(6)) -
-              i.recurrenceExceptionDates!.length;
-          List<DateTime> dateCollection =
-              SfCalendar.getRecurrenceDateTimeCollection(
-                  i.recurrenceRule!, i.startTime);
+          int numberToAdd = int.parse(pieceOfRecurrenceRule[2].substring(6)) - i.recurrenceExceptionDates!.length;
+          List<DateTime> dateCollection = SfCalendar.getRecurrenceDateTimeCollection(i.recurrenceRule!, i.startTime);
           if (i.subject.length > 2) {
-            int done =
-                (i.subject.substring(i.subject.length - 3) == '(-)') ? 0 : 1;
+            int done = (i.subject.substring(i.subject.length - 3) == '(-)') ? 0 : 1;
             doneCountPerDay[0][done] += numberToAdd;
             for (DateTime j in dateCollection) {
               if (!i.recurrenceExceptionDates!.contains(j)) {
@@ -52,8 +49,7 @@ class _ChartState extends State<Chart> {
         } else {
           // No recurrence
           if (i.subject.length > 2) {
-            int done =
-                (i.subject.substring(i.subject.length - 3) == '(-)') ? 0 : 1;
+            int done = (i.subject.substring(i.subject.length - 3) == '(-)') ? 0 : 1;
             doneCountPerDay[0][done] += 1;
             doneCountPerDay[i.startTime.weekday][done] += 1;
           } else {
@@ -116,10 +112,8 @@ class _ChartState extends State<Chart> {
                         ColumnSeries<List<dynamic>, String>(
                             dataSource: data!,
                             name: AppLocalizations.of(context)!.done,
-                            xValueMapper: (List<dynamic> value, _) =>
-                                value[2].toString(),
-                            yValueMapper: (List<dynamic> value, _) =>
-                                value[0] as int,
+                            xValueMapper: (List<dynamic> value, _) => value[2].toString(),
+                            yValueMapper: (List<dynamic> value, _) => value[0] as int,
                             yAxisName: 'Primary Y-Axis',
                             gradient: const LinearGradient(
                                 colors: [Color(0xA418B2BE), Color(0x9418B2BE)],
@@ -127,10 +121,8 @@ class _ChartState extends State<Chart> {
                         ColumnSeries<List<dynamic>, String>(
                             dataSource: data,
                             name: AppLocalizations.of(context)!.notDone,
-                            xValueMapper: (List<dynamic> value, _) =>
-                                value[2].toString(),
-                            yValueMapper: (List<dynamic> value, _) =>
-                                value[1] as int,
+                            xValueMapper: (List<dynamic> value, _) => value[2].toString(),
+                            yValueMapper: (List<dynamic> value, _) => value[1] as int,
                             yAxisName: 'Secondary Y-Axis',
                             gradient: const LinearGradient(
                                 colors: [Color(0xCFFD82F7), Color(0x9FFD82F7)],
@@ -162,9 +154,7 @@ class _ChartState extends State<Chart> {
 }
 
 class ChartRow extends StatelessWidget {
-  const ChartRow(
-      {Key? key, required this.data, required this.num, required this.num2})
-      : super(key: key);
+  const ChartRow({Key? key, required this.data, required this.num, required this.num2}) : super(key: key);
 
   final data, num, num2;
 

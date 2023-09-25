@@ -4,12 +4,14 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todoli/screens/calendar.dart';
-import 'package:todoli/controllers/color_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:todoli/services/interstitial_ad_widget.dart';
-import 'package:todoli/fonts.dart';
+
+import '../screens/calendar.dart';
+import '../controllers/color_controller.dart';
+import '../services/interstitial_ad_widget.dart';
+import '../fonts.dart';
 import '../utilities/guide.dart';
+
 
 class Home extends StatefulWidget {
   const Home({Key? key,}) : super(key: key);

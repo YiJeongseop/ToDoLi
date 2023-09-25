@@ -8,11 +8,12 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-import 'package:todoli/controllers/color_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:confetti/confetti.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:klc/klc.dart';
+
+import '../controllers/color_controller.dart';
 import '../fonts.dart';
 import '../services/google_drive.dart';
 import '../widgets/color_picker.dart';
@@ -23,6 +24,7 @@ part '../widgets/recurrence_change.dart';
 part 'login.dart';
 part '../utilities/cancellation_line.dart';
 part 'chart.dart';
+
 
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
@@ -192,9 +194,7 @@ class CalendarState extends State<Calendar> {
 
                           Navigator.push<Widget>(
                             context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    const AppointmentEditor()),
+                            MaterialPageRoute(builder: (BuildContext context) => const AppointmentEditor()),
                           );
                         },
                       );
@@ -255,8 +255,7 @@ class CalendarState extends State<Calendar> {
                 monthHeaderSettings: MonthHeaderSettings(
                   textAlign: TextAlign.center,
                   height: 95,
-                  backgroundColor: (!Get.isDarkMode) ? colorList[colorController.numberOfColor] : const Color(
-                      0xFF3D4146),
+                  backgroundColor: (!Get.isDarkMode) ? colorList[colorController.numberOfColor] : const Color(0xFF3D4146),
                   monthTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko28.copyWith(color: Theme.of(context).primaryColorDark) : en26.copyWith(color: Theme.of(context).primaryColorDark),
                 ),
                 weekHeaderSettings: WeekHeaderSettings(
@@ -386,38 +385,34 @@ class CalendarState extends State<Calendar> {
                         fontSize: 17,
                         color: (!Get.isDarkMode) ? const Color(0xFFB7B7B7) : Colors.grey,
                         fontWeight: FontWeight.w500,
-                      )
-                      : GoogleFonts.pangolin(
-                    fontSize: 16,
-                    color: (!Get.isDarkMode) ? const Color(0xFFB7B7B7) : Colors.grey,
-                    fontWeight: FontWeight.w500,
-                  ),
+                      ) : GoogleFonts.pangolin(
+                        fontSize: 16,
+                        color: (!Get.isDarkMode) ? const Color(0xFFB7B7B7) : Colors.grey,
+                        fontWeight: FontWeight.w500,
+                      ),
                   leadingDatesTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ?
-                  GoogleFonts.poorStory(
-                    fontSize: 17,
-                    color: (!Get.isDarkMode) ? const Color(0xFFB7B7B7) : Colors.grey,
-                    fontWeight: FontWeight.w500,
-                  )
-                      : GoogleFonts.pangolin(
-                    fontSize: 16,
-                    color: (!Get.isDarkMode) ? const Color(0xFFB7B7B7) : Colors.grey,
-                    fontWeight: FontWeight.w500,
-                  ),
+                    GoogleFonts.poorStory(
+                      fontSize: 17,
+                      color: (!Get.isDarkMode) ? const Color(0xFFB7B7B7) : Colors.grey,
+                      fontWeight: FontWeight.w500,
+                    ) : GoogleFonts.pangolin(
+                      fontSize: 16,
+                      color: (!Get.isDarkMode) ? const Color(0xFFB7B7B7) : Colors.grey,
+                      fontWeight: FontWeight.w500,
+                    ),
                 ),
               ),
               headerStyle: CalendarHeaderStyle(
                 textStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? GoogleFonts.poorStory(
                   fontSize: 28,
-                  color: (calendarController.view == CalendarView.month ||
-                      calendarController.view == null)
+                  color: (calendarController.view == CalendarView.month || calendarController.view == null)
                   // The screen appears before the CalendarView value is initially included in the calendarController.view in the first time.
                       ? ((!Get.isDarkMode) ? Colors.black87 : Colors.white)
                       : Colors.transparent,
                   fontWeight: FontWeight.w500,
                 ) : GoogleFonts.pangolin(
                   fontSize: 24,
-                  color: (calendarController.view == CalendarView.month ||
-                          calendarController.view == null)
+                  color: (calendarController.view == CalendarView.month || calendarController.view == null)
                       // The screen appears before the CalendarView value is initially included in the calendarController.view in the first time.
                       ? (!Get.isDarkMode ? Colors.black87 : Colors.white)
                       : Colors.transparent,
@@ -433,7 +428,6 @@ class CalendarState extends State<Calendar> {
                       fontSize: 18,
                       color: !Get.isDarkMode ? Colors.white : Colors.black,
                     ),
-
               monthCellBuilder: (AppLocalizations.of(context)!.localeName == 'ko') ? (BuildContext buildContext, MonthCellDetails details) {
                 var mid = details.visibleDates.length~/2.toInt();
                 var midDate = details.visibleDates[0].add(Duration(days: mid));
@@ -470,7 +464,6 @@ class CalendarState extends State<Calendar> {
                   ),
                 );
               } : null,
-
             );
           }
         );
@@ -536,8 +529,7 @@ class CalendarState extends State<Calendar> {
           }
         } else{
           isCanceled = false;
-          _subject =
-          meetingDetails.subject == AppLocalizations.of(context)!.noTitle
+          _subject = meetingDetails.subject == AppLocalizations.of(context)!.noTitle
               ? ''
               : meetingDetails.subject;
         }

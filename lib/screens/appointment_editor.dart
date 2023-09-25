@@ -1,5 +1,6 @@
 part of event_calendar;
 
+
 class AppointmentEditor extends StatefulWidget {
   const AppointmentEditor({super.key});
 
@@ -511,12 +512,10 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                       builder: (BuildContext context) {
                         return const RecurrenceDelete();
                       },
-                    ).then(
-                      (dynamic value) => setState(() {
+                    ).then((dynamic value) => setState(() {
                         if (_selectedAppointment == null) {
                           Navigator.pop(context);
-                        }
-                      }),
+                        }}),
                     );
                   }
                 },

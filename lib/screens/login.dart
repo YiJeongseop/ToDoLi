@@ -1,5 +1,6 @@
 part of event_calendar;
 
+
 class LoadingOverlay extends StatelessWidget {
   const LoadingOverlay({super.key});
 

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
+
 import '../screens/calendar.dart';
 import '../fonts.dart';
 
+
 class ColorPicker extends StatefulWidget {
+  const ColorPicker({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _ColorPickerState();
