@@ -23,6 +23,7 @@ part '../widgets/recurrence_delete.dart';
 part '../widgets/recurrence_change.dart';
 part 'login.dart';
 part '../utilities/cancellation_line.dart';
+part '../utilities/delete_alert.dart';
 part 'chart.dart';
 
 
@@ -368,7 +369,7 @@ class CalendarState extends State<Calendar> {
               monthViewSettings: MonthViewSettings(
                 agendaItemHeight: 57,
                 showAgenda: true,
-                agendaViewHeight: MediaQuery.of(context).size.height / 3,
+                agendaViewHeight: MediaQuery.of(context).size.height / 3.45,
                 appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
                 agendaStyle: AgendaStyle(
                   backgroundColor: (!Get.isDarkMode) ? Colors.white : const Color(0xFF3D4146),

@@ -30,5 +30,9 @@
   "allDay" : "All Day",
   "addDescription" : "Add description",
   "darkTheme" : "Dark Theme",
-  "lightTheme" : "Light Theme"
+  "lightTheme" : "Light Theme",
+  "deleteTheEntireSchedule" : "Delete the entire schedule",
+  "cancle" : "Cancle",
+  "check" : "Check",
+  "deleteAlert" : "Are you sure you want to delete it?"
 }

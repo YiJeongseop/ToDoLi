@@ -68,7 +68,7 @@ class _HomeState extends State<Home> {
         },
         backgroundColor: Theme.of(context).primaryColorLight,
         appBar: AppBar(
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             size: 35,
             color: Colors.white,
           ),
@@ -141,24 +141,21 @@ class _HomeState extends State<Home> {
                                 ),
                               ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                              child: ListTile(
-                                leading: Icon(Icons.bar_chart,
-                                    size: 30, color: Theme.of(context).primaryColorDark,),
-                                title: Text(AppLocalizations.of(context)!.chart,
-                                    style: AppLocalizations.of(context)!.localeName == 'ko'
-                                        ? ko24.copyWith(color: Theme.of(context).primaryColorDark,)
-                                        : en26.copyWith(color: Theme.of(context).primaryColorDark,)),
-                                onTap: () {
-                                  Get.to(() => Chart(
-                                      appBarColor: (!Get.isDarkMode)
-                                          ? colorList[colorController.numberOfColor]
-                                          : const Color(0xFF3D4146)));
-                                  callInterstitialAd();
-                                  loadInterstitialAd();
-                                },
-                              ),
+                            ListTile(
+                              leading: Icon(Icons.bar_chart,
+                                  size: 30, color: Theme.of(context).primaryColorDark,),
+                              title: Text(AppLocalizations.of(context)!.chart,
+                                  style: AppLocalizations.of(context)!.localeName == 'ko'
+                                      ? ko24.copyWith(color: Theme.of(context).primaryColorDark,)
+                                      : en26.copyWith(color: Theme.of(context).primaryColorDark,)),
+                              onTap: () {
+                                Get.to(() => Chart(
+                                    appBarColor: (!Get.isDarkMode)
+                                        ? colorList[colorController.numberOfColor]
+                                        : const Color(0xFF3D4146)));
+                                callInterstitialAd();
+                                loadInterstitialAd();
+                              },
                             ),
                             ListTile(
                               leading: Icon(Icons.library_books_outlined,
@@ -169,6 +166,17 @@ class _HomeState extends State<Home> {
                                       : en28.copyWith(color: Theme.of(context).primaryColorDark,)),
                               onTap: () {
                                 guideDialog(context);
+                              },
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.delete_forever_outlined,
+                                size: 30, color: Theme.of(context).primaryColorDark,),
+                              title: Text(AppLocalizations.of(context)!.deleteTheEntireSchedule,
+                                  style: AppLocalizations.of(context)!.localeName == 'ko'
+                                      ? ko24.copyWith(color: Theme.of(context).primaryColorDark,)
+                                      : en20.copyWith(color: Theme.of(context).primaryColorDark,)),
+                              onTap: () {
+                                deleteDialog(context);
                               },
                             ),
                             ListTile(

@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
         Locale('en'),
         Locale('ko'),
       ],
-      locale: (defaultLocale == 'ko_KR') ? const Locale('ko') : const Locale('en'),
+      locale: (defaultLocale == 'ko_KR') ? const Locale('en') : const Locale('en'),
       debugShowCheckedModeBanner: false,
       title: 'ToDoLi',
       theme: ThemeData.light().copyWith(primaryColorLight: Colors.white, primaryColorDark: Colors.black, secondaryHeaderColor: Colors.black38),
