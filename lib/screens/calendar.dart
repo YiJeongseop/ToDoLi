@@ -17,6 +17,7 @@ import '../controllers/color_controller.dart';
 import '../fonts.dart';
 import '../services/google_drive.dart';
 import '../widgets/color_picker.dart';
+import '../utilities/db_helper.dart';
 
 part 'appointment_editor.dart';
 part '../widgets/recurrence_delete.dart';
@@ -60,11 +61,10 @@ late List<DateTime> _recurrenceExceptionDates;
 final _valueListFreq = ['DAILY', 'WEEKLY', 'MONTHLY'];
 final _valueListInterval = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 final _valueListCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+final dbHelper = DBHelper();
 
 class CalendarState extends State<Calendar> {
-  bool isLoading = true; // It is used to get data from Google Drive at first.
-
-  CalendarState();
+  bool isLoading = true;
 
   CalendarController calendarController = CalendarController();
   final ColorController colorController = Get.put(ColorController());
@@ -77,7 +77,8 @@ class CalendarState extends State<Calendar> {
   ];
 
   Future<void> _initializeAsyncStuff() async {
-    _events = DataSource(await downloadAppointmentsFromDrive());
+    _events = DataSource(await dbHelper.getData());
+    //_events = DataSource(await downloadAppointmentsFromDrive());
     setState(() {
       isLoading = false;
     });
@@ -85,7 +86,9 @@ class CalendarState extends State<Calendar> {
 
   @override
   initState() {
+    super.initState();
     _initializeAsyncStuff();
+
     _selectedAppointment = null;
     selectedColorIndex = 0;
 
@@ -110,8 +113,6 @@ class CalendarState extends State<Calendar> {
     colorNames.add('Mint');
     colorNames.add('Peach');
     colorNames.add('Red');
-
-    super.initState();
   }
 
   @override
@@ -561,7 +562,7 @@ class DataSource extends CalendarDataSource {
   }
 }
 
-Map<String, dynamic> appointmentToJson(Appointment appointment) {
+Map<String, dynamic> appointmentToJson(Appointment appointment, bool isGoogleDrive) {
   return {
     'subject': appointment.subject,
     'notes': appointment.notes,
@@ -570,18 +571,17 @@ Map<String, dynamic> appointmentToJson(Appointment appointment) {
     'startTime': appointment.startTime.toIso8601String(),
     'endTime': appointment.endTime.toIso8601String(),
     'recurrenceRule': appointment.recurrenceRule,
-    'recurrenceExceptionDates': appointment.recurrenceExceptionDates!
-        .map((datetime) => datetime.toIso8601String())
-        .toList(),
+    'recurrenceExceptionDates': isGoogleDrive
+        ? appointment.recurrenceExceptionDates!.map((datetime) => datetime.toIso8601String()).toList()
+        : appointment.recurrenceExceptionDates!.map((datetime) => datetime.toIso8601String()).toList().join(","),
     'id': appointment.id.toString(),
   };
 }
 
-List<Map<String, dynamic>> appointmentsToJsonList(
-    List<Appointment> appointments) {
+List<Map<String, dynamic>> appointmentsToJsonList(List<Appointment> appointments, bool isGoogleDrive) {
   List<Map<String, dynamic>> jsonList = [];
   for (var appointment in appointments) {
-    jsonList.add(appointmentToJson(appointment));
+    jsonList.add(appointmentToJson(appointment, isGoogleDrive));
   }
   return jsonList;
 }

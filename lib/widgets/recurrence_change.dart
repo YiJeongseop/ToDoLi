@@ -75,11 +75,17 @@ class _RecurrenceChangeState extends State<RecurrenceChange> {
                             }
                           }
                           apptToAddAgain = firstAppt;
+                          dbHelper.deleteData(firstAppt.id.toString());
                           _events.appointments!.removeAt(_events.appointments!.indexOf(firstAppt));
                           _events.notifyListeners(CalendarDataSourceAction.remove, <Appointment>[]..add(firstAppt));
-                          tempAppointments.add(apptToAddAgain);
-                          _events.appointments!.add(tempAppointments[0]);
-                          _events.notifyListeners(CalendarDataSourceAction.add, tempAppointments);
+
+                          List<String> pieceOfRecurrenceRule = apptToAddAgain.recurrenceRule!.split(';');
+                          if(apptToAddAgain.recurrenceExceptionDates!.length != int.parse(pieceOfRecurrenceRule[2].substring(6))){
+                            tempAppointments.add(apptToAddAgain);
+                            dbHelper.insertData(appointmentToJson(tempAppointments[0], false));
+                            _events.appointments!.add(tempAppointments[0]);
+                            _events.notifyListeners(CalendarDataSourceAction.add, tempAppointments);
+                          }
                           // Delete all appointments since the appointment you choose
 
                           // Add a new changed appointment
@@ -96,11 +102,17 @@ class _RecurrenceChangeState extends State<RecurrenceChange> {
                             firstAppt.recurrenceExceptionDates!.add(_selectedAppointment!.startTime);
                           }
                           apptToAddAgain = firstAppt;
+                          dbHelper.deleteData(firstAppt.id.toString());
                           _events.appointments!.removeAt(_events.appointments!.indexOf(firstAppt));
                           _events.notifyListeners(CalendarDataSourceAction.remove, <Appointment>[]..add(firstAppt));
-                          tempAppointments.add(apptToAddAgain);
-                          _events.appointments!.add(tempAppointments[0]);
-                          _events.notifyListeners(CalendarDataSourceAction.add, tempAppointments);
+
+                          List<String> pieceOfRecurrenceRule = apptToAddAgain.recurrenceRule!.split(';');
+                          if(apptToAddAgain.recurrenceExceptionDates!.length != int.parse(pieceOfRecurrenceRule[2].substring(6))){
+                            tempAppointments.add(apptToAddAgain);
+                            dbHelper.insertData(appointmentToJson(tempAppointments[0], false));
+                            _events.appointments!.add(tempAppointments[0]);
+                            _events.notifyListeners(CalendarDataSourceAction.add, tempAppointments);
+                          }
 
                           addAppointmentInChange(<Appointment>[]);
                           break;
@@ -139,9 +151,10 @@ class _RecurrenceChangeState extends State<RecurrenceChange> {
           ? 'FREQ=$_freq;INTERVAL=$_interval;COUNT=$_count;BYMONTHDAY=${_startDate.day}'
           : 'FREQ=DAILY;INTERVAL=1;COUNT=1')),
     ));
+    dbHelper.insertData(appointmentToJson(tempAppointments[0], false));
     _events.appointments!.add(tempAppointments[0]);
     _events.notifyListeners(CalendarDataSourceAction.add, tempAppointments);
     _selectedAppointment = null;
-    uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
+    //uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
   }
 }

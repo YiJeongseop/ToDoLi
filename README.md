@@ -43,3 +43,5 @@ It's available on the [Google Play Store](https://play.google.com/store/apps/det
 * [http](https://pub.dev/packages/http)
 * [confetti](https://pub.dev/packages/confetti)
 * [klc](https://pub.dev/packages/klc)
+* [sqflite](https://pub.dev/packages/sqflite)
+* [path](https://pub.dev/packages/path)

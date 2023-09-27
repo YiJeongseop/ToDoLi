@@ -20,7 +20,7 @@ Future<drive.DriveApi?> _getDriveApi() async {
 Future<void> uploadAppointmentsToDrive(List<Appointment> appointments) async {
   final driveApi = await _getDriveApi();
 
-  List<Map<String, dynamic>> jsonList = appointmentsToJsonList(appointments);
+  List<Map<String, dynamic>> jsonList = appointmentsToJsonList(appointments, true);
   final appointmentsJson1 = jsonEncode(jsonList);
   final appointmentsJson2 = utf8.encode(appointmentsJson1);
 
@@ -52,6 +52,7 @@ Future<List<Appointment>> downloadAppointmentsFromDrive() async {
     List<DateTime> dateTimeOfRedList = List.generate(redList.length, (index) => redList[index] as DateTime);
     List<String> pieceOfRecurrenceRule = appt['recurrenceRule'].split(';');
 
+    // This part is to ignore previously incorrectly saved appointments.
     if(pieceOfRecurrenceRule.length == 4){
       if(pieceOfRecurrenceRule[3] == 'BYDAY=' || pieceOfRecurrenceRule[3] == 'BYMONTHDAY=') continue;
     }

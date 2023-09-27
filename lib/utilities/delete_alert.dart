@@ -19,7 +19,10 @@ void deleteDialog(BuildContext context){
                 onPressed: () {
                   _events.appointments!.clear();
                   _events.notifyListeners(CalendarDataSourceAction.reset, _events.appointments!);
-                  uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
+
+                  dbHelper.deleteAllData();
+                  // uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
+
                   Future.delayed(const Duration(milliseconds: 200), () {
                     Navigator.pop(context);
                   });

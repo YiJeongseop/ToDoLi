@@ -49,25 +49,25 @@ class _RecurrenceDeleteState extends State<RecurrenceDelete> {
                     List<String> pieceOfRecurrenceRule = _selectedAppointment!.recurrenceRule!.split(';');
                     if (index == 0) { // Delete all
                       if (_selectedAppointment!.appointmentType == AppointmentType.pattern) {
-                        _events.appointments!.removeAt(_events.appointments!
-                            .indexOf(_selectedAppointment));
+                        dbHelper.deleteData(_selectedAppointment!.id.toString());
+                        _events.appointments!.removeAt(_events.appointments!.indexOf(_selectedAppointment));
                         _events.notifyListeners(CalendarDataSourceAction.remove,
                             <Appointment>[]..add(_selectedAppointment!));
                         _selectedAppointment = null;
-                        uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
+                        //uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
                       }
                       // Only first appointment of Recurrence Appointments is in _events.appointments.
                       // If you didn't choose the first appointment, you have to find first appointment.
                       else {
                         for (Appointment firstAppt in _events.appointments!) {
                           if (firstAppt.id == _selectedAppointment!.id) {
-                            _events.appointments!
-                                .removeAt(_events.appointments!.indexOf(firstAppt));
+                            dbHelper.deleteData(_selectedAppointment!.id.toString());
+                            _events.appointments!.removeAt(_events.appointments!.indexOf(firstAppt));
                             _events.notifyListeners(
                                 CalendarDataSourceAction.remove,
                                 <Appointment>[]..add(firstAppt));
                             _selectedAppointment = null;
-                            uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
+                            //uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
                             break;
                           }
                         }
@@ -80,21 +80,21 @@ class _RecurrenceDeleteState extends State<RecurrenceDelete> {
                           firstAppt.recurrenceExceptionDates!
                               .add(_selectedAppointment!.startTime);
                           apptToAddAgain = firstAppt;
-                          _events.appointments!
-                              .removeAt(_events.appointments!.indexOf(firstAppt));
+                          dbHelper.deleteData(firstAppt.id.toString());
+                          _events.appointments!.removeAt(_events.appointments!.indexOf(firstAppt));
                           _events.notifyListeners(
                               CalendarDataSourceAction.remove,
                               <Appointment>[]..add(firstAppt));
 
                           if(apptToAddAgain.recurrenceExceptionDates!.length !=
                               int.parse(pieceOfRecurrenceRule[2].substring(6))){
+                            dbHelper.insertData(appointmentToJson(apptToAddAgain, false));
                             tempAppointments.add(apptToAddAgain);
                             _events.appointments!.add(tempAppointments[0]);
-                            _events.notifyListeners(
-                                CalendarDataSourceAction.add, tempAppointments);
+                            _events.notifyListeners(CalendarDataSourceAction.add, tempAppointments);
                           }
                           _selectedAppointment = null;
-                          uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
+                          //uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
                           break;
                         }
                       }
@@ -114,21 +114,21 @@ class _RecurrenceDeleteState extends State<RecurrenceDelete> {
                             }
                           }
                           apptToAddAgain = firstAppt;
-                          _events.appointments!
-                              .removeAt(_events.appointments!.indexOf(firstAppt));
+                          dbHelper.deleteData(firstAppt.id.toString());
+                          _events.appointments!.removeAt(_events.appointments!.indexOf(firstAppt));
                           _events.notifyListeners(
                               CalendarDataSourceAction.remove,
                               <Appointment>[]..add(firstAppt));
 
                           if(apptToAddAgain.recurrenceExceptionDates!.length !=
                               int.parse(pieceOfRecurrenceRule[2].substring(6))){
+                            dbHelper.insertData(appointmentToJson(apptToAddAgain, false));
                             tempAppointments.add(apptToAddAgain);
                             _events.appointments!.add(tempAppointments[0]);
-                            _events.notifyListeners(
-                                CalendarDataSourceAction.add, tempAppointments);
+                            _events.notifyListeners(CalendarDataSourceAction.add, tempAppointments);
                           }
                           _selectedAppointment = null;
-                          uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
+                          //uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
                           break;
                         }
                       }

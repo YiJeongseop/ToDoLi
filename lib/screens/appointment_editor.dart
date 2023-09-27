@@ -499,8 +499,11 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                   if (int.parse(pieceOfRecurrenceRule[2].substring(6)) == 1) {
                     _events.appointments!.removeAt(_events.appointments!.indexOf(_selectedAppointment));
                     _events.notifyListeners(CalendarDataSourceAction.remove, <Appointment>[]..add(_selectedAppointment!));
+
+                    dbHelper.deleteData(_selectedAppointment!.id.toString());
+                    // uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
+
                     _selectedAppointment = null;
-                    uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
                     Navigator.pop(context);
                   }
 
@@ -547,7 +550,10 @@ class AppointmentEditorState extends State<AppointmentEditor> {
     _events.appointments!.add(tempAppointments[0]);
     _events.notifyListeners(CalendarDataSourceAction.add, tempAppointments);
     _selectedAppointment = null;
-    uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
+
+    dbHelper.insertData(appointmentToJson(tempAppointments[0], false));
+    //uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
+
     Navigator.pop(context);
   }
 }

@@ -35,6 +35,8 @@ void modifyCancellationLine(CalendarLongPressDetails details) {
         appointmentAfterMod!.subject = "${selectedAppointment.subject}(-)";
       }
 
+      dbHelper.deleteData(appointmentBeforeMod!.id.toString());
+
       // If you insert selectedAppointment, An error occurs.
       _events.appointments!.removeAt(_events.appointments!.indexOf(appointmentBeforeMod));
       _events.notifyListeners(CalendarDataSourceAction.remove, <Appointment>[]..add(appointmentBeforeMod!));
@@ -109,7 +111,9 @@ void modifyCancellationLine(CalendarLongPressDetails details) {
         }
       }
 
-      Appointment temp = appointmentBeforeMod!;
+      dbHelper.deleteData(appointmentBeforeMod!.id.toString());
+
+      Appointment temp = appointmentBeforeMod;
       temp.recurrenceExceptionDates!.add(selectedAppointment.startTime);
 
       _events.appointments!.removeAt(_events.appointments!.indexOf(appointmentBeforeMod));
@@ -118,13 +122,15 @@ void modifyCancellationLine(CalendarLongPressDetails details) {
       // If all dates of recurrence appointment are excluded, you do not need to add it.
       if(temp.recurrenceExceptionDates!.length !=
           int.parse(pieceOfRecurrenceRule[2].substring(6))){
+        dbHelper.insertData(appointmentToJson(temp, false));
         _events.appointments!.add(temp);
         _events.notifyListeners(CalendarDataSourceAction.add, <Appointment>[]..add(temp));
       }
     }
 
+    dbHelper.insertData(appointmentToJson(appointmentAfterMod!, false));
     _events.appointments!.add(appointmentAfterMod);
-    _events.notifyListeners(CalendarDataSourceAction.add, <Appointment>[]..add(appointmentAfterMod!));
-    uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
+    _events.notifyListeners(CalendarDataSourceAction.add, <Appointment>[]..add(appointmentAfterMod));
+    //uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
   }
 }
