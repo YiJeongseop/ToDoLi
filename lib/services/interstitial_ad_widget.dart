@@ -1,6 +1,5 @@
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-
 InterstitialAd? _interstitialAd;
 var status;
 
@@ -18,8 +17,7 @@ void loadInterstitialAd() {
 void callInterstitialAd() {
   _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
     onAdDismissedFullScreenContent: (InterstitialAd ad) => ad.dispose(),
-    onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) =>
-        ad.dispose(),
+    onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) => ad.dispose(),
   );
   _interstitialAd?.show();
 }
@@ -38,8 +36,7 @@ void cancelConsentPersonalizedAds() {
   final params = ConsentRequestParameters();
   // final params = ConsentRequestParameters(consentDebugSettings: debugSettings); // for test
 
-  ConsentInformation.instance.requestConsentInfoUpdate(params, () async {
-  }, (error) {});
+  ConsentInformation.instance.requestConsentInfoUpdate(params, () async {}, (error) {});
 }
 
 Future<void> setStatus() async {

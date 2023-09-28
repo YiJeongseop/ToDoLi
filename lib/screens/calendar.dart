@@ -9,23 +9,18 @@ import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:confetti/confetti.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:klc/klc.dart';
-
 import '../controllers/color_controller.dart';
 import '../fonts.dart';
-import '../services/google_drive.dart';
 import '../widgets/color_picker.dart';
 import '../utilities/db_helper.dart';
 
 part 'appointment_editor.dart';
 part '../widgets/recurrence_delete.dart';
 part '../widgets/recurrence_change.dart';
-part 'login.dart';
 part '../utilities/cancellation_line.dart';
 part '../utilities/delete_alert.dart';
-
+part '../services/google_login.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
@@ -77,7 +72,6 @@ class CalendarState extends State<Calendar> {
 
   Future<void> _initializeAsyncStuff() async {
     _events = DataSource(await dbHelper.getData());
-    //_events = DataSource(await downloadAppointmentsFromDrive());
     setState(() {
       isLoading = false;
     });
@@ -145,13 +139,10 @@ class CalendarState extends State<Calendar> {
                 children: [
                   FloatingActionButton(
                     heroTag: 'addAppointment',
-                    backgroundColor: (!Get.isDarkMode) ? colorList[colorController.numberOfColor] : const Color(0xFF3D4146),
-                    child: const Icon(
-                      Icons.add,
-                      color: Colors.white,
-                      weight: 20,
-                      size: 40,
-                    ),
+                    backgroundColor: (!Get.isDarkMode)
+                        ? colorList[colorController.numberOfColor]
+                        : const Color(0xFF3D4146),
+                    child: const Icon(Icons.add, color: Colors.white, weight: 20, size: 40),
                     onPressed: () {
                       setState(() {
                           isCanceled = false;
@@ -161,10 +152,8 @@ class CalendarState extends State<Calendar> {
                           final DateTime date = calendarController.selectedDate!;
                           _startDate = date;
                           _endDate = date.add(const Duration(hours: 1));
-                          _startTime = TimeOfDay(
-                              hour: _startDate.hour, minute: _startDate.minute);
-                          _endTime = TimeOfDay(
-                              hour: _endDate.hour, minute: _endDate.minute);
+                          _startTime = TimeOfDay(hour: _startDate.hour, minute: _startDate.minute);
+                          _endTime = TimeOfDay(hour: _endDate.hour, minute: _endDate.minute);
                           _byMonthDay = _startDate.day;
                           _isAllDay = false;
                           _subject = '';
@@ -206,20 +195,12 @@ class CalendarState extends State<Calendar> {
                   ),
                   FloatingActionButton(
                     heroTag: 'changeView',
-                    backgroundColor: (!Get.isDarkMode) ? colorList[colorController.numberOfColor] : const Color(0xFF3D4146),
+                    backgroundColor: (!Get.isDarkMode)
+                        ? colorList[colorController.numberOfColor]
+                        : const Color(0xFF3D4146),
                     child: (calendarController.view == CalendarView.month)
-                        ? const Icon(
-                            Icons.list_alt,
-                            color: Colors.white,
-                            weight: 20,
-                            size: 40,
-                          )
-                        : const Icon(
-                            Icons.calendar_month,
-                            color: Colors.white,
-                            weight: 20,
-                            size: 40,
-                          ),
+                        ? const Icon(Icons.list_alt, color: Colors.white, weight: 20, size: 40)
+                        : const Icon(Icons.calendar_month, color: Colors.white, weight: 20, size: 40),
                     onPressed: () {
                       setState(
                         () {
@@ -256,17 +237,27 @@ class CalendarState extends State<Calendar> {
                 monthHeaderSettings: MonthHeaderSettings(
                   textAlign: TextAlign.center,
                   height: 95,
-                  backgroundColor: (!Get.isDarkMode) ? colorList[colorController.numberOfColor] : const Color(0xFF3D4146),
-                  monthTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko28.copyWith(color: Theme.of(context).primaryColorDark) : en26.copyWith(color: Theme.of(context).primaryColorDark),
+                  backgroundColor: (!Get.isDarkMode)
+                      ? colorList[colorController.numberOfColor]
+                      : const Color(0xFF3D4146),
+                  monthTextStyle: (AppLocalizations.of(context)!.localeName == 'ko')
+                      ? ko28.copyWith(color: Theme.of(context).primaryColorDark)
+                      : en26.copyWith(color: Theme.of(context).primaryColorDark),
                 ),
                 weekHeaderSettings: WeekHeaderSettings(
                   height: 20,
                   textAlign: TextAlign.start,
-                  weekTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20.copyWith(color: Theme.of(context).primaryColorDark) : en18.copyWith(color: Theme.of(context).primaryColorDark),
+                  weekTextStyle: (AppLocalizations.of(context)!.localeName == 'ko')
+                      ? ko20.copyWith(color: Theme.of(context).primaryColorDark)
+                      : en18.copyWith(color: Theme.of(context).primaryColorDark),
                 ),
                 dayHeaderSettings: DayHeaderSettings(
-                  dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko16.copyWith(color: Theme.of(context).primaryColorDark) : en16.copyWith(color: Theme.of(context).primaryColorDark),
-                  dateTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko18.copyWith(color: Theme.of(context).primaryColorDark) : en18.copyWith(color: Theme.of(context).primaryColorDark),
+                  dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko')
+                      ? ko16.copyWith(color: Theme.of(context).primaryColorDark, fontWeight: FontWeight.w500)
+                      : en16.copyWith(color: Theme.of(context).primaryColorDark),
+                  dateTextStyle: (AppLocalizations.of(context)!.localeName == 'ko')
+                      ? ko18.copyWith(color: Theme.of(context).primaryColorDark, fontWeight: FontWeight.w500)
+                      : en18.copyWith(color: Theme.of(context).primaryColorDark),
                 ),
               ),
               appointmentTimeTextFormat: 'HH:mm',
@@ -301,13 +292,13 @@ class CalendarState extends State<Calendar> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: (AppLocalizations.of(context)!.localeName == 'ko') ?
-                              ko20Subject.copyWith(decoration: TextDecoration.lineThrough,) :
+                              ko20_2.copyWith(decoration: TextDecoration.lineThrough,) :
                               en20.copyWith(decoration: TextDecoration.lineThrough,),
                             ) : Text(
                               appointments.subject,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20Subject : en20,
+                              style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20_2 : en20,
                               ),
                             ),
                           if(appointments.subject.length < 3)
@@ -316,7 +307,7 @@ class CalendarState extends State<Calendar> {
                                 appointments.subject,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20Subject : en20,
+                                style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20_2 : en20,
                               ),
                             ),
                         if ((appointments.isAllDay == false) & (appointments.startTime.year != appointments.endTime.year))
@@ -364,7 +355,9 @@ class CalendarState extends State<Calendar> {
               ),
               viewHeaderStyle: ViewHeaderStyle(
                   backgroundColor: (!Get.isDarkMode) ? colorList[colorController.numberOfColor] : const Color(0xFF3D4146),
-                  dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko19.copyWith(color: Theme.of(context).primaryColorDark) : en18.copyWith(color: Theme.of(context).primaryColorDark)
+                  dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko')
+                      ? ko19.copyWith(color: Theme.of(context).primaryColorDark)
+                      : en18.copyWith(color: Theme.of(context).primaryColorDark)
               ),
               monthViewSettings: MonthViewSettings(
                 agendaItemHeight: 57,
@@ -373,14 +366,20 @@ class CalendarState extends State<Calendar> {
                 appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
                 agendaStyle: AgendaStyle(
                   backgroundColor: (!Get.isDarkMode) ? Colors.white : const Color(0xFF3D4146),
-                  dateTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko22.copyWith(color: Theme.of(context).primaryColorDark) : en20.copyWith(color: Theme.of(context).primaryColorDark),
-                  dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko24.copyWith(color: Theme.of(context).primaryColorDark) : en22.copyWith(color: Theme.of(context).primaryColorDark),
+                  dateTextStyle: (AppLocalizations.of(context)!.localeName == 'ko')
+                      ? ko22.copyWith(color: Theme.of(context).primaryColorDark)
+                      : en20.copyWith(color: Theme.of(context).primaryColorDark),
+                  dayTextStyle: (AppLocalizations.of(context)!.localeName == 'ko')
+                      ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
+                      : en22.copyWith(color: Theme.of(context).primaryColorDark),
                   placeholderTextStyle: const TextStyle( // Make "No events" a invisible in Month View.
                     color: Colors.transparent,
                   ),
                 ),
                 monthCellStyle: MonthCellStyle(
-                  textStyle: (AppLocalizations.of(context)!.localeName == 'ko') ? ko20.copyWith(color: Theme.of(context).primaryColorDark) : en18.copyWith(color: Theme.of(context).primaryColorDark),
+                  textStyle: (AppLocalizations.of(context)!.localeName == 'ko')
+                      ? ko20.copyWith(color: Theme.of(context).primaryColorDark)
+                      : en18.copyWith(color: Theme.of(context).primaryColorDark),
                   trailingDatesTextStyle: (AppLocalizations.of(context)!.localeName == 'ko') ?
                       GoogleFonts.poorStory(
                         fontSize: 17,
@@ -523,8 +522,7 @@ class CalendarState extends State<Calendar> {
             _subject = meetingDetails.subject.substring(0, meetingDetails.subject.length - 3);
           } else{
             isCanceled = false;
-            _subject =
-            meetingDetails.subject == AppLocalizations.of(context)!.noTitle
+            _subject = meetingDetails.subject == AppLocalizations.of(context)!.noTitle
                 ? ''
                 : meetingDetails.subject;
           }
@@ -542,8 +540,7 @@ class CalendarState extends State<Calendar> {
       isLoading = false;
       Navigator.push<Widget>(
         context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => const AppointmentEditor()),
+        MaterialPageRoute(builder: (BuildContext context) => const AppointmentEditor()),
       );
     });
   }

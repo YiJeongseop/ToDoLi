@@ -14,7 +14,6 @@ It's available on the [Google Play Store](https://play.google.com/store/apps/det
 * Change the color of some parts of the UI
 * Change parts of recurring appointments, Delete parts of recurring appointments
 * Press and hold the To-do to create or remove a cancellation line
-* Run animation on the login screen
 * English and Korean translations
 
 ![Translation](https://github.com/YiJeongseop/ToDoLi/assets/112690335/9b0a98db-f916-4639-a279-c72933c1777c)
@@ -39,7 +38,6 @@ It's available on the [Google Play Store](https://play.google.com/store/apps/det
 * [shared_preferences](https://pub.dev/packages/shared_preferences)
 * [url_launcher](https://pub.dev/packages/url_launcher)
 * [http](https://pub.dev/packages/http)
-* [confetti](https://pub.dev/packages/confetti)
 * [klc](https://pub.dev/packages/klc)
 * [sqflite](https://pub.dev/packages/sqflite)
 * [path](https://pub.dev/packages/path)

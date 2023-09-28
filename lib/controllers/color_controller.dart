@@ -1,9 +1,7 @@
 import 'package:get/get.dart';
 
-
 class ColorController extends GetxController {
   int _numberOfColor = 0;
-
   get numberOfColor => _numberOfColor;
   set numberOfColor(value) => _numberOfColor = value;
 

@@ -1,6 +1,5 @@
 part of event_calendar;
 
-
 bool isCanceled = false;
 
 // If there is a '(-)' at the end of the subject, a cancellation line will be created.
@@ -39,7 +38,7 @@ void modifyCancellationLine(CalendarLongPressDetails details) {
 
       // If you insert selectedAppointment, An error occurs.
       _events.appointments!.removeAt(_events.appointments!.indexOf(appointmentBeforeMod));
-      _events.notifyListeners(CalendarDataSourceAction.remove, <Appointment>[]..add(appointmentBeforeMod!));
+      _events.notifyListeners(CalendarDataSourceAction.remove, <Appointment>[]..add(appointmentBeforeMod));
     }
 
     // selectedAppointment - recurrence
@@ -131,6 +130,5 @@ void modifyCancellationLine(CalendarLongPressDetails details) {
     dbHelper.insertData(appointmentToJson(appointmentAfterMod!, false));
     _events.appointments!.add(appointmentAfterMod);
     _events.notifyListeners(CalendarDataSourceAction.add, <Appointment>[]..add(appointmentAfterMod));
-    //uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
   }
 }

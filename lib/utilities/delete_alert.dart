@@ -1,6 +1,5 @@
 part of event_calendar;
 
-
 void deleteDialog(BuildContext context){
   showDialog(
       context: context,
@@ -12,25 +11,25 @@ void deleteDialog(BuildContext context){
           content: Text(AppLocalizations.of(context)!.deleteAlert,
             textAlign: TextAlign.center,
             style: AppLocalizations.of(context)!.localeName == 'ko'
-                  ? ko22.copyWith(color: Theme.of(context).primaryColorDark,)
-                  : en22.copyWith(color: Theme.of(context).primaryColorDark,)),
+                  ? ko22.copyWith(color: Theme.of(context).primaryColorDark)
+                  : en22.copyWith(color: Theme.of(context).primaryColorDark),
+          ),
           actions: [
             TextButton(
                 onPressed: () {
                   _events.appointments!.clear();
                   _events.notifyListeners(CalendarDataSourceAction.reset, _events.appointments!);
-
                   dbHelper.deleteAllData();
-                  // uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
-
                   Future.delayed(const Duration(milliseconds: 200), () {
                     Navigator.pop(context);
                   });
                 },
                 child: Text(AppLocalizations.of(context)!.check,
                     style: AppLocalizations.of(context)!.localeName == 'ko'
-                        ? ko20.copyWith(color: Theme.of(context).primaryColorDark,)
-                        : en18.copyWith(color: Theme.of(context).primaryColorDark,))),
+                        ? ko20.copyWith(color: Theme.of(context).primaryColorDark)
+                        : en18.copyWith(color: Theme.of(context).primaryColorDark),
+                ),
+            ),
             TextButton(
                 onPressed: () {
                   Future.delayed(const Duration(milliseconds: 200), () {
@@ -39,8 +38,10 @@ void deleteDialog(BuildContext context){
                 },
                 child: Text(AppLocalizations.of(context)!.cancle,
                     style: AppLocalizations.of(context)!.localeName == 'ko'
-                        ? ko20.copyWith(color: Theme.of(context).primaryColorDark,)
-                        : en18.copyWith(color: Theme.of(context).primaryColorDark,))),
+                        ? ko20.copyWith(color: Theme.of(context).primaryColorDark)
+                        : en18.copyWith(color: Theme.of(context).primaryColorDark),
+                ),
+            ),
           ],
         );
       }

@@ -1,10 +1,8 @@
 import 'dart:ui';
 
-import 'package:get/get.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-
 
 const String tableAppointment = 'tableAppointment';
 const String columnSubject = 'subject';
@@ -30,7 +28,7 @@ class DBHelper {
 
   Future<Database> initDatabase() async {
     final databasePath = await getDatabasesPath();
-    final path = join(databasePath, 'todoli5.db');
+    final path = join(databasePath, 'todoli6.db');
 
     return await openDatabase(
       path,
@@ -69,7 +67,7 @@ class DBHelper {
     await db!.rawDelete("DELETE FROM $tableAppointment");
   }
 
-  Future<List<Appointment>> getData() async { // List<Appointment>
+  Future<List<Appointment>> getData() async {
     final db = await database;
     final List<Map<String, dynamic>> appointmentsList = await db!.query(tableAppointment);
     final List<Appointment> returnList = [];
@@ -80,7 +78,7 @@ class DBHelper {
       print(appt);
       String stringOfHexValue = appt['color'].split('(0x')[1].split(')')[0];
       int hexValue = int.parse(stringOfHexValue, radix: 16);
-      final tempList = appt['recurrenceExceptionDates'].split(','); // List<String>
+      final tempList = appt['recurrenceExceptionDates'].split(',');
       if(tempList[0] != ''){
         final redList = tempList.map((date) => DateTime.parse(date)).toList();
         dateTimeOfRedList = List.generate(redList.length, (index) => redList[index] as DateTime);

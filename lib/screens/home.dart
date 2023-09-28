@@ -5,13 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../screens/calendar.dart';
 import '../controllers/color_controller.dart';
 import '../services/interstitial_ad_widget.dart';
 import '../fonts.dart';
 import '../utilities/guide.dart';
-
 
 class Home extends StatefulWidget {
   const Home({Key? key,}) : super(key: key);
@@ -72,9 +70,11 @@ class _HomeState extends State<Home> {
             size: 35,
             color: Colors.white,
           ),
-          backgroundColor: (!Get.isDarkMode) ? colorList[colorController.numberOfColor] : const Color(0xFF3D4146),
+          backgroundColor: (!Get.isDarkMode)
+              ? colorList[colorController.numberOfColor]
+              : const Color(0xFF3D4146),
           actions: [
-            if(!Get.isDarkMode)
+            if (!Get.isDarkMode)
               Row(
                 children: [
                   colorButton(color: colorList[0], number: 0),
@@ -87,159 +87,211 @@ class _HomeState extends State<Home> {
           ],
           elevation: 0.0,
         ),
-        drawer: FutureBuilder(
-          future: _getCurrentUser(),
+        drawer: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
-            if (snapshot.hasData == false) {
-              return const CircularProgressIndicator();
-            } else {
-              return Container(
-                width: MediaQuery.of(context).size.width / 1.75,
-                child: Drawer(
-                  backgroundColor: (!Get.isDarkMode) ? Colors.white : const Color(0xFF505458),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: ListView(
-                          children: [
-                            Stack(
-                              children: [
-                                Container(
-                                  height: MediaQuery.of(context).size.height / 7.2 - 15,
-                                  child: UserAccountsDrawerHeader(
-                                    decoration: BoxDecoration(
-                                        color: (!Get.isDarkMode) ? colorList[colorController.numberOfColor] : const Color(0xFF3D4146)),
-                                    margin: const EdgeInsets.only(bottom: 0.0),
-                                    accountName: Text(_displayName!,
-                                        style: (AppLocalizations.of(context)!.localeName == 'ko')
-                                            ? GoogleFonts.poorStory(
-                                                fontSize: 29,
-                                                color: Theme.of(context).primaryColorDark,
-                                                fontWeight: FontWeight.w500)
-                                            : en26.copyWith(color: Theme.of(context).primaryColorDark,)),
-                                    accountEmail: Text(
-                                      _email!,
-                                      style: (AppLocalizations.of(context)!.localeName == 'ko')
-                                          ? GoogleFonts.poorStory(
-                                              fontSize: 25,
-                                              color: Theme.of(context).primaryColorDark,
-                                              fontWeight: FontWeight.w500)
-                                          : en22.copyWith(color: Theme.of(context).primaryColorDark,),
+            return SizedBox(
+              width: MediaQuery.of(context).size.width / 1.75,
+              child: Drawer(
+                backgroundColor: (!Get.isDarkMode) ? Colors.white : const Color(0xFF505458),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ListView(
+                        children: [
+                          Stack(
+                            children: [
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height / 7.2 - 15,
+                                child: FutureBuilder(
+                                    future: _getCurrentUser(),
+                                    builder: (context, snapshot) {
+                                      return UserAccountsDrawerHeader(
+                                        decoration: BoxDecoration(
+                                            color: (!Get.isDarkMode)
+                                                ? colorList[colorController.numberOfColor]
+                                                : const Color(0xFF3D4146)),
+                                        margin: const EdgeInsets.only(bottom: 0.0),
+                                        accountName: Text(
+                                            (snapshot.hasData) ? _displayName! : 'Guest',
+                                            style: (AppLocalizations.of(context)!.localeName == 'ko')
+                                                    ? GoogleFonts.poorStory(
+                                                        fontSize: 29,
+                                                        color: Theme.of(context).primaryColorDark,
+                                                        fontWeight: FontWeight.w500)
+                                                    : en26.copyWith(color: Theme.of(context).primaryColorDark),
+                                        ),
+                                        accountEmail: Text(
+                                          (snapshot.hasData) ? _email! : 'You are not logged in',
+                                          style: (AppLocalizations.of(context)!.localeName == 'ko')
+                                              ? GoogleFonts.poorStory(
+                                                  fontSize: 25,
+                                                  color: Theme.of(context).primaryColorDark,
+                                                  fontWeight: FontWeight.w500)
+                                              : en22.copyWith(color: Theme.of(context).primaryColorDark),
+                                        ),
+                                      );
+                                    }),
+                              ),
+                              Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(width: 1.5),
+                                    borderRadius: const BorderRadius.only(
+                                      bottomLeft: Radius.circular(10.0),
+                                      bottomRight: Radius.circular(10.0),
                                     ),
+                                    color: Colors.transparent,
                                   ),
+                                  height: MediaQuery.of(context).size.height / 7.2),
+                            ],
+                          ),
+                          if(snapshot.hasData)
+                          ListTile(
+                                leading: Icon(Icons.logout, size: 30,
+                                    color: Theme.of(context).primaryColorDark),
+                                title: Text(
+                                  AppLocalizations.of(context)!.logout,
+                                    style: AppLocalizations.of(context)!.localeName == 'ko'
+                                        ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
+                                        : en20.copyWith(color: Theme.of(context).primaryColorDark),
                                 ),
-                                Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(width: 1.5),
-                                      borderRadius: const BorderRadius.only(
-                                        bottomLeft: Radius.circular(10.0),
-                                        bottomRight: Radius.circular(10.0),
-                                      ),
-                                      color: Colors.transparent,
-                                    ),
-                                    height: MediaQuery.of(context).size.height / 7.2
+                                onTap: () {
+                                  googleSignIn.disconnect();
+                                  // It makes the pop up to choose between Google accounts always come out.
+                                  FirebaseAuth.instance.signOut();
+                                },
+                              ),
+                          if(!snapshot.hasData)
+                          ListTile(
+                                leading: Icon(Icons.login, size: 30,
+                                    color: Theme.of(context).primaryColorDark),
+                                title: Text(
+                                  '구글 로그인 \n화면으로 이동',
+                                    style: AppLocalizations.of(context)!.localeName == 'ko'
+                                        ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
+                                        : en20.copyWith(color: Theme.of(context).primaryColorDark),
                                 ),
-                              ],
+                                onTap: () {
+                                  loginDialog(context);
+                                },
+                              ),
+                          ListTile(
+                            leading: Icon(
+                              Icons.library_books_outlined,
+                              size: 30,
+                              color: Theme.of(context).primaryColorDark,
                             ),
-                            ListTile(
-                              leading: Icon(Icons.library_books_outlined,
-                                  size: 30, color: Theme.of(context).primaryColorDark,),
-                              title: Text(AppLocalizations.of(context)!.guide,
-                                  style: AppLocalizations.of(context)!.localeName == 'ko'
-                                      ? ko28.copyWith(color: Theme.of(context).primaryColorDark,)
-                                      : en28.copyWith(color: Theme.of(context).primaryColorDark,)),
-                              onTap: () {
-                                guideDialog(context);
-                              },
+                            title: Text(
+                              AppLocalizations.of(context)!.guide,
+                                style: AppLocalizations.of(context)!.localeName == 'ko'
+                                    ? ko28.copyWith(color: Theme.of(context).primaryColorDark)
+                                    : en28.copyWith(color: Theme.of(context).primaryColorDark),
                             ),
-                            ListTile(
-                              leading: Icon(Icons.delete_forever_outlined,
-                                size: 30, color: Theme.of(context).primaryColorDark,),
-                              title: Text(AppLocalizations.of(context)!.deleteTheEntireSchedule,
-                                  style: AppLocalizations.of(context)!.localeName == 'ko'
-                                      ? ko24.copyWith(color: Theme.of(context).primaryColorDark,)
-                                      : en20.copyWith(color: Theme.of(context).primaryColorDark,)),
-                              onTap: () {
-                                deleteDialog(context);
-                              },
+                            onTap: () {
+                              guideDialog(context);
+                            },
+                          ),
+                          ListTile(
+                            leading: Icon(
+                              Icons.delete_forever_outlined,
+                              size: 30,
+                              color: Theme.of(context).primaryColorDark,
                             ),
-                            ListTile(
-                              leading: Icon(Icons.logout, size: 30, color: Theme.of(context).primaryColorDark),
-                              title: Text(AppLocalizations.of(context)!.logout,
-                                  style: AppLocalizations.of(context)!.localeName == 'ko'
-                                      ? ko28.copyWith(color: Theme.of(context).primaryColorDark)
-                                      : en28.copyWith(color: Theme.of(context).primaryColorDark)),
-                              onTap: () {
-                                googleSignIn.disconnect();
-                                // It makes the pop up to choose between Google accounts always come out.
-                                FirebaseAuth.instance.signOut();
-                              },
+                            title: Text(
+                                AppLocalizations.of(context)!.deleteTheEntireSchedule,
+                                style: AppLocalizations.of(context)!.localeName == 'ko'
+                                    ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
+                                    : en20.copyWith(color: Theme.of(context).primaryColorDark),
                             ),
-                          ],
-                        ),
+                            onTap: () {
+                              deleteDialog(context);
+                            },
+                          ),
+                        ],
                       ),
+                    ),
+                    ListTile(
+                      leading: (!Get.isDarkMode)
+                          ? const Icon(Icons.dark_mode, size: 30, color: Colors.black)
+                          : const Icon(Icons.light_mode, size: 30, color: Colors.white),
+                      title: (!Get.isDarkMode)
+                          ? Text(
+                              AppLocalizations.of(context)!.darkTheme,
+                              style: AppLocalizations.of(context)!.localeName == 'ko'
+                                  ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
+                                  : en22.copyWith(color: Theme.of(context).primaryColorDark),
+                            )
+                          : Text(
+                              AppLocalizations.of(context)!.lightTheme,
+                              style: AppLocalizations.of(context)!.localeName == 'ko'
+                                  ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
+                                  : en22.copyWith(color: Theme.of(context).primaryColorDark),
+                            ),
+                      onTap: () {
+                        if (Get.isDarkMode) {
+                          _saveThemeStatus(1);
+                        } else {
+                          _saveThemeStatus(0);
+                        }
+                        Get.changeThemeMode(
+                          Get.isDarkMode ? ThemeMode.light : ThemeMode.dark,
+                        );
+                        callInterstitialAd();
+                        loadInterstitialAd();
+                        Get.back();
+                      },
+                    ),
+                    if (status == ConsentStatus.required)
                       ListTile(
-                        leading: (!Get.isDarkMode) ? const Icon(Icons.dark_mode,
-                            size: 30, color: Colors.black) : const Icon(Icons.light_mode,
-                            size: 30, color: Colors.white),
-                        title: (!Get.isDarkMode)
-                            ? Text(AppLocalizations.of(context)!.darkTheme,
-                              style: AppLocalizations.of(context)!.localeName == 'ko'
-                                  ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
-                                  : en22.copyWith(color: Theme.of(context).primaryColorDark),)
-                            : Text(AppLocalizations.of(context)!.lightTheme,
-                              style: AppLocalizations.of(context)!.localeName == 'ko'
-                                  ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
-                                  : en22.copyWith(color: Theme.of(context).primaryColorDark),),
+                        leading: Icon(
+                          Icons.ads_click,
+                          size: 30,
+                          color: Theme.of(context).primaryColorDark,
+                        ),
+                        title: Text(
+                          "Consent for personalized ads",
+                            style: en18.copyWith(
+                              color: Theme.of(context).primaryColorDark,
+                            ),
+                        ),
                         onTap: () {
-                          if(Get.isDarkMode){
-                            _saveThemeStatus(1);
-                          } else{
-                            _saveThemeStatus(0);
-                          }
-                          Get.changeThemeMode(
-                            Get.isDarkMode ? ThemeMode.light : ThemeMode.dark,
-                          );
-                          callInterstitialAd();
-                          loadInterstitialAd();
+                          consentPersonalizedAds();
                           Get.back();
                         },
                       ),
-                      if (status == ConsentStatus.required)
-                        ListTile(
-                          leading: Icon(Icons.ads_click,
-                              size: 30, color: Theme.of(context).primaryColorDark,),
-                          title: Text("Consent for personalized ads", style: en18.copyWith(color: Theme.of(context).primaryColorDark,)),
-                          onTap: () {
-                            consentPersonalizedAds();
-                            Get.back();
-                          },
+                    if (status == ConsentStatus.obtained)
+                      ListTile(
+                        leading: Icon(
+                          Icons.ads_click,
+                          size: 30,
+                          color: Theme.of(context).primaryColorDark,
                         ),
-                      if (status == ConsentStatus.obtained)
-                        ListTile(
-                          leading: Icon(Icons.ads_click, size: 30, color: Theme.of(context).primaryColorDark,),
-                          title: Text("Cancle consent for personalized ads", style: en18.copyWith(color: Theme.of(context).primaryColorDark,)),
-                          onTap: () {
-                            cancelConsentPersonalizedAds();
-                            Get.back();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Cancel complete',
-                                  style: en20.copyWith(color: Theme.of(context).primaryColorDark,),
-                                  textAlign: TextAlign.center,
-                                ),
-                                duration: const Duration(seconds: 3),
-                                backgroundColor: Theme.of(context).primaryColorLight,
+                        title: Text(
+                            "Cancle consent for personalized ads",
+                            style: en18.copyWith(
+                              color: Theme.of(context).primaryColorDark,
+                            ),
+                        ),
+                        onTap: () {
+                          cancelConsentPersonalizedAds();
+                          Get.back();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Cancel complete',
+                                style: en20.copyWith(color: Theme.of(context).primaryColorDark),
+                                textAlign: TextAlign.center,
                               ),
-                            );
-                          },
-                        ),
-                    ],
-                  ),
+                              duration: const Duration(seconds: 3),
+                              backgroundColor: Theme.of(context).primaryColorLight,
+                            ),
+                          );
+                        },
+                      ),
+                  ],
                 ),
-              );
-            }
+              ),
+            );
           },
         ),
         body: const SafeArea(
@@ -279,7 +331,7 @@ class _HomeState extends State<Home> {
             radius: 17,
             backgroundColor: color,
             child: (colorController.numberOfColor == number)
-                ? const Icon(Icons.check, size: 24.0, color: Colors.white,)
+                ? const Icon(Icons.check, size: 24.0, color: Colors.white)
                 : null,
           ),
         ),

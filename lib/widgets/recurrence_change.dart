@@ -1,6 +1,5 @@
 part of '../screens/calendar.dart';
 
-
 class RecurrenceChange extends StatefulWidget {
   const RecurrenceChange({Key? key}) : super(key: key);
 
@@ -16,9 +15,9 @@ class _RecurrenceChangeState extends State<RecurrenceChange> {
     return AlertDialog(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          side: BorderSide(color: Colors.black, width: 2.0)
+          side: BorderSide(color: Colors.black, width: 2.0),
       ),
-      content: Container(
+      content: SizedBox(
         height: MediaQuery.of(context).size.height / 6,
         width: double.maxFinite,
         child: ListView.builder(
@@ -37,7 +36,9 @@ class _RecurrenceChangeState extends State<RecurrenceChange> {
                 title: Center(
                   child: Text(
                     _changeOptionList[index],
-                    style: (AppLocalizations.of(context)!.localeName == 'ko') ? ko22.copyWith(color: Theme.of(context).primaryColorDark,) : en20.copyWith(color: Theme.of(context).primaryColorDark,),
+                    style: (AppLocalizations.of(context)!.localeName == 'ko')
+                        ? ko22.copyWith(color: Theme.of(context).primaryColorDark)
+                        : en20.copyWith(color: Theme.of(context).primaryColorDark),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -155,6 +156,5 @@ class _RecurrenceChangeState extends State<RecurrenceChange> {
     _events.appointments!.add(tempAppointments[0]);
     _events.notifyListeners(CalendarDataSourceAction.add, tempAppointments);
     _selectedAppointment = null;
-    //uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
   }
 }

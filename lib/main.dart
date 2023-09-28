@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,14 +7,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-
 import 'controllers/color_controller.dart';
-import 'screens/calendar.dart';
 import 'screens/home.dart';
 import 'services/interstitial_ad_widget.dart';
 
-
-// for Requesting Consent from European Users https://developers.google.com/admob/flutter/eu-consent?hl=en
+// https://developers.google.com/admob/flutter/eu-consent?hl=en
 final params = ConsentRequestParameters();
 /*  for Test
 ConsentDebugSettings debugSettings = ConsentDebugSettings(
@@ -79,18 +74,15 @@ class MyApp extends StatelessWidget {
       locale: (defaultLocale == 'ko_KR') ? const Locale('ko') : const Locale('en'),
       debugShowCheckedModeBanner: false,
       title: 'ToDoLi',
-      theme: ThemeData.light().copyWith(primaryColorLight: Colors.white, primaryColorDark: Colors.black, secondaryHeaderColor: Colors.black38),
-      darkTheme: ThemeData.dark().copyWith(primaryColorLight: Colors.black, primaryColorDark: const Color(0xFFEBECEC), secondaryHeaderColor: Colors.white70),
-      home: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) {
-            return const LoginPage();
-          } else {
-            return const Home();
-          }
-        },
-      ),
+      theme: ThemeData.light().copyWith(
+          primaryColorLight: Colors.white,
+          primaryColorDark: Colors.black,
+          secondaryHeaderColor: Colors.black38),
+      darkTheme: ThemeData.dark().copyWith(
+          primaryColorLight: Colors.black,
+          primaryColorDark: const Color(0xFFEBECEC),
+          secondaryHeaderColor: Colors.white70),
+      home: const Home(),
     );
   }
 }

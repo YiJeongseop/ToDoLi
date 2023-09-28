@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
-
 import '../fonts.dart';
-
 
 void guideDialog(BuildContext context) {
   showDialog(
@@ -27,8 +25,9 @@ void guideDialog(BuildContext context) {
             ),
             Text(AppLocalizations.of(context)!.guideText,
                 style: AppLocalizations.of(context)!.localeName == 'ko'
-                    ? ko18.copyWith(color: Theme.of(context).primaryColorDark,)
-                    : en18.copyWith(color: Theme.of(context).primaryColorDark,)),
+                    ? ko18.copyWith(color: Theme.of(context).primaryColorDark, fontWeight: FontWeight.w500)
+                    : en18.copyWith(color: Theme.of(context).primaryColorDark),
+            ),
           ],
         ),
       );
