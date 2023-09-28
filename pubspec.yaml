@@ -48,7 +48,6 @@ dependencies:
   google_mobile_ads: ^3.0.0
   http: ^1.1.0
   confetti: ^0.7.0
-  syncfusion_flutter_charts: ^22.2.10
   klc: ^0.1.0
   sqflite: ^2.3.0
   path: ^1.8.3

@@ -13,7 +13,6 @@ It's available on the [Google Play Store](https://play.google.com/store/apps/det
 * Upload data to Google Drive, download data from Google Drive
 * Change the color of some parts of the UI
 * Change parts of recurring appointments, Delete parts of recurring appointments
-* A chart shows how many To-dos you saved and how many To-dos you completed
 * Press and hold the To-do to create or remove a cancellation line
 * Run animation on the login screen
 * English and Korean translations
@@ -28,7 +27,6 @@ It's available on the [Google Play Store](https://play.google.com/store/apps/det
 ## Packages
 > #### It is necessary to have [a commercial or community license](https://www.syncfusion.com/products/communitylicense) to use syncfusion packages.
 * [syncfusion_flutter_calendar](https://pub.dev/packages/syncfusion_flutter_calendar)
-* [syncfusion_flutter_charts](https://pub.dev/packages/syncfusion_flutter_charts)
 * [google_sign_in](https://pub.dev/packages/google_sign_in)
 * [googleapis](https://pub.dev/packages/googleapis)
 * [google_fonts](https://pub.dev/packages/google_fonts)
