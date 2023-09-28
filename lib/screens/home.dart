@@ -142,22 +142,6 @@ class _HomeState extends State<Home> {
                               ],
                             ),
                             ListTile(
-                              leading: Icon(Icons.bar_chart,
-                                  size: 30, color: Theme.of(context).primaryColorDark,),
-                              title: Text(AppLocalizations.of(context)!.chart,
-                                  style: AppLocalizations.of(context)!.localeName == 'ko'
-                                      ? ko24.copyWith(color: Theme.of(context).primaryColorDark,)
-                                      : en26.copyWith(color: Theme.of(context).primaryColorDark,)),
-                              onTap: () {
-                                Get.to(() => Chart(
-                                    appBarColor: (!Get.isDarkMode)
-                                        ? colorList[colorController.numberOfColor]
-                                        : const Color(0xFF3D4146)));
-                                callInterstitialAd();
-                                loadInterstitialAd();
-                              },
-                            ),
-                            ListTile(
                               leading: Icon(Icons.library_books_outlined,
                                   size: 30, color: Theme.of(context).primaryColorDark,),
                               title: Text(AppLocalizations.of(context)!.guide,

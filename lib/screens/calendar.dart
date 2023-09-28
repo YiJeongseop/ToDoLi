@@ -25,7 +25,6 @@ part '../widgets/recurrence_change.dart';
 part 'login.dart';
 part '../utilities/cancellation_line.dart';
 part '../utilities/delete_alert.dart';
-part 'chart.dart';
 
 
 class Calendar extends StatefulWidget {

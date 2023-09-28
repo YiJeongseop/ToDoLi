@@ -17,7 +17,6 @@ TextStyle en17 = GoogleFonts.pangolin(
 // home.dart Consent for personalized ads, Cancle consent for personalized ads
 // appointment_editor.dart _valueListCount, _valueListInterval, _valueListFreq, timesEvery
 // calendar.dart scheduleView-dateText, viewHeader, monthCellText, scheduleView-weekHeader
-// chart.dart SfCartesianChart
 // guide.dart
 // delete_alert.dart check, cancle
 TextStyle en18 = GoogleFonts.pangolin(
@@ -27,7 +26,6 @@ TextStyle en18 = GoogleFonts.pangolin(
 
 // appointment_editor.dart dateFormat
 // calendar.dart appointmentBuilder-subject, agenda-dateText
-// chart.dart ChartRow
 // recurrence_change.dart, recurrence_delete.dart
 // home.dart deleteTheEntireSchedule
 TextStyle en20 = GoogleFonts.pangolin(
@@ -47,7 +45,7 @@ TextStyle en22 = GoogleFonts.pangolin(
 );
 
 // calendar.dart scheduleView-monthHeader
-// home.dart displayName, chart
+// home.dart displayName
 TextStyle en26 = GoogleFonts.pangolin(
     fontSize: 26,
     color: Colors.black
@@ -83,7 +81,6 @@ TextStyle ko19 = GoogleFonts.poorStory(
 );
 
 // calendar.dart monthCellText, scheduleView-weekHeader
-// chart.dart SfCartesianChart
 // delete_alert.dart check, cancle
 TextStyle ko20 = GoogleFonts.poorStory(
     fontSize: 20,
@@ -99,7 +96,6 @@ TextStyle ko20Subject = GoogleFonts.gowunDodum(
 // appointment_editor.dart dateFormat, description
 // calendar.dart agenda-dateText
 // recurrence_change.dart recurrence_delete.dart
-// chart.dart ChartRow
 // delete_alert.dart deleteAlert
 TextStyle ko22 = GoogleFonts.poorStory(
     fontSize: 22,
@@ -114,7 +110,7 @@ TextStyle ko23 = GoogleFonts.poorStory(
 
 // appointment_editor.dart recurrence, _valueListCount, _valueListInterval
 // calendar.dart agenda-dayText
-// home.dart chart, darkTheme, deleteTheEntireSchedule
+// home.dart darkTheme, deleteTheEntireSchedule
 TextStyle ko24 = GoogleFonts.poorStory(
     fontSize: 24,
     color: Colors.black,
