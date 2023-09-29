@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todoli/controllers/login_controller.dart';
 import 'package:todoli/utilities/snack_bar.dart';
-import '../main.dart';
 import '../screens/calendar.dart';
 import '../controllers/color_controller.dart';
 import '../services/interstitial_ad_widget.dart';
@@ -21,7 +20,7 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with WidgetsBindingObserver {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final ColorController colorController = Get.put(ColorController());
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -32,6 +31,7 @@ class _HomeState extends State<Home> {
     const Color(0xFFECDD83),
     const Color(0xFF8BD39A)
   ];
+  int snack130_1 = 0;
 
   _saveColorStatus(int value) async {
     SharedPreferences pref = await _prefs;
@@ -43,6 +43,13 @@ class _HomeState extends State<Home> {
     pref.setInt('themeNumber', value);
   }
 
+  _getSnackStatus() async {
+    var number = _prefs.then((SharedPreferences prefs) {
+      return prefs.getInt('snack130_1') ?? 0;
+    });
+    snack130_1 = await number;
+  }
+
   _saveSnackStatus(int value) async {
     SharedPreferences pref = await _prefs;
     pref.setInt('snack130', value);
@@ -52,6 +59,14 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     loadInterstitialAd();
+    _getSnackStatus();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if(snack130_1 == 0){
+        showSnackbar(context);
+        snack130_1 = 1;
+        _saveSnackStatus(snack130_1);
+      }
+    });
   }
 
   @override
@@ -60,11 +75,6 @@ class _HomeState extends State<Home> {
     return GetBuilder<ColorController>(builder: (colorController) {
       return Scaffold(
         onDrawerChanged: (isOpened) {
-          if(snack130 == 0 || snack130 == 1){
-            showSnackbar(context);
-            snack130 += 1;
-            _saveSnackStatus(snack130);
-          }
           setStatus();
         },
         backgroundColor: Theme.of(context).primaryColorLight,

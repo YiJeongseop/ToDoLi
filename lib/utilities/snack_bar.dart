@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
 import '../fonts.dart';
 
 void showSnackbar(BuildContext context) {
@@ -15,7 +16,8 @@ void showSnackbar(BuildContext context) {
             : en16.copyWith(color: Theme.of(context).primaryColorLight),
       ),
       showCloseIcon: true,
-      duration: const Duration(seconds: 10),
+      closeIconColor: Get.isDarkMode ? Colors.black : Colors.white,
+      duration: const Duration(seconds: 15),
     ),
   );
 }

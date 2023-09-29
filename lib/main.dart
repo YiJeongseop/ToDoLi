@@ -19,7 +19,6 @@ ConsentDebugSettings debugSettings = ConsentDebugSettings(
     testIdentifiers: ['TEST-DEVICE-HASHED-ID']);
 final params = ConsentRequestParameters(consentDebugSettings: debugSettings);
 */
-int snack130 = 0;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,13 +44,6 @@ class MyApp extends StatelessWidget {
       return prefs.getInt('colorNumber') ?? 0;
     });
     colorController.numberOfColor = await number;
-  }
-
-  _getSnackStatus() async {
-    var number = _prefs.then((SharedPreferences prefs) {
-      return prefs.getInt('snack130') ?? 0;
-    });
-    snack130 = await number;
   }
 
   MyApp() {
