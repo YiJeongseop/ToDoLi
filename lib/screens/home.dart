@@ -5,11 +5,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:todoli/controllers/login_controller.dart';
 import '../screens/calendar.dart';
 import '../controllers/color_controller.dart';
 import '../services/interstitial_ad_widget.dart';
 import '../fonts.dart';
-import '../utilities/guide.dart';
+import '../widgets/guide.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key,}) : super(key: key);
@@ -30,10 +31,6 @@ class _HomeState extends State<Home> {
     const Color(0xFF8BD39A)
   ];
 
-  User? _user;
-  String? _displayName;
-  String? _email;
-
   _saveColorStatus(int value) async {
     SharedPreferences pref = await _prefs;
     pref.setInt('colorNumber', value);
@@ -50,15 +47,9 @@ class _HomeState extends State<Home> {
     loadInterstitialAd();
   }
 
-  Future<String?> _getCurrentUser() async {
-    _user = _auth.currentUser;
-    _displayName = _user!.displayName;
-    _email = _user!.email;
-    return _email;
-  }
-
   @override
   Widget build(BuildContext context) {
+    Get.put(LoginController());
     return GetBuilder<ColorController>(builder: (colorController) {
       return Scaffold(
         onDrawerChanged: (isOpened) {
@@ -87,9 +78,13 @@ class _HomeState extends State<Home> {
           ],
           elevation: 0.0,
         ),
-        drawer: StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
+        drawer: GetBuilder<LoginController>(
+          builder: (controller) {
+            if(_auth.currentUser == null){
+              controller.logout();
+            } else if(_auth.currentUser != null){
+              controller.login();
+            }
             return SizedBox(
               width: MediaQuery.of(context).size.width / 1.75,
               child: Drawer(
@@ -103,17 +98,14 @@ class _HomeState extends State<Home> {
                             children: [
                               SizedBox(
                                 height: MediaQuery.of(context).size.height / 7.2 - 15,
-                                child: FutureBuilder(
-                                    future: _getCurrentUser(),
-                                    builder: (context, snapshot) {
-                                      return UserAccountsDrawerHeader(
+                                child: UserAccountsDrawerHeader(
                                         decoration: BoxDecoration(
                                             color: (!Get.isDarkMode)
                                                 ? colorList[colorController.numberOfColor]
                                                 : const Color(0xFF3D4146)),
                                         margin: const EdgeInsets.only(bottom: 0.0),
                                         accountName: Text(
-                                            (snapshot.hasData) ? _displayName! : 'Guest',
+                                            controller.isLogined ? _auth.currentUser!.displayName! : 'Guest',
                                             style: (AppLocalizations.of(context)!.localeName == 'ko')
                                                     ? GoogleFonts.poorStory(
                                                         fontSize: 29,
@@ -122,7 +114,7 @@ class _HomeState extends State<Home> {
                                                     : en26.copyWith(color: Theme.of(context).primaryColorDark),
                                         ),
                                         accountEmail: Text(
-                                          (snapshot.hasData) ? _email! : 'You are not logged in',
+                                          controller.isLogined ? _auth.currentUser!.email! : 'You are not logged in',
                                           style: (AppLocalizations.of(context)!.localeName == 'ko')
                                               ? GoogleFonts.poorStory(
                                                   fontSize: 25,
@@ -130,8 +122,7 @@ class _HomeState extends State<Home> {
                                                   fontWeight: FontWeight.w500)
                                               : en22.copyWith(color: Theme.of(context).primaryColorDark),
                                         ),
-                                      );
-                                    }),
+                                      )
                               ),
                               Container(
                                   decoration: BoxDecoration(
@@ -145,8 +136,8 @@ class _HomeState extends State<Home> {
                                   height: MediaQuery.of(context).size.height / 7.2),
                             ],
                           ),
-                          if(snapshot.hasData)
-                          ListTile(
+                          if(controller.isLogined)
+                            ListTile(
                                 leading: Icon(Icons.logout, size: 30,
                                     color: Theme.of(context).primaryColorDark),
                                 title: Text(
@@ -159,10 +150,11 @@ class _HomeState extends State<Home> {
                                   googleSignIn.disconnect();
                                   // It makes the pop up to choose between Google accounts always come out.
                                   FirebaseAuth.instance.signOut();
+                                  controller.logout();
                                 },
                               ),
-                          if(!snapshot.hasData)
-                          ListTile(
+                          if(!controller.isLogined)
+                            ListTile(
                                 leading: Icon(Icons.login, size: 30,
                                     color: Theme.of(context).primaryColorDark),
                                 title: Text(
@@ -184,8 +176,8 @@ class _HomeState extends State<Home> {
                             title: Text(
                               AppLocalizations.of(context)!.guide,
                                 style: AppLocalizations.of(context)!.localeName == 'ko'
-                                    ? ko28.copyWith(color: Theme.of(context).primaryColorDark)
-                                    : en28.copyWith(color: Theme.of(context).primaryColorDark),
+                                    ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
+                                    : en20.copyWith(color: Theme.of(context).primaryColorDark),
                             ),
                             onTap: () {
                               guideDialog(context);
@@ -207,6 +199,40 @@ class _HomeState extends State<Home> {
                               deleteDialog(context);
                             },
                           ),
+                          if(controller.isLogined)
+                            ListTile(
+                              leading: Icon(
+                                Icons.upload,
+                                size: 30,
+                                color: Theme.of(context).primaryColorDark,
+                              ),
+                              title: Text(
+                                '저장(구글 \n드라이브)',
+                                style: AppLocalizations.of(context)!.localeName == 'ko'
+                                    ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
+                                    : en20.copyWith(color: Theme.of(context).primaryColorDark),
+                              ),
+                              onTap: () {
+                                driveDialog(context, true);
+                              },
+                            ),
+                          if(controller.isLogined)
+                            ListTile(
+                              leading: Icon(
+                                Icons.download,
+                                size: 30,
+                                color: Theme.of(context).primaryColorDark,
+                              ),
+                              title: Text(
+                                '불러오기(구글 \n드라이브)',
+                                style: AppLocalizations.of(context)!.localeName == 'ko'
+                                    ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
+                                    : en20.copyWith(color: Theme.of(context).primaryColorDark),
+                              ),
+                              onTap: () {
+                                driveDialog(context, false);
+                              },
+                            )
                         ],
                       ),
                     ),

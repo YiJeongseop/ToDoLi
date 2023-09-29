@@ -5,21 +5,25 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:googleapis/admob/v1.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:klc/klc.dart';
 import '../controllers/color_controller.dart';
+import '../controllers/login_controller.dart';
 import '../fonts.dart';
+import '../services/google_drive.dart';
 import '../widgets/color_picker.dart';
 import '../utilities/db_helper.dart';
 
 part 'appointment_editor.dart';
 part '../widgets/recurrence_delete.dart';
 part '../widgets/recurrence_change.dart';
+part '../widgets/delete_alert.dart';
+part '../widgets/drive_alert.dart';
 part '../utilities/cancellation_line.dart';
-part '../utilities/delete_alert.dart';
 part '../services/google_login.dart';
 
 class Calendar extends StatefulWidget {

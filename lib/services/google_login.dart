@@ -5,7 +5,7 @@ final GoogleSignIn googleSignIn = GoogleSignIn(
     scopes: [drive.DriveApi.driveFileScope, drive.DriveApi.driveAppdataScope]
 );
 
-Future<void> signInWithGoogle() async {
+Future<bool> signInWithGoogle() async {
   Get.dialog(
       const LoadingOverlay(),
       barrierDismissible: false
@@ -15,7 +15,7 @@ Future<void> signInWithGoogle() async {
 
   if(googleUser == null) {
     Get.back();
-    return;
+    return false;
   }
 
   try{
@@ -30,9 +30,10 @@ Future<void> signInWithGoogle() async {
 
     Get.back();
     Get.back();
+    return true;
   } catch(e){
     Get.back();
-    return;
+    return false;
   }
 }
 
@@ -44,9 +45,11 @@ void loginDialog(BuildContext context) {
       return AlertDialog(
         backgroundColor: (!Get.isDarkMode) ? Colors.white : const Color(0xFF505458),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.0)),
-        content: GestureDetector(
+        content: GetBuilder<LoginController>(
+          builder: (controller) {
+          return GestureDetector(
           onTap: () {
-            signInWithGoogle();
+            signInWithGoogle().then((value) => (value) ? controller.login() : controller.logout());
           },
           child: Container(
             decoration: BoxDecoration(
@@ -57,7 +60,7 @@ void loginDialog(BuildContext context) {
             width: MediaQuery.of(context).size.width * 0.77,
             height: MediaQuery.of(context).size.height * 0.085,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
@@ -68,18 +71,16 @@ void loginDialog(BuildContext context) {
                     width: MediaQuery.of(context).size.width * 0.1,
                   ),
                 ),
+                const SizedBox(width: 10),
                 Text(
                   'Sign in with Google',
                   style: en22.copyWith(color: Colors.black),
                   textAlign: TextAlign.center,
                 ),
-                const CircleAvatar(
-                  backgroundColor: Colors.white,
-                )
               ],
             ),
           ),
-        ),
+        );},),
       );
     },
   );

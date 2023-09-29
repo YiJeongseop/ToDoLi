@@ -1,8 +1,8 @@
 import 'dart:ui';
-
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import '../screens/calendar.dart';
 
 const String tableAppointment = 'tableAppointment';
 const String columnSubject = 'subject';
@@ -57,6 +57,19 @@ class DBHelper {
     await batch.commit();
   }
 
+  Future<void> insertAllData(List<Appointment> appointments) async {
+    final db = await database;
+    await db!.rawDelete("DELETE FROM $tableAppointment");
+    final batch = db.batch();
+
+    List<Map<String, dynamic>> jsonList = appointmentsToJsonList(appointments, false);
+    for(int i = 0; i < jsonList.length; i++){
+      batch.insert(tableAppointment, jsonList[i]);
+    }
+
+    await batch.commit();
+  }
+
   Future<void> deleteData(String id) async {
     final db = await database;
     await db!.delete(tableAppointment, where: '$columnId = ?', whereArgs: [id]);
@@ -75,7 +88,6 @@ class DBHelper {
     if(appointmentsList == []) return [];
 
     for (Map<String, dynamic> appt in appointmentsList) {
-      print(appt);
       String stringOfHexValue = appt['color'].split('(0x')[1].split(')')[0];
       int hexValue = int.parse(stringOfHexValue, radix: 16);
       final tempList = appt['recurrenceExceptionDates'].split(',');
@@ -87,8 +99,6 @@ class DBHelper {
       }
       List<String> pieceOfRecurrenceRule = appt['recurrenceRule'].split(';');
 
-      print(dateTimeOfRedList.length);
-      print(int.parse(pieceOfRecurrenceRule[2].substring(6)));
       if(dateTimeOfRedList.length != int.parse(pieceOfRecurrenceRule[2].substring(6))) {
         returnList.add(
           Appointment(
