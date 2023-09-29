@@ -1,6 +1,5 @@
 ![README image](https://github.com/YiJeongseop/ToDoLi/assets/112690335/4b21ea38-b499-420e-8a44-ff518604f21d)
 # ToDoLi ![README image2](https://github.com/YiJeongseop/ToDoLi/assets/112690335/29c62c59-f4f6-4dc2-a7b2-0ea721df60e1)
-This app is a combination of __Calendar and To-do list__.
 It's available on the [Google Play Store](https://play.google.com/store/apps/details?id=com.sanashi.todoli).
 
 ## Features
@@ -10,10 +9,11 @@ It's available on the [Google Play Store](https://play.google.com/store/apps/det
 > change AdMob APP ID in AndroidManifest.xml and adUnitId in interstitial_ad_widget.dart to your own.
 * UMP SDK for requesting consent from European Users
 * Dark Theme
-* Upload data to Google Drive, download data from Google Drive
+* Save data to Google Drive, Load data from Google Drive
+* Save data, Load data using sqflite
 * Change the color of some parts of the UI
 * Change parts of recurring appointments, Delete parts of recurring appointments
-* Press and hold the To-do to create or remove a cancellation line
+* Press and hold the appointment to create or remove a cancellation line
 * English and Korean translations
 
 ![Translation](https://github.com/YiJeongseop/ToDoLi/assets/112690335/9b0a98db-f916-4639-a279-c72933c1777c)
