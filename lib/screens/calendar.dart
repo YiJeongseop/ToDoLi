@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:googleapis/admob/v1.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -447,18 +446,18 @@ class CalendarState extends State<Calendar> {
                           Text(
                             details.date.day.toString(),
                             style: (details.date.month == midDate.month) ? GoogleFonts.poorStory(
-                              fontSize: (details.date.year == now.year && details.date.month == now.month && details.date.day == now.day) ? 21 : 20,
+                              fontSize: (details.date.year == now.year && details.date.month == now.month && details.date.day == now.day) ? 19 : 19,
                               color: !Get.isDarkMode ? Colors.black : Colors.white,
                               fontWeight: (details.date.year == now.year && details.date.month == now.month && details.date.day == now.day) ? FontWeight.w600 : FontWeight.w400
                             ) : GoogleFonts.poorStory(
-                              fontSize: 16,
+                              fontSize: 15,
                               color: !Get.isDarkMode ? Colors.grey : Colors.white70,
                             ),
                           ),
                           (details.date.month == midDate.month) ? Text(
                             getLunarDay(details.date.year, details.date.month, details.date.day),
                             style: GoogleFonts.poorStory(
-                              fontSize: 14,
+                              fontSize: 12,
                               color: !Get.isDarkMode ? Colors.black45 : Colors.grey,
                             ),
                           ) : Container(),

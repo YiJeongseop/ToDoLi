@@ -66,13 +66,13 @@ void loginDialog(BuildContext context) {
                         'images/google_logo.png',
                         // https://about.google/brand-resource-center/logos-list/
                         fit: BoxFit.cover,
-                        width: MediaQuery.of(context).size.width * 0.1,
+                        width: MediaQuery.of(context).size.width * 0.08,
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.035),
                     Text(
                       'Sign in with Google',
-                      style: en22.copyWith(color: Colors.black),
+                      style: en18.copyWith(color: Colors.black),
                       textAlign: TextAlign.center,
                     ),
                   ],

@@ -6,6 +6,8 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todoli/controllers/login_controller.dart';
+import 'package:todoli/utilities/snack_bar.dart';
+import '../main.dart';
 import '../screens/calendar.dart';
 import '../controllers/color_controller.dart';
 import '../services/interstitial_ad_widget.dart';
@@ -41,6 +43,11 @@ class _HomeState extends State<Home> {
     pref.setInt('themeNumber', value);
   }
 
+  _saveSnackStatus(int value) async {
+    SharedPreferences pref = await _prefs;
+    pref.setInt('snack130', value);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -53,6 +60,11 @@ class _HomeState extends State<Home> {
     return GetBuilder<ColorController>(builder: (colorController) {
       return Scaffold(
         onDrawerChanged: (isOpened) {
+          if(snack130 == 0 || snack130 == 1){
+            showSnackbar(context);
+            snack130 += 1;
+            _saveSnackStatus(snack130);
+          }
           setStatus();
         },
         backgroundColor: Theme.of(context).primaryColorLight,
@@ -112,7 +124,7 @@ class _HomeState extends State<Home> {
                                           controller.isLogined ? _auth.currentUser!.email! : AppLocalizations.of(context)!.youAreNotLoggedIn,
                                           style: (AppLocalizations.of(context)!.localeName == 'ko')
                                               ? GoogleFonts.poorStory(
-                                                  fontSize: 22,
+                                                  fontSize: 20,
                                                   color: Theme.of(context).primaryColorDark,
                                                   fontWeight: FontWeight.w500)
                                               : en22.copyWith(color: Theme.of(context).primaryColorDark),
@@ -187,7 +199,7 @@ class _HomeState extends State<Home> {
                             title: Text(
                                 AppLocalizations.of(context)!.deleteTheEntireSchedule,
                                 style: AppLocalizations.of(context)!.localeName == 'ko'
-                                    ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
+                                    ? ko20.copyWith(color: Theme.of(context).primaryColorDark)
                                     : en20.copyWith(color: Theme.of(context).primaryColorDark),
                             ),
                             onTap: () {
@@ -204,7 +216,7 @@ class _HomeState extends State<Home> {
                               title: Text(
                                 AppLocalizations.of(context)!.saveToDrive,
                                 style: AppLocalizations.of(context)!.localeName == 'ko'
-                                    ? ko22.copyWith(color: Theme.of(context).primaryColorDark)
+                                    ? ko20.copyWith(color: Theme.of(context).primaryColorDark)
                                     : en20.copyWith(color: Theme.of(context).primaryColorDark),
                               ),
                               onTap: () {
@@ -221,7 +233,7 @@ class _HomeState extends State<Home> {
                               title: Text(
                                 AppLocalizations.of(context)!.loadFromDrive,
                                 style: AppLocalizations.of(context)!.localeName == 'ko'
-                                    ? ko22.copyWith(color: Theme.of(context).primaryColorDark)
+                                    ? ko20.copyWith(color: Theme.of(context).primaryColorDark)
                                     : en20.copyWith(color: Theme.of(context).primaryColorDark),
                               ),
                               onTap: () {
