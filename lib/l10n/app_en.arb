@@ -34,5 +34,11 @@
   "deleteTheEntireSchedule" : "Delete the entire schedule",
   "cancle" : "Cancle",
   "check" : "Check",
-  "deleteAlert" : "Are you sure you want to delete it?"
+  "deleteAlert" : "Are you sure you want to delete it?",
+  "saveToDriveQuestion" : "Are you sure you want to save it on Google Drive?",
+  "loadFromDriveQuestion" : "Are you sure you want to load it from Google Drive?",
+  "saveToDrive" : "Save(Google \nDrive)",
+  "loadFromDrive" : "Load(Google \nDrive)",
+  "youAreNotLoggedIn" : "You are not logged in.",
+  "login" : "Login"
 }

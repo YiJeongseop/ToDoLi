@@ -29,7 +29,9 @@ class _RecurrenceDeleteState extends State<RecurrenceDelete> {
             return Padding(
               padding: const EdgeInsets.all(4.0),
               child: ListTile(
-                tileColor: (!Get.isDarkMode) ? colorCollection[selectedColorIndex] : const Color(0xFF505458),
+                tileColor: (!Get.isDarkMode)
+                    ? colorCollection[selectedColorIndex]
+                    : const Color(0xFF505458),
                 shape: RoundedRectangleBorder(
                   side: const BorderSide(width: 1.0),
                   borderRadius: BorderRadius.circular(10.0),
@@ -47,7 +49,8 @@ class _RecurrenceDeleteState extends State<RecurrenceDelete> {
                   setState(() {
                     List<Appointment> tempAppointments = <Appointment>[];
                     List<String> pieceOfRecurrenceRule = _selectedAppointment!.recurrenceRule!.split(';');
-                    if (index == 0) { // Delete all
+                    if (index == 0) {
+                      // Delete all
                       if (_selectedAppointment!.appointmentType == AppointmentType.pattern) {
                         dbHelper.deleteData(_selectedAppointment!.id.toString());
                         _events.appointments!.removeAt(_events.appointments!.indexOf(_selectedAppointment));
@@ -67,8 +70,8 @@ class _RecurrenceDeleteState extends State<RecurrenceDelete> {
                           }
                         }
                       }
-                    }
-                    else if (index == 1) { // Delete only one
+                    } else if (index == 1) {
+                      // Delete only one
                       Appointment apptToAddAgain;
                       for (Appointment firstAppt in _events.appointments!) {
                         if (firstAppt.id == _selectedAppointment!.id) {
@@ -78,7 +81,8 @@ class _RecurrenceDeleteState extends State<RecurrenceDelete> {
                           _events.appointments!.removeAt(_events.appointments!.indexOf(firstAppt));
                           _events.notifyListeners(CalendarDataSourceAction.remove, <Appointment>[]..add(firstAppt));
 
-                          if(apptToAddAgain.recurrenceExceptionDates!.length != int.parse(pieceOfRecurrenceRule[2].substring(6))){
+                          if (apptToAddAgain.recurrenceExceptionDates!.length !=
+                              int.parse(pieceOfRecurrenceRule[2].substring(6))) {
                             dbHelper.insertData(appointmentToJson(apptToAddAgain, false));
                             tempAppointments.add(apptToAddAgain);
                             _events.appointments!.add(tempAppointments[0]);
@@ -88,15 +92,15 @@ class _RecurrenceDeleteState extends State<RecurrenceDelete> {
                           break;
                         }
                       }
-                    }
-                    else if (index == 2) { // Delete all since the appointment you choose
+                    } else if (index == 2) {
+                      // Delete all since the appointment you choose
                       List<DateTime> daysToDelete;
                       Appointment apptToAddAgain;
                       for (Appointment firstAppt in _events.appointments!) {
                         if (firstAppt.id == _selectedAppointment!.id) {
                           daysToDelete = SfCalendar.getRecurrenceDateTimeCollection(firstAppt.recurrenceRule!, firstAppt.startTime);
                           for (DateTime i in daysToDelete) {
-                            if (i.microsecondsSinceEpoch >= _selectedAppointment!.startTime.microsecondsSinceEpoch){
+                            if (i.microsecondsSinceEpoch >= _selectedAppointment!.startTime.microsecondsSinceEpoch) {
                               if (!firstAppt.recurrenceExceptionDates!.contains(i)) {
                                 // Do not include date that already exist.
                                 firstAppt.recurrenceExceptionDates!.add(i);
@@ -108,7 +112,8 @@ class _RecurrenceDeleteState extends State<RecurrenceDelete> {
                           _events.appointments!.removeAt(_events.appointments!.indexOf(firstAppt));
                           _events.notifyListeners(CalendarDataSourceAction.remove, <Appointment>[]..add(firstAppt));
 
-                          if(apptToAddAgain.recurrenceExceptionDates!.length != int.parse(pieceOfRecurrenceRule[2].substring(6))){
+                          if (apptToAddAgain.recurrenceExceptionDates!.length !=
+                              int.parse(pieceOfRecurrenceRule[2].substring(6))) {
                             dbHelper.insertData(appointmentToJson(apptToAddAgain, false));
                             tempAppointments.add(apptToAddAgain);
                             _events.appointments!.add(tempAppointments[0]);

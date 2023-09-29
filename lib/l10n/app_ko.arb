@@ -34,5 +34,11 @@
   "deleteTheEntireSchedule" : "일정 전체 삭제",
   "cancle" : "취소",
   "check" : "확인",
-  "deleteAlert" : "정말 삭제하시겠습니까?"
+  "deleteAlert" : "정말 삭제하시겠습니까?",
+  "saveToDriveQuestion" : "정말 구글 드라이브에 저장하시겠습니까?",
+  "loadFromDriveQuestion" : "정말 구글 드라이브로부터 불러오시겠습니까?",
+  "saveToDrive" : "저장(구글 \n드라이브)",
+  "loadFromDrive" : "불러오기(구글 \n드라이브)",
+  "youAreNotLoggedIn" : "로그인 되지 않았습니다.",
+  "login" : "로그인"
 }

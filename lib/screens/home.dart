@@ -80,11 +80,6 @@ class _HomeState extends State<Home> {
         ),
         drawer: GetBuilder<LoginController>(
           builder: (controller) {
-            if(_auth.currentUser == null){
-              controller.logout();
-            } else if(_auth.currentUser != null){
-              controller.login();
-            }
             return SizedBox(
               width: MediaQuery.of(context).size.width / 1.75,
               child: Drawer(
@@ -105,19 +100,19 @@ class _HomeState extends State<Home> {
                                                 : const Color(0xFF3D4146)),
                                         margin: const EdgeInsets.only(bottom: 0.0),
                                         accountName: Text(
-                                            controller.isLogined ? _auth.currentUser!.displayName! : 'Guest',
+                                            controller.isLogined ? _auth.currentUser!.displayName! : 'ToDoLi',
                                             style: (AppLocalizations.of(context)!.localeName == 'ko')
                                                     ? GoogleFonts.poorStory(
-                                                        fontSize: 29,
+                                                        fontSize: 27,
                                                         color: Theme.of(context).primaryColorDark,
                                                         fontWeight: FontWeight.w500)
                                                     : en26.copyWith(color: Theme.of(context).primaryColorDark),
                                         ),
                                         accountEmail: Text(
-                                          controller.isLogined ? _auth.currentUser!.email! : 'You are not logged in',
+                                          controller.isLogined ? _auth.currentUser!.email! : AppLocalizations.of(context)!.youAreNotLoggedIn,
                                           style: (AppLocalizations.of(context)!.localeName == 'ko')
                                               ? GoogleFonts.poorStory(
-                                                  fontSize: 25,
+                                                  fontSize: 22,
                                                   color: Theme.of(context).primaryColorDark,
                                                   fontWeight: FontWeight.w500)
                                               : en22.copyWith(color: Theme.of(context).primaryColorDark),
@@ -144,7 +139,7 @@ class _HomeState extends State<Home> {
                                   AppLocalizations.of(context)!.logout,
                                     style: AppLocalizations.of(context)!.localeName == 'ko'
                                         ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
-                                        : en20.copyWith(color: Theme.of(context).primaryColorDark),
+                                        : en24.copyWith(color: Theme.of(context).primaryColorDark),
                                 ),
                                 onTap: () {
                                   googleSignIn.disconnect();
@@ -158,10 +153,10 @@ class _HomeState extends State<Home> {
                                 leading: Icon(Icons.login, size: 30,
                                     color: Theme.of(context).primaryColorDark),
                                 title: Text(
-                                  '구글 로그인 \n화면으로 이동',
+                                  AppLocalizations.of(context)!.login,
                                     style: AppLocalizations.of(context)!.localeName == 'ko'
                                         ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
-                                        : en20.copyWith(color: Theme.of(context).primaryColorDark),
+                                        : en24.copyWith(color: Theme.of(context).primaryColorDark),
                                 ),
                                 onTap: () {
                                   loginDialog(context);
@@ -177,7 +172,7 @@ class _HomeState extends State<Home> {
                               AppLocalizations.of(context)!.guide,
                                 style: AppLocalizations.of(context)!.localeName == 'ko'
                                     ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
-                                    : en20.copyWith(color: Theme.of(context).primaryColorDark),
+                                    : en24.copyWith(color: Theme.of(context).primaryColorDark),
                             ),
                             onTap: () {
                               guideDialog(context);
@@ -207,9 +202,9 @@ class _HomeState extends State<Home> {
                                 color: Theme.of(context).primaryColorDark,
                               ),
                               title: Text(
-                                '저장(구글 \n드라이브)',
+                                AppLocalizations.of(context)!.saveToDrive,
                                 style: AppLocalizations.of(context)!.localeName == 'ko'
-                                    ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
+                                    ? ko22.copyWith(color: Theme.of(context).primaryColorDark)
                                     : en20.copyWith(color: Theme.of(context).primaryColorDark),
                               ),
                               onTap: () {
@@ -224,9 +219,9 @@ class _HomeState extends State<Home> {
                                 color: Theme.of(context).primaryColorDark,
                               ),
                               title: Text(
-                                '불러오기(구글 \n드라이브)',
+                                AppLocalizations.of(context)!.loadFromDrive,
                                 style: AppLocalizations.of(context)!.localeName == 'ko'
-                                    ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
+                                    ? ko22.copyWith(color: Theme.of(context).primaryColorDark)
                                     : en20.copyWith(color: Theme.of(context).primaryColorDark),
                               ),
                               onTap: () {

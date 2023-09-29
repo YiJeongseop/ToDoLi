@@ -2,24 +2,21 @@ part of event_calendar;
 
 // https://developers.google.com/drive/api/guides/api-specific-auth?hl=en
 final GoogleSignIn googleSignIn = GoogleSignIn(
-    scopes: [drive.DriveApi.driveFileScope, drive.DriveApi.driveAppdataScope]
-);
+    scopes: [drive.DriveApi.driveFileScope, drive.DriveApi.driveAppdataScope]);
 
 Future<bool> signInWithGoogle() async {
-  Get.dialog(
-      const LoadingOverlay(),
-      barrierDismissible: false
-  );
+  Get.dialog(const LoadingOverlay(), barrierDismissible: false);
 
   final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
-  if(googleUser == null) {
+  if (googleUser == null) {
     Get.back();
     return false;
   }
 
-  try{
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+  try {
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
 
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
@@ -31,7 +28,7 @@ Future<bool> signInWithGoogle() async {
     Get.back();
     Get.back();
     return true;
-  } catch(e){
+  } catch (e) {
     Get.back();
     return false;
   }
@@ -47,40 +44,43 @@ void loginDialog(BuildContext context) {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.0)),
         content: GetBuilder<LoginController>(
           builder: (controller) {
-          return GestureDetector(
-          onTap: () {
-            signInWithGoogle().then((value) => (value) ? controller.login() : controller.logout());
+            return GestureDetector(
+              onTap: () {
+                signInWithGoogle().then((value) => (value) ? controller.login() : ());
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: const Color(0xFF000000), width: 2),
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
+                width: MediaQuery.of(context).size.width * 0.77,
+                height: MediaQuery.of(context).size.height * 0.085,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                      child: Image.asset(
+                        'images/google_logo.png',
+                        // https://about.google/brand-resource-center/logos-list/
+                        fit: BoxFit.cover,
+                        width: MediaQuery.of(context).size.width * 0.1,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      'Sign in with Google',
+                      style: en22.copyWith(color: Colors.black),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            );
           },
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: const Color(0xFF000000), width: 2),
-              borderRadius: BorderRadius.circular(25.0),
-            ),
-            width: MediaQuery.of(context).size.width * 0.77,
-            height: MediaQuery.of(context).size.height * 0.085,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                  child: Image.asset(
-                    'images/google_logo.png', // https://about.google/brand-resource-center/logos-list/
-                    fit: BoxFit.cover,
-                    width: MediaQuery.of(context).size.width * 0.1,
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  'Sign in with Google',
-                  style: en22.copyWith(color: Colors.black),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-        );},),
+        ),
       );
     },
   );
@@ -105,4 +105,3 @@ class LoadingOverlay extends StatelessWidget {
     );
   }
 }
-

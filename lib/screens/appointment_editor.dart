@@ -300,7 +300,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                             '$item',
                             style: (AppLocalizations.of(context)!.localeName == 'ko')
                                 ? ko24.copyWith(color: Theme.of(context).primaryColorDark,)
-                                : en18.copyWith(color: Theme.of(context).primaryColorDark,),
+                                : en19.copyWith(color: Theme.of(context).primaryColorDark,),
                           ),
                         );
                       }).toList(),
@@ -314,7 +314,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                       AppLocalizations.of(context)!.timesEvery,
                       style: (AppLocalizations.of(context)!.localeName == 'ko')
                           ? ko23.copyWith(color: Theme.of(context).primaryColorDark,)
-                          : en18.copyWith(color: Theme.of(context).primaryColorDark,),
+                          : en19.copyWith(color: Theme.of(context).primaryColorDark,),
                     ),
                     DropdownButton(
                         dropdownColor: (!Get.isDarkMode) ? Colors.white : const Color(0xFF505458),
@@ -327,7 +327,7 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                               '$item',
                               style: (AppLocalizations.of(context)!.localeName == 'ko')
                                   ? ko24.copyWith(color: Theme.of(context).primaryColorDark,)
-                                  : en18.copyWith(color: Theme.of(context).primaryColorDark,),
+                                  : en19.copyWith(color: Theme.of(context).primaryColorDark,),
                             ),
                           );
                         }).toList(),
@@ -346,20 +346,20 @@ class AppointmentEditorState extends State<AppointmentEditor> {
                                 ? Text(AppLocalizations.of(context)!.days,
                                     style: (AppLocalizations.of(context)!.localeName == 'ko')
                                         ? ko23.copyWith(color: Theme.of(context).primaryColorDark,)
-                                        : en18.copyWith(color: Theme.of(context).primaryColorDark,),
+                                        : en19.copyWith(color: Theme.of(context).primaryColorDark,),
                                   )
                                 : ((item == 'WEEKLY')
                                     ? Text(
                                         AppLocalizations.of(context)!.weeks,
                                         style: (AppLocalizations.of(context)!.localeName == 'ko')
                                             ? ko23.copyWith(color: Theme.of(context).primaryColorDark,)
-                                            : en18.copyWith(color: Theme.of(context).primaryColorDark,),
+                                            : en19.copyWith(color: Theme.of(context).primaryColorDark,),
                                       )
                                     : Text(
                                         AppLocalizations.of(context)!.months,
                                         style: (AppLocalizations.of(context)!.localeName == 'ko')
                                             ? ko23.copyWith(color: Theme.of(context).primaryColorDark,)
-                                            : en18.copyWith(color: Theme.of(context).primaryColorDark,),
+                                            : en19.copyWith(color: Theme.of(context).primaryColorDark,),
                                       )),
                           );
                         }).toList(),

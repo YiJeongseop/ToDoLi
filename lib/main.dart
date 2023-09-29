@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
     final isLightTheme = _prefs.then((SharedPreferences prefs) {
       return prefs.getInt('themeNumber') ?? 1;
     });
-    Get.changeThemeMode((await isLightTheme) == 1 ? ThemeMode.light : ThemeMode.dark);
+    Get.changeThemeMode(await isLightTheme == 1 ? ThemeMode.light : ThemeMode.dark);
   }
 
   _getColorStatus() async {

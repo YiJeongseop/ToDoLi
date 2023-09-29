@@ -4,8 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 TextStyle en16 = GoogleFonts.pangolin(fontSize: 16, color: Colors.black);
 TextStyle en17 = GoogleFonts.pangolin(fontSize: 17, color: Colors.black);
 TextStyle en18 = GoogleFonts.pangolin(fontSize: 18, color: Colors.black);
+TextStyle en19 = GoogleFonts.pangolin(fontSize: 19, color: Colors.black);
 TextStyle en20 = GoogleFonts.pangolin(fontSize: 20, color: Colors.black);
 TextStyle en22 = GoogleFonts.pangolin(fontSize: 22, color: Colors.black);
+TextStyle en24 = GoogleFonts.pangolin(fontSize: 24, color: Colors.black);
 TextStyle en26 = GoogleFonts.pangolin(fontSize: 26, color: Colors.black);
 TextStyle en28 = GoogleFonts.pangolin(fontSize: 28, color: Colors.black);
 
