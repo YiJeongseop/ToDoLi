@@ -1,18 +1,16 @@
-![README image](https://github.com/YiJeongseop/ToDoLi/assets/112690335/4b21ea38-b499-420e-8a44-ff518604f21d)
-# ToDoLi ![README image2](https://github.com/YiJeongseop/ToDoLi/assets/112690335/29c62c59-f4f6-4dc2-a7b2-0ea721df60e1)
+# ToDoLi
 It's available on the [Google Play Store](https://play.google.com/store/apps/details?id=com.sanashi.todoli).
 
 ## Features
 * Sign in with Google account using Firebase
-> __If you want to refer to this repo,__ you should have your own android/app/google-services.json.
+> If you want to refer to this repo, you should have your own android/app/google-services.json.
 * Play interstitial ads
-> change AdMob APP ID in AndroidManifest.xml and adUnitId in interstitial_ad_widget.dart to your own.
+> change {AdMob APP ID} in AndroidManifest.xml and adUnitId in interstitial_ad_widget.dart to your own.
 * UMP SDK for requesting consent from European Users
 * Dark Theme
-* Save data to Google Drive, Load data from Google Drive
-* Save data, Load data using sqflite
+* Save(Load) data using sqflite and Google Drive
 * Change the color of some parts of the UI
-* Change parts of recurring appointments, Delete parts of recurring appointments
+* Change(Delete) parts of recurring appointments
 * Press and hold the appointment to create or remove a cancellation line
 * English and Korean translations
 
