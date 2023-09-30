@@ -4,10 +4,19 @@ part of event_calendar;
 final GoogleSignIn googleSignIn = GoogleSignIn(
     scopes: [drive.DriveApi.driveFileScope, drive.DriveApi.driveAppdataScope]);
 
-Future<bool> signInWithGoogle() async {
+Future<bool> signInWithGoogle(BuildContext context) async {
   Get.dialog(const LoadingOverlay(), barrierDismissible: false);
+  GoogleSignInAccount? googleUser;
 
-  final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+  try{
+    googleUser = await googleSignIn.signIn();
+  } catch (e) {
+    Get.back();
+    Get.back();
+    Get.back();
+    showSnackbar(context, AppLocalizations.of(context)!.loginFail, 5);
+    return false;
+  }
 
   if (googleUser == null) {
     Get.back();
@@ -27,6 +36,8 @@ Future<bool> signInWithGoogle() async {
 
     Get.back();
     Get.back();
+    Get.back();
+    isLogined = true;
     return true;
   } catch (e) {
     Get.back();
@@ -42,44 +53,40 @@ void loginDialog(BuildContext context) {
       return AlertDialog(
         backgroundColor: (!Get.isDarkMode) ? Colors.white : const Color(0xFF505458),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.0)),
-        content: GetBuilder<LoginController>(
-          builder: (controller) {
-            return GestureDetector(
-              onTap: () {
-                signInWithGoogle().then((value) => (value) ? controller.login() : ());
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: const Color(0xFF000000), width: 2),
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                width: MediaQuery.of(context).size.width * 0.77,
-                height: MediaQuery.of(context).size.height * 0.085,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                      child: Image.asset(
-                        'images/google_logo.png',
-                        // https://about.google/brand-resource-center/logos-list/
-                        fit: BoxFit.cover,
-                        width: MediaQuery.of(context).size.width * 0.08,
-                      ),
-                    ),
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.035),
-                    Text(
-                      'Sign in with Google',
-                      style: en18.copyWith(color: Colors.black),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-            );
+        content: GestureDetector(
+          onTap: () {
+            signInWithGoogle(context);
           },
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: const Color(0xFF000000), width: 2),
+              borderRadius: BorderRadius.circular(25.0),
+            ),
+            width: MediaQuery.of(context).size.width * 0.77,
+            height: MediaQuery.of(context).size.height * 0.085,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                  child: Image.asset(
+                    'images/google_logo.png',
+                    // https://about.google/brand-resource-center/logos-list/
+                    fit: BoxFit.cover,
+                    width: MediaQuery.of(context).size.width * 0.08,
+                  ),
+                ),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.035),
+                Text(
+                  'Sign in with Google',
+                  style: en18.copyWith(color: Colors.black),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
         ),
       );
     },

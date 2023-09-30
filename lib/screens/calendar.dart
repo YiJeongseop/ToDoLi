@@ -11,11 +11,12 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:klc/klc.dart';
 import '../controllers/color_controller.dart';
-import '../controllers/login_controller.dart';
 import '../fonts.dart';
 import '../services/google_drive.dart';
+import '../utilities/snack_bar.dart';
 import '../widgets/color_picker.dart';
 import '../utilities/db_helper.dart';
+import 'home.dart';
 
 part 'appointment_editor.dart';
 part '../widgets/recurrence_delete.dart';

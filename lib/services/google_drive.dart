@@ -1,11 +1,12 @@
-import 'dart:ui';
 import 'dart:convert';
-import 'package:get/get.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 import "package:http/http.dart" as http;
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../screens/calendar.dart';
+import '../utilities/snack_bar.dart';
 
 Future<drive.DriveApi?> _getDriveApi() async {
   final googleUser = await googleSignIn.signInSilently();
@@ -15,8 +16,16 @@ Future<drive.DriveApi?> _getDriveApi() async {
   return driveApi;
 }
 
-Future<void> uploadAppointmentsToDrive(List<Appointment> appointments) async {
-  final driveApi = await _getDriveApi();
+Future<void> uploadAppointmentsToDrive(List<Appointment> appointments, BuildContext context) async {
+  drive.DriveApi? driveApi;
+
+  try{
+    driveApi = await _getDriveApi();
+  } catch (e) {
+    showSnackbar(context, AppLocalizations.of(context)!.saveFail, 5);
+    return;
+  }
+  // final driveApi = await _getDriveApi();
 
   List<Map<String, dynamic>> jsonList = appointmentsToJsonList(appointments, true);
   final appointmentsJson1 = jsonEncode(jsonList);
@@ -29,9 +38,17 @@ Future<void> uploadAppointmentsToDrive(List<Appointment> appointments) async {
   await driveApi!.files.create(driveFile, uploadMedia: media);
 }
 
-Future<List<Appointment>> downloadAppointmentsFromDrive() async {
+Future<List<Appointment>?> downloadAppointmentsFromDrive(BuildContext context) async {
   final List<Appointment> returnList = [];
-  final driveApi = await _getDriveApi();
+  drive.DriveApi? driveApi;
+
+  try{
+    driveApi = await _getDriveApi();
+  } catch (e) {
+    showSnackbar(context, AppLocalizations.of(context)!.loadFail, 8);
+    return null;
+  }
+  // final driveApi = await _getDriveApi();
 
   final fileId = await getFileIdByName('appointments.json');
   if(fileId == null) return [];

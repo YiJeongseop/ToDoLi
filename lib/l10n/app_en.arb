@@ -40,5 +40,9 @@
   "saveToDrive" : "Save(Google \nDrive)",
   "loadFromDrive" : "Load(Google \nDrive)",
   "youAreNotLoggedIn" : "You are not logged in.",
-  "login" : "Login"
+  "login" : "Login",
+  "updateMessage" : "If your saved schedule has disappeared after the update, please login and click Load(Google Drive)!",
+  "loginFail" : "Login failed: Please check your internet connection!",
+  "saveFail" : "Save failed : Please check your internet connection!",
+  "loadFail" : "Load failed : Please check your internet connection!"
 }

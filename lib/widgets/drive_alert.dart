@@ -19,21 +19,25 @@ void driveDialog(BuildContext context, bool isUpload) {
             TextButton(
               onPressed: () async {
                 if (isUpload) {
-                  uploadAppointmentsToDrive(_events.appointments! as List<Appointment>);
+                  uploadAppointmentsToDrive(_events.appointments! as List<Appointment>, context);
                 } else {
                   Get.dialog(const LoadingOverlay(), barrierDismissible: false);
 
-                  _events.appointments!.clear();
-                  _events.notifyListeners(CalendarDataSourceAction.reset, _events.appointments!);
+                  List<Appointment>? temp = await downloadAppointmentsFromDrive(context);
+                  if(temp == null){
+                    Get.back();
+                  } else{
+                    _events.appointments!.clear();
+                    _events.notifyListeners(CalendarDataSourceAction.reset, _events.appointments!);
 
-                  List<Appointment> temp = await downloadAppointmentsFromDrive();
-                  for (int i = 0; i < temp.length; i++) {
-                    _events.appointments!.add(temp[i]);
+                    for (int i = 0; i < temp.length; i++) {
+                      _events.appointments!.add(temp[i]);
+                    }
+                    _events.notifyListeners(CalendarDataSourceAction.add, temp);
+
+                    dbHelper.insertAllData(temp);
+                    Get.back();
                   }
-                  _events.notifyListeners(CalendarDataSourceAction.add, temp);
-
-                  dbHelper.insertAllData(temp);
-                  Get.back();
                 }
                 Future.delayed(const Duration(milliseconds: 200), () {
                   Navigator.pop(context);

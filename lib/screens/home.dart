@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:todoli/controllers/login_controller.dart';
 import 'package:todoli/utilities/snack_bar.dart';
 import '../screens/calendar.dart';
 import '../controllers/color_controller.dart';
@@ -20,7 +19,9 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> with WidgetsBindingObserver {
+bool isLogined = false;
+
+class _HomeState extends State<Home> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final ColorController colorController = Get.put(ColorController());
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -48,11 +49,18 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
       return prefs.getInt('snack130_1') ?? 0;
     });
     snack130_1 = await number;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if(snack130_1 == 0){
+        showSnackbar(context, AppLocalizations.of(context)!.updateMessage, 15);
+        snack130_1 = 1;
+        _saveSnackStatus(snack130_1);
+      }
+    });
   }
 
   _saveSnackStatus(int value) async {
     SharedPreferences pref = await _prefs;
-    pref.setInt('snack130', value);
+    pref.setInt('snack130_1', value);
   }
 
   @override
@@ -60,18 +68,10 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     super.initState();
     loadInterstitialAd();
     _getSnackStatus();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if(snack130_1 == 0){
-        showSnackbar(context);
-        snack130_1 = 1;
-        _saveSnackStatus(snack130_1);
-      }
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    Get.put(LoginController());
     return GetBuilder<ColorController>(builder: (colorController) {
       return Scaffold(
         onDrawerChanged: (isOpened) {
@@ -100,9 +100,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
           ],
           elevation: 0.0,
         ),
-        drawer: GetBuilder<LoginController>(
-          builder: (controller) {
-            return SizedBox(
+        drawer: SizedBox(
               width: MediaQuery.of(context).size.width / 1.75,
               child: Drawer(
                 backgroundColor: (!Get.isDarkMode) ? Colors.white : const Color(0xFF505458),
@@ -115,31 +113,22 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                             children: [
                               SizedBox(
                                 height: MediaQuery.of(context).size.height / 7.2 - 15,
-                                child: UserAccountsDrawerHeader(
-                                        decoration: BoxDecoration(
-                                            color: (!Get.isDarkMode)
-                                                ? colorList[colorController.numberOfColor]
-                                                : const Color(0xFF3D4146)),
-                                        margin: const EdgeInsets.only(bottom: 0.0),
-                                        accountName: Text(
-                                            controller.isLogined ? _auth.currentUser!.displayName! : 'ToDoLi',
-                                            style: (AppLocalizations.of(context)!.localeName == 'ko')
-                                                    ? GoogleFonts.poorStory(
-                                                        fontSize: 27,
-                                                        color: Theme.of(context).primaryColorDark,
-                                                        fontWeight: FontWeight.w500)
-                                                    : en26.copyWith(color: Theme.of(context).primaryColorDark),
-                                        ),
-                                        accountEmail: Text(
-                                          controller.isLogined ? _auth.currentUser!.email! : AppLocalizations.of(context)!.youAreNotLoggedIn,
-                                          style: (AppLocalizations.of(context)!.localeName == 'ko')
-                                              ? GoogleFonts.poorStory(
-                                                  fontSize: 20,
-                                                  color: Theme.of(context).primaryColorDark,
-                                                  fontWeight: FontWeight.w500)
-                                              : en22.copyWith(color: Theme.of(context).primaryColorDark),
-                                        ),
-                                      )
+                                child: StreamBuilder<User?>(
+                                  stream: _auth.authStateChanges(),
+                                  builder: (context, snapshot) {
+                                    if(snapshot.connectionState == ConnectionState.active && !snapshot.hasData){
+                                      isLogined = false;
+                                    }
+                                    if(snapshot.hasData || isLogined){
+                                      isLogined = true;
+                                      return userAccountsDrawerHeader(displayName: _auth.currentUser!.displayName!,
+                                      email: _auth.currentUser!.email!);
+                                    } else{
+                                      return userAccountsDrawerHeader(displayName: 'ToDoLi',
+                                          email: AppLocalizations.of(context)!.youAreNotLoggedIn);
+                                    }
+                                  }
+                                )
                               ),
                               Container(
                                   decoration: BoxDecoration(
@@ -153,37 +142,48 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                                   height: MediaQuery.of(context).size.height / 7.2),
                             ],
                           ),
-                          if(controller.isLogined)
-                            ListTile(
-                                leading: Icon(Icons.logout, size: 30,
-                                    color: Theme.of(context).primaryColorDark),
-                                title: Text(
-                                  AppLocalizations.of(context)!.logout,
+                          StreamBuilder<User?>(
+                            stream: _auth.authStateChanges(),
+                            builder: (context, snapshot) {
+                              print(snapshot.hasData);
+                              print(snapshot.connectionState);
+                              print(snapshot);
+                              print(isLogined);
+                              if(snapshot.hasData || isLogined){
+                                return ListTile(
+                                  leading: Icon(Icons.logout, size: 30,
+                                      color: Theme.of(context).primaryColorDark),
+                                  title: Text(
+                                    AppLocalizations.of(context)!.logout,
                                     style: AppLocalizations.of(context)!.localeName == 'ko'
                                         ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
                                         : en24.copyWith(color: Theme.of(context).primaryColorDark),
-                                ),
-                                onTap: () {
-                                  googleSignIn.disconnect();
-                                  // It makes the pop up to choose between Google accounts always come out.
-                                  FirebaseAuth.instance.signOut();
-                                  controller.logout();
-                                },
-                              ),
-                          if(!controller.isLogined)
-                            ListTile(
-                                leading: Icon(Icons.login, size: 30,
-                                    color: Theme.of(context).primaryColorDark),
-                                title: Text(
-                                  AppLocalizations.of(context)!.login,
-                                    style: AppLocalizations.of(context)!.localeName == 'ko'
-                                        ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
-                                        : en24.copyWith(color: Theme.of(context).primaryColorDark),
-                                ),
-                                onTap: () {
-                                  loginDialog(context);
-                                },
-                              ),
+                                  ),
+                                  onTap: () {
+                                    googleSignIn.disconnect();
+                                    // It makes the pop up to choose between Google accounts always come out.
+                                    _auth.signOut();
+                                    isLogined = false;
+                                    Get.back();
+                                  },
+                                );
+                              } else {
+                                return ListTile(
+                                    leading: Icon(Icons.login, size: 30,
+                                        color: Theme.of(context).primaryColorDark),
+                                    title: Text(
+                                      AppLocalizations.of(context)!.login,
+                                      style: AppLocalizations.of(context)!.localeName == 'ko'
+                                          ? ko24.copyWith(color: Theme.of(context).primaryColorDark)
+                                          : en24.copyWith(color: Theme.of(context).primaryColorDark),
+                                    ),
+                                    onTap: () {
+                                      loginDialog(context);
+                                    },
+                                  );
+                              }
+                            },
+                          ),
                           ListTile(
                             leading: Icon(
                               Icons.library_books_outlined,
@@ -216,40 +216,56 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                               deleteDialog(context);
                             },
                           ),
-                          if(controller.isLogined)
-                            ListTile(
-                              leading: Icon(
-                                Icons.upload,
-                                size: 30,
-                                color: Theme.of(context).primaryColorDark,
-                              ),
-                              title: Text(
-                                AppLocalizations.of(context)!.saveToDrive,
-                                style: AppLocalizations.of(context)!.localeName == 'ko'
-                                    ? ko20.copyWith(color: Theme.of(context).primaryColorDark)
-                                    : en20.copyWith(color: Theme.of(context).primaryColorDark),
-                              ),
-                              onTap: () {
-                                driveDialog(context, true);
-                              },
-                            ),
-                          if(controller.isLogined)
-                            ListTile(
-                              leading: Icon(
-                                Icons.download,
-                                size: 30,
-                                color: Theme.of(context).primaryColorDark,
-                              ),
-                              title: Text(
-                                AppLocalizations.of(context)!.loadFromDrive,
-                                style: AppLocalizations.of(context)!.localeName == 'ko'
-                                    ? ko20.copyWith(color: Theme.of(context).primaryColorDark)
-                                    : en20.copyWith(color: Theme.of(context).primaryColorDark),
-                              ),
-                              onTap: () {
-                                driveDialog(context, false);
-                              },
-                            )
+                          StreamBuilder<User?>(
+                            stream: _auth.authStateChanges(),
+                            builder: (context, snapshot) {
+                              if(snapshot.hasData || isLogined){
+                                return ListTile(
+                                  leading: Icon(
+                                    Icons.upload,
+                                    size: 30,
+                                    color: Theme.of(context).primaryColorDark,
+                                  ),
+                                  title: Text(
+                                    AppLocalizations.of(context)!.saveToDrive,
+                                    style: AppLocalizations.of(context)!.localeName == 'ko'
+                                        ? ko20.copyWith(color: Theme.of(context).primaryColorDark)
+                                        : en20.copyWith(color: Theme.of(context).primaryColorDark),
+                                  ),
+                                  onTap: () {
+                                    driveDialog(context, true);
+                                  },
+                                );
+                              } else {
+                                return const SizedBox(height: 0,);
+                              }
+                            },
+                          ),
+                          StreamBuilder<User?>(
+                            stream: _auth.authStateChanges(),
+                            builder: (context, snapshot) {
+                              if(snapshot.hasData || isLogined){
+                                return ListTile(
+                                  leading: Icon(
+                                    Icons.download,
+                                    size: 30,
+                                    color: Theme.of(context).primaryColorDark,
+                                  ),
+                                  title: Text(
+                                    AppLocalizations.of(context)!.loadFromDrive,
+                                    style: AppLocalizations.of(context)!.localeName == 'ko'
+                                        ? ko20.copyWith(color: Theme.of(context).primaryColorDark)
+                                        : en20.copyWith(color: Theme.of(context).primaryColorDark),
+                                  ),
+                                  onTap: () {
+                                    driveDialog(context, false);
+                                  },
+                                );
+                              } else {
+                                return const SizedBox(height: 0,);
+                              }
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -334,14 +350,43 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                   ],
                 ),
               ),
-            );
-          },
-        ),
+            ),
         body: const SafeArea(
           child: Calendar(),
         ),
       );
     });
+  }
+
+  UserAccountsDrawerHeader userAccountsDrawerHeader({
+    required String displayName,
+    required String email,
+  }){
+    return UserAccountsDrawerHeader(
+      decoration: BoxDecoration(
+          color: (!Get.isDarkMode)
+              ? colorList[colorController.numberOfColor]
+              : const Color(0xFF3D4146)),
+      margin: const EdgeInsets.only(bottom: 0.0),
+      accountName: Text(
+        displayName,
+        style: (AppLocalizations.of(context)!.localeName == 'ko')
+            ? GoogleFonts.poorStory(
+            fontSize: 27,
+            color: Theme.of(context).primaryColorDark,
+            fontWeight: FontWeight.w500)
+            : en26.copyWith(color: Theme.of(context).primaryColorDark),
+      ),
+      accountEmail: Text(
+        email,
+        style: (AppLocalizations.of(context)!.localeName == 'ko')
+            ? GoogleFonts.poorStory(
+            fontSize: 20,
+            color: Theme.of(context).primaryColorDark,
+            fontWeight: FontWeight.w500)
+            : en22.copyWith(color: Theme.of(context).primaryColorDark),
+      ),
+    );
   }
 
   GestureDetector colorButton({
