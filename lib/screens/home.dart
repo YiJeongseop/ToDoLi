@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,6 +26,7 @@ class _HomeState extends State<Home> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final ColorController colorController = Get.put(ColorController());
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  StreamController<ConsentStatus> consentController = StreamController<ConsentStatus>();
   final List<Color> colorList = [
     const Color(0xFF97D7E1),
     const Color(0xFFE5C1F5),
@@ -32,7 +34,7 @@ class _HomeState extends State<Home> {
     const Color(0xFFECDD83),
     const Color(0xFF8BD39A)
   ];
-  int snack130_1 = 0;
+  int snack130_3 = 0;
 
   _saveColorStatus(int value) async {
     SharedPreferences pref = await _prefs;
@@ -46,21 +48,21 @@ class _HomeState extends State<Home> {
 
   _getSnackStatus() async {
     var number = _prefs.then((SharedPreferences prefs) {
-      return prefs.getInt('snack130_1') ?? 0;
+      return prefs.getInt('snack130_3') ?? 0;
     });
-    snack130_1 = await number;
+    snack130_3 = await number;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if(snack130_1 == 0){
+      if(snack130_3 == 0){
         showSnackbar(context, AppLocalizations.of(context)!.updateMessage, 15);
-        snack130_1 = 1;
-        _saveSnackStatus(snack130_1);
+        snack130_3 = 1;
+        _saveSnackStatus(snack130_3);
       }
     });
   }
 
   _saveSnackStatus(int value) async {
     SharedPreferences pref = await _prefs;
-    pref.setInt('snack130_1', value);
+    pref.setInt('snack130_3', value);
   }
 
   @override
@@ -68,13 +70,16 @@ class _HomeState extends State<Home> {
     super.initState();
     loadInterstitialAd();
     _getSnackStatus();
+    setStatus();
   }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ColorController>(builder: (colorController) {
       return Scaffold(
-        onDrawerChanged: (isOpened) {
+        onDrawerChanged: (isOpened) async {
+          // Without these two lines, (Cancle) Consent button will not come out properly.
+          colorController.justUpdate();
           setStatus();
         },
         backgroundColor: Theme.of(context).primaryColorLight,
@@ -145,10 +150,6 @@ class _HomeState extends State<Home> {
                           StreamBuilder<User?>(
                             stream: _auth.authStateChanges(),
                             builder: (context, snapshot) {
-                              print(snapshot.hasData);
-                              print(snapshot.connectionState);
-                              print(snapshot);
-                              print(isLogined);
                               if(snapshot.hasData || isLogined){
                                 return ListTile(
                                   leading: Icon(Icons.logout, size: 30,
@@ -244,6 +245,7 @@ class _HomeState extends State<Home> {
                           StreamBuilder<User?>(
                             stream: _auth.authStateChanges(),
                             builder: (context, snapshot) {
+                              print(status);
                               if(snapshot.hasData || isLogined){
                                 return ListTile(
                                   leading: Icon(
@@ -300,7 +302,7 @@ class _HomeState extends State<Home> {
                         Get.back();
                       },
                     ),
-                    if (status == ConsentStatus.required)
+                    if(status == ConsentStatus.required)
                       ListTile(
                         leading: Icon(
                           Icons.ads_click,
@@ -309,16 +311,15 @@ class _HomeState extends State<Home> {
                         ),
                         title: Text(
                           "Consent for personalized ads",
-                            style: en18.copyWith(
-                              color: Theme.of(context).primaryColorDark,
-                            ),
+                          style: en18.copyWith(
+                            color: Theme.of(context).primaryColorDark,
+                          ),
                         ),
                         onTap: () {
                           consentPersonalizedAds();
-                          Get.back();
                         },
                       ),
-                    if (status == ConsentStatus.obtained)
+                    if(status == ConsentStatus.obtained)
                       ListTile(
                         leading: Icon(
                           Icons.ads_click,
@@ -326,14 +327,13 @@ class _HomeState extends State<Home> {
                           color: Theme.of(context).primaryColorDark,
                         ),
                         title: Text(
-                            "Cancle consent for personalized ads",
-                            style: en18.copyWith(
-                              color: Theme.of(context).primaryColorDark,
-                            ),
+                          "Cancle Consent for personalized ads",
+                          style: en18.copyWith(
+                            color: Theme.of(context).primaryColorDark,
+                          ),
                         ),
                         onTap: () {
                           cancelConsentPersonalizedAds();
-                          Get.back();
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
@@ -375,7 +375,7 @@ class _HomeState extends State<Home> {
             fontSize: 27,
             color: Theme.of(context).primaryColorDark,
             fontWeight: FontWeight.w500)
-            : en26.copyWith(color: Theme.of(context).primaryColorDark),
+            : en24.copyWith(color: Theme.of(context).primaryColorDark),
       ),
       accountEmail: Text(
         email,
@@ -384,7 +384,7 @@ class _HomeState extends State<Home> {
             fontSize: 20,
             color: Theme.of(context).primaryColorDark,
             fontWeight: FontWeight.w500)
-            : en22.copyWith(color: Theme.of(context).primaryColorDark),
+            : en20.copyWith(color: Theme.of(context).primaryColorDark),
       ),
     );
   }

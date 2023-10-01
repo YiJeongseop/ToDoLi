@@ -29,4 +29,8 @@ class ColorController extends GetxController {
     _numberOfColor = 4;
     update();
   }
+
+  void justUpdate(){
+    update();
+  }
 }

@@ -13,12 +13,10 @@ import 'services/interstitial_ad_widget.dart';
 
 // https://developers.google.com/admob/flutter/eu-consent?hl=en
 final params = ConsentRequestParameters();
-/*  for Test
-ConsentDebugSettings debugSettings = ConsentDebugSettings(
-    debugGeography: DebugGeography.debugGeographyEea,
-    testIdentifiers: ['TEST-DEVICE-HASHED-ID']);
-final params = ConsentRequestParameters(consentDebugSettings: debugSettings);
-*/
+// ConsentDebugSettings debugSettings = ConsentDebugSettings(
+//     debugGeography: DebugGeography.debugGeographyEea,
+//     testIdentifiers: ['TEST-DEVICE-HASHED-ID']); // for Test
+// final params = ConsentRequestParameters(consentDebugSettings: debugSettings); // for Test
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -71,7 +69,7 @@ class MyApp extends StatelessWidget {
         Locale('en'),
         Locale('ko'),
       ],
-      locale: (defaultLocale == 'ko_KR') ? const Locale('ko') : const Locale('en'),
+      locale: (defaultLocale == 'ko_KR') ? const Locale('en') : const Locale('en'),
       debugShowCheckedModeBanner: false,
       title: 'ToDoLi',
       theme: ThemeData.light().copyWith(

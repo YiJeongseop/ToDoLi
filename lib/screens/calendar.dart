@@ -438,33 +438,35 @@ class CalendarState extends State<Calendar> {
                 final DateTime now = DateTime.now();
                 return Container(
                   decoration: BoxDecoration(border: Border.all(color: Colors.black12, width: 0.5)),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            details.date.day.toString(),
-                            style: (details.date.month == midDate.month) ? GoogleFonts.poorStory(
-                              fontSize: (details.date.year == now.year && details.date.month == now.month && details.date.day == now.day) ? 19 : 19,
-                              color: !Get.isDarkMode ? Colors.black : Colors.white,
-                              fontWeight: (details.date.year == now.year && details.date.month == now.month && details.date.day == now.day) ? FontWeight.w600 : FontWeight.w400
-                            ) : GoogleFonts.poorStory(
-                              fontSize: 15,
-                              color: !Get.isDarkMode ? Colors.grey : Colors.white70,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              details.date.day.toString(),
+                              style: (details.date.month == midDate.month) ? GoogleFonts.poorStory(
+                                fontSize: (details.date.year == now.year && details.date.month == now.month && details.date.day == now.day) ? 19 : 19,
+                                color: !Get.isDarkMode ? Colors.black : Colors.white,
+                                fontWeight: (details.date.year == now.year && details.date.month == now.month && details.date.day == now.day) ? FontWeight.w600 : FontWeight.w400
+                              ) : GoogleFonts.poorStory(
+                                fontSize: 15,
+                                color: !Get.isDarkMode ? Colors.grey : Colors.white70,
+                              ),
                             ),
-                          ),
-                          (details.date.month == midDate.month) ? Text(
-                            getLunarDay(details.date.year, details.date.month, details.date.day),
-                            style: GoogleFonts.poorStory(
-                              fontSize: 12,
-                              color: !Get.isDarkMode ? Colors.black45 : Colors.grey,
-                            ),
-                          ) : Container(),
-                        ],
-                      ),
-                    ],
+                            (details.date.month == midDate.month) ? Text(
+                              getLunarDay(details.date.year, details.date.month, details.date.day),
+                              style: GoogleFonts.poorStory(
+                                fontSize: 12,
+                                color: !Get.isDarkMode ? Colors.black45 : Colors.grey,
+                              ),
+                            ) : Container(),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 );
               } : null,

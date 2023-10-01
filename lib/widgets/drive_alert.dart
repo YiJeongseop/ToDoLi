@@ -28,7 +28,6 @@ void driveDialog(BuildContext context, bool isUpload) {
                     Get.back();
                   } else{
                     _events.appointments!.clear();
-                    _events.notifyListeners(CalendarDataSourceAction.reset, _events.appointments!);
 
                     for (int i = 0; i < temp.length; i++) {
                       _events.appointments!.add(temp[i]);

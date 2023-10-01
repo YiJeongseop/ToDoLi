@@ -25,7 +25,6 @@ Future<void> uploadAppointmentsToDrive(List<Appointment> appointments, BuildCont
     showSnackbar(context, AppLocalizations.of(context)!.saveFail, 5);
     return;
   }
-  // final driveApi = await _getDriveApi();
 
   List<Map<String, dynamic>> jsonList = appointmentsToJsonList(appointments, true);
   final appointmentsJson1 = jsonEncode(jsonList);
@@ -35,12 +34,18 @@ Future<void> uploadAppointmentsToDrive(List<Appointment> appointments, BuildCont
   driveFile.name = 'appointments.json';
 
   final media = drive.Media(Stream.value(utf8.encode(appointmentsJson1)), appointmentsJson2.length);
-  await driveApi!.files.create(driveFile, uploadMedia: media);
+  try{
+    await driveApi!.files.create(driveFile, uploadMedia: media);
+  } catch (e) {
+    showSnackbar(context, AppLocalizations.of(context)!.saveFail, 5);
+    return;
+  }
 }
 
 Future<List<Appointment>?> downloadAppointmentsFromDrive(BuildContext context) async {
   final List<Appointment> returnList = [];
   drive.DriveApi? driveApi;
+  String? fileId;
 
   try{
     driveApi = await _getDriveApi();
@@ -48,9 +53,14 @@ Future<List<Appointment>?> downloadAppointmentsFromDrive(BuildContext context) a
     showSnackbar(context, AppLocalizations.of(context)!.loadFail, 8);
     return null;
   }
-  // final driveApi = await _getDriveApi();
 
-  final fileId = await getFileIdByName('appointments.json');
+  try{
+    fileId = await getFileIdByName('appointments.json');
+  } catch (e) {
+    showSnackbar(context, AppLocalizations.of(context)!.loadFail, 8);
+    return null;
+  }
+
   if(fileId == null) return [];
 
   final response = await driveApi!.files.get(fileId, downloadOptions: drive.DownloadOptions.fullMedia) as drive.Media?;
