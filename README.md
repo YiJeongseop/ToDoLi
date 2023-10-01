@@ -2,7 +2,7 @@
 It's available on the [Google Play Store](https://play.google.com/store/apps/details?id=com.sanashi.todoli).
 
 ## Features
-* Sign in with Google account using Firebase
+* Sign in with Google using Firebase
 > If you want to refer to this repo, you should have your own android/app/google-services.json.
 * Play interstitial ads
 > change {AdMob APP ID} in AndroidManifest.xml and adUnitId in interstitial_ad_widget.dart to your own.
@@ -10,16 +10,16 @@ It's available on the [Google Play Store](https://play.google.com/store/apps/det
 * Dark Theme
 * Save(Load) data using sqflite and Google Drive
 * Change the color of some parts of the UI
-* Change(Delete) parts of recurring appointments
-* Press and hold the appointment to create or remove a cancellation line
+* Change(Delete) parts of recurring schedules
+* Create(Remove) a schedule cancellation line
 * English and Korean translations
 
 ![Translation](https://github.com/YiJeongseop/ToDoLi/assets/112690335/9b0a98db-f916-4639-a279-c72933c1777c)
 
 ## Screenshots
-![ReadmeOne](https://github.com/YiJeongseop/ToDoLi/assets/112690335/08f87fa5-0c95-4d8f-9e85-c7cc044c970b)
+![README1](https://github.com/YiJeongseop/ToDoLi/assets/112690335/1a2ccf84-3ee1-479e-8aa8-a7758becd7c4)
+![README2](https://github.com/YiJeongseop/ToDoLi/assets/112690335/66cfd465-2a4c-4102-baee-90ec46fcf613)
 
-![ReadmeTwo](https://github.com/YiJeongseop/ToDoLi/assets/112690335/a8475651-ad7e-452a-bbc9-c4dc717a336d)
 
 ## Packages
 > #### It is necessary to have [a commercial or community license](https://www.syncfusion.com/products/communitylicense) to use syncfusion packages.
