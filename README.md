@@ -1,6 +1,4 @@
 # ToDoLi
-It's available on the [Google Play Store](https://play.google.com/store/apps/details?id=com.sanashi.todoli).
-
 ## Features
 * Sign in with Google using Firebase
 > If you want to refer to this repo, you should have your own android/app/google-services.json.
